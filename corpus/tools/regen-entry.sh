@@ -2,9 +2,12 @@
 # Regenerate a generated corpus entry from scratch on testnet and check it shows the same pattern
 # and the same core verdicts as the committed entry.
 #
-# Usage: corpus/tools/regen-entry.sh <entry-id> [out-dir]
-#   entry-id: cap0027-muxed-sac-destination-01 | lp-issuer-order-01
+# Usage: corpus/tools/regen-entry.sh [--new] <entry-id> [out-dir]
+#   entry-id: cap0027-muxed-sac-destination-01 | lp-issuer-order-01 | cap0027-muxed-classic-payment-01 |
+#             cap0046-scmap-key-collision-01
 #   out-dir:  default .cache/regen/<entry-id>-<UTC timestamp>
+#   --new     create a new entry: stop after the export (no comparison); copy the files into
+#             corpus/entries/ and add the entry to build-manifest.py
 #
 # Steps: run the generator (new random accounts) -> wait until the testnet history archive has a
 # checkpoint at or past the target ledger -> export it with Galexie into the local S3 -> download,
@@ -18,10 +21,14 @@ set -euo pipefail
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$ROOT"
 
-ID=${1:?usage: corpus/tools/regen-entry.sh <entry-id> [out-dir]}
+NEW=0
+if [ "${1:-}" = --new ]; then NEW=1; shift; fi
+ID=${1:?usage: corpus/tools/regen-entry.sh [--new] <entry-id> [out-dir]}
 case $ID in
   cap0027-muxed-sac-destination-01) GEN=muxed-soroban ;;
   lp-issuer-order-01) GEN=lp-issuer-order ;;
+  cap0027-muxed-classic-payment-01) GEN=muxed-classic ;;
+  cap0046-scmap-key-collision-01) GEN=scmap-collision ;;
   cap0040-signed-payload-signer-01)
     echo "$ID is mined, not generated: re-export it with sighting-729/repro.sh (it checks the ledger header and tx)" >&2
     exit 2 ;;
@@ -73,6 +80,10 @@ curl -sf -o "$OUT/$(basename "$KEY")" "http://localhost:$S3_PORT/ledgers/testnet
 zstd -qdf "$OUT/$(basename "$KEY")" -o "$OUT/ledger-$L.LedgerCloseMetaBatch.xdr"
 echo "downloaded $KEY"
 
+if [ $NEW = 1 ]; then
+  echo "new entry files (generation.json, ledger file) are in $OUT"
+  exit 0
+fi
 step "Comparing with the committed entry"
 python3 -I corpus/tools/build-manifest.py --regen-check "$ID" "$OUT"
 echo "files and the regenerated manifest entry are in $OUT"

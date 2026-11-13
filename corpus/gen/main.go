@@ -6,6 +6,8 @@
 //
 //	gen muxed-soroban     # cap0027-muxed-sac-destination-01 (target: wallet-backend #716)
 //	gen lp-issuer-order   # lp-issuer-order-01 (target: js-stellar-sdk #1766)
+//	gen muxed-classic     # cap0027-muxed-classic-payment-01 (muxed tx source, op source and destination)
+//	gen scmap-collision   # cap0046-scmap-key-collision-01 (target: js-stellar-sdk #1789)
 //
 // Environment (defaults: testnet):
 //
@@ -65,7 +67,7 @@ type Submission struct {
 
 func main() {
 	if len(os.Args) != 2 {
-		fmt.Fprintln(os.Stderr, "usage: gen muxed-soroban|lp-issuer-order")
+		fmt.Fprintln(os.Stderr, "usage: gen muxed-soroban|lp-issuer-order|muxed-classic|scmap-collision")
 		os.Exit(2)
 	}
 	e := &env{
@@ -83,6 +85,10 @@ func main() {
 		out, err = e.muxedSoroban()
 	case "lp-issuer-order":
 		out, err = e.lpIssuerOrder()
+	case "muxed-classic":
+		out, err = e.muxedClassic()
+	case "scmap-collision":
+		out, err = e.scmapCollision()
 	default:
 		err = fmt.Errorf("unknown generator %q", os.Args[1])
 	}

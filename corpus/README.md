@@ -1,7 +1,7 @@
-# Corpus: 3 sample entries and a draft manifest schema
+# Corpus: 5 sample entries and a draft manifest schema
 
 RFP 9 asks for a corpus of **rare transaction shapes** that indexers and SDKs tend to mishandle, one or more per CAP, each with
-a manifest of the values a correct reader must decode. This folder holds three sample entries and the draft manifest schema.
+a manifest of the values a correct reader must decode. This folder holds five sample entries and the draft manifest schema.
 
 ## What an entry is
 
@@ -18,13 +18,15 @@ An entry is **real ledger data emitted by stellar-core**, not hand-made bytes. E
 from the files. Every value under `expected` and `extra` comes from decoding the files. The only hand-written inputs are which
 transaction and operation an entry is about, the CAP/SEP tags, the protocol a CAP introduced, and issue links.
 
-## The three entries
+## The entries
 
 | Entry | Pattern | How it was made | Ledger (protocol) | Bug it targets | Shown? |
 | --- | --- | --- | --- | --- | --- |
 | [`cap0040-signed-payload-signer-01`](entries/cap-0040/cap0040-signed-payload-signer-01/) | `set_options` adds a `P…` signed-payload signer: a 40-byte key where readers assume 32 | **mined**: found in testnet history | 4437357 (28) | wallet-backend [#729](https://github.com/stellar/wallet-backend/pull/729) | **yes**, [`sighting-729/`](../sighting-729/README.md) |
 | [`cap0027-muxed-sac-destination-01`](entries/cap-0027/cap0027-muxed-sac-destination-01/) | a native-XLM token-contract (SAC) `transfer` to a **muxed** `M…` recipient: a 40-byte address, plus the event's `to_muxed_id` field | **generated** on testnet | 5708671 (30) | wallet-backend [#716](https://github.com/stellar/wallet-backend/issues/716) | no, future harness work |
-| [`lp-issuer-order-01`](entries/cap-0038/lp-issuer-order-01/) | a liquidity-pool trustline whose two `LPO` issuers sort one way as raw key bytes (the network's rule) and the other way as `G…` text | **generated** on testnet | 5708628 (30) | js-stellar-sdk [#1766](https://github.com/stellar/js-stellar-sdk/pull/1766) | **yes**, [`conformance-1766/`](../conformance-1766/README.md) |
+| [`lp-issuer-order-01`](entries/cap-0038/lp-issuer-order-01/) | a liquidity-pool trustline whose two `LPO` issuers sort one way as raw key bytes (the network's rule) and the other way as `G…` text | **generated** on testnet | 5708628 (30) | js-stellar-sdk [#1766](https://github.com/stellar/js-stellar-sdk/pull/1766) | **yes**, [`conformance/`](../conformance/README.md) |
+| [`cap0027-muxed-classic-payment-01`](entries/cap-0027/cap0027-muxed-classic-payment-01/) | a classic payment whose **transaction source, operation source and destination** are all muxed, with ids 2^63+1, 2^53+1 and 2^64−1 (the RFP's "muxed source" shape) | **generated** on testnet | 5710218 (30) | wallet-backend [#716](https://github.com/stellar/wallet-backend/issues/716); the valid side of js-stellar-sdk [#1785](https://github.com/stellar/js-stellar-sdk/issues/1785) | conformance: all releases pass (see [why #1785 needs input vectors](../conformance/README.md#what-these-checks-cannot-catch-1785)) |
+| [`cap0046-scmap-key-collision-01`](entries/cap-0046/cap0046-scmap-key-collision-01/) | a contract call whose argument and return value are a map with keys `u32 1`, `string "1"`, `symbol "1"`: valid, distinct keys that print the same | **generated** on testnet ([`gen/contracts/map-echo`](gen/contracts/map-echo/)) | 5710299 (30) | js-stellar-sdk [#1789](https://github.com/stellar/js-stellar-sdk/issues/1789) | **yes**, [`conformance/`](../conformance/README.md) |
 
 **Muxed account:** one normal account `G…` plus a 64-bit ID, written `M…` (CAP-27). Exchanges use it to give each customer
 a deposit address while holding one account. On the wire the address is 40 bytes, not 32.
@@ -47,6 +49,10 @@ a deposit address while holding one account. On the wire the address is 40 bytes
      3. trusts both `LPO` assets and the pool share, in one transaction.
 
      It first submits the same transaction with the pool's assets in *text* order, which core must reject.
+   - **`muxed-classic`:** one classic payment, with the transaction source set to a muxed address on the built
+     envelope (the Go SDK takes a `G…` there) and a muxed operation source and destination.
+   - **`scmap-collision`:** uploads and deploys [`gen/contracts/map-echo`](gen/contracts/map-echo/) (a 355-byte contract that
+     returns its map argument; `build.sh` rebuilds it in a Rust container), then calls it with the colliding-key map.
    - **`muxed-soroban`:** tries a Soroban transfer with a muxed **operation** source, then a muxed **transaction** source.
      Core rejects both. It then submits the valid pattern: a transfer **to** a muxed recipient. The recipient form came
      with CAP-67 in protocol 23.
@@ -70,11 +76,12 @@ The records are in [`gen/local-runs/`](gen/local-runs/). The export step is test
 | 6 | the manifest equals a fresh decode of the files | no expected value was typed or edited by hand | `tools/build-manifest.py --check` |
 | 7 | the manifest matches [`manifest.schema.json`](manifest.schema.json) | the draft schema is enforceable | `check-jsonschema` |
 | 8 | regenerating an entry from scratch keeps the same pattern and core verdicts | the generator reliably produces the pattern | `tools/regen-entry.sh` |
-| 9 | a real reader mishandles the entry before its fix and handles it after | the entry actually catches the bug it targets | [`sighting-729`](../sighting-729/) (entry 1), [`conformance-1766`](../conformance-1766/) (entry 3) |
+| 9 | a real reader mishandles the entry before its fix and handles it after | the entry actually catches the bug it targets | [`sighting-729`](../sighting-729/) (entry 1), [`conformance`](../conformance/) (entries 3 and 5) |
 
-Checks 3–7 run in CI on every push (`.github/workflows/corpus.yml`), and so does check 9 for entry 3.
+Checks 3–7 run in CI on every push (`.github/workflows/corpus.yml`), and so does check 9 (both demos).
 
-**Not validated yet:** that wallet-backend mishandles entry 2 (#716). Doing that, for every entry and indexer, is the harness deliverable.
+**Not validated yet:** that wallet-backend mishandles entries 2 and 4 (#716 was closed without a linked fix commit, so there is no clean
+before/after pair). Doing that, for every entry and indexer, is the harness deliverable.
 No stellar-core `--check-lcm` golden ledger files are published for these ledgers, so `check_lcm_golden` is `null`.
 
 ## Commands
@@ -84,6 +91,9 @@ corpus/tools/roundtrip.sh                             # checks 3-4 (offline, ~10
 python3 -I corpus/tools/build-manifest.py --check     # checks 5-6
 corpus/tools/regen-entry.sh lp-issuer-order-01        # check 8 (testnet, 3-8 min)
 corpus/tools/regen-entry.sh cap0027-muxed-sac-destination-01
+corpus/tools/regen-entry.sh cap0027-muxed-classic-payment-01
+corpus/tools/regen-entry.sh cap0046-scmap-key-collision-01
+corpus/tools/regen-entry.sh --new <entry-id> <dir>      # create a new entry: generate + export, no comparison
 ```
 
 Decoding protocol-30 ledgers needs stellar CLI ≥ 30. [`tools/get-stellar-cli.sh`](tools/get-stellar-cli.sh) downloads
@@ -103,8 +113,14 @@ be regenerated, only re-exported: `sighting-729/repro.sh --clean` does that.
 - **Two protocol numbers.** `protocol.introduced_in` is where the pattern can first occur (from the CAP). `protocol.ledger` is
   the protocol of the captured ledger (decoded). For example, the CAP-40 entry is a protocol-28 ledger.
 - **A fixed `expected` core plus a per-pattern `extra`.** `expected` has the same 12 fields for every entry (ledger, tx, op,
-  results, sources). `extra` holds the pattern's own values.
-- **`synthetic` means hand-crafted bytes**, as in the RFP. All three entries were emitted by core on a real network, so they are
+  results, sources). `extra` holds the pattern's own values, and the schema **types it per `pattern.id`** (`$defs/extra_*`,
+  selected with `if`/`then`). A pattern's defining property is a constant in its type, e.g. `lp-issuer-order` requires byte
+  order ≠ text order and `scmap-key-collision` requires keys with the same text form, so an entry that lost its pattern fails
+  validation. Ids are decimal strings (`uint64String`), never JSON numbers, which lose precision above 2^53. An unknown
+  `pattern.id` is rejected: a new pattern needs its `extra` type.
+- **Expected values are decoded by rs-stellar-xdr, then cross-checked by a second decoder.** The conformance run decodes every
+  envelope again with js-stellar-sdk's own XDR code and checks the tx hash and every muxed id against the manifest.
+- **`synthetic` means hand-crafted bytes**, as in the RFP. All five entries were emitted by core on a real network, so they are
   `synthetic: false`. `source.kind` (`mined` / `generated` / `local` / `handcrafted`) records the origin, and the schema enforces
   `synthetic == (kind == handcrafted)`.
 - **The captured file is canonical (sha256).** Re-exporting a ledger doesn't give identical bytes (see `sighting-729`, finding 5).
@@ -118,7 +134,7 @@ be regenerated, only re-exported: `sighting-729/repro.sh --clean` does that.
    before protocol 25 apply this check only when transactions are queued, not in consensus. We haven't checked older core releases.
    wallet-backend #716's "most reachable" path, taking a Soroban participant from the operation source, can therefore only be
    met in pre-protocol-25 history, if at all. Entry 2 targets #716's other path, a muxed recipient, which is valid today.
-   The RFP also asks for a *muxed source* pattern; that needs a classic-transaction entry, which isn't done yet.
+   The RFP's *muxed source* pattern is therefore a classic transaction: entry `cap0027-muxed-classic-payment-01`.
 2. **Core rejects the text-ordered pool** as `change_trust: malformed` and accepts the byte-ordered one. Random issuer pairs
    disagree on order often, so this isn't an exotic case.
 3. **A fresh local network has no native-XLM token contract**, so the muxed generator deploys it first when it's missing.

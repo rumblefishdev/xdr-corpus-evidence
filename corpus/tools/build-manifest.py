@@ -103,9 +103,63 @@ ENTRIES = [
         "related": [
             {"kind": "target", "url": "https://github.com/stellar/js-stellar-sdk/pull/1766"},
         ],
-        "evidence": "conformance-1766/README.md",
+        "evidence": "conformance/README.md",
         "invariants": ["extra.asset_code", "extra.issuers_byte_order_a_lt_b", "extra.issuers_text_order_a_lt_b",
                        "extra.fee_bps"],
+    },
+    {
+        "id": "cap0027-muxed-classic-payment-01",
+        "title": "classic payment with a muxed transaction source, operation source and destination (three M... ids)",
+        "cap": ["CAP-0027"],
+        "sep": ["SEP-0023"],
+        "introduced_in": 13,
+        "dir": "corpus/entries/cap-0027/cap0027-muxed-classic-payment-01",
+        "ledger": 5710218,
+        "tx_hash": None,  # from generation.json
+        "op_index": 0,
+        "source_kind": "generated",
+        "generator": "corpus/gen/run.sh muxed-classic",
+        "pattern": {
+            "id": "muxed-classic-sources",
+            "description": "A classic payment whose transaction source, operation source and destination are muxed "
+            "accounts with three different ids: 2^63+1, 2^53+1 (the smallest a float64 cannot hold) and 2^64-1. "
+            "The tx and op sources share one base account. Readers that store 32-byte keys truncate the M... "
+            "addresses; readers that keep ids as floats or confuse the three accounts are visible. This is the "
+            "muxed-source shape: on Soroban it is rejected since protocol 25 (see cap0027-muxed-sac-destination-01).",
+        },
+        "related": [
+            {"kind": "target", "url": "https://github.com/stellar/wallet-backend/issues/716"},
+            {"kind": "target", "url": "https://github.com/stellar/js-stellar-sdk/issues/1785"},
+        ],
+        "evidence": None,
+        "invariants": ["extra.tx_source_muxed_id", "extra.op_source_muxed_id", "extra.destination_muxed_id",
+                       "extra.tx_and_op_source_same_base", "extra.amount"],
+    },
+    {
+        "id": "cap0046-scmap-key-collision-01",
+        "title": "contract call whose argument and return value are an ScMap with keys u32 1, string \"1\", symbol \"1\"",
+        "cap": ["CAP-0046"],
+        "sep": [],
+        "introduced_in": 20,
+        "dir": "corpus/entries/cap-0046/cap0046-scmap-key-collision-01",
+        "ledger": 5710299,
+        "tx_hash": None,  # from generation.json
+        "op_index": 0,
+        "source_kind": "generated",
+        "generator": "corpus/gen/run.sh scmap-collision",
+        "pattern": {
+            "id": "scmap-key-collision",
+            "description": "An ScMap whose keys have different ScVal types but the same text form (u32 1, string "
+            "\"1\", symbol \"1\"). It is a valid map: keys are distinct and in host order (by type). Code that turns "
+            "map keys into text, such as JavaScript object properties, merges them and loses entries. The map is "
+            "the argument of a call to corpus/gen/contracts/map-echo, and its return value in the ledger meta.",
+        },
+        "related": [
+            {"kind": "sighting", "url": "https://github.com/stellar/js-stellar-sdk/issues/1789"},
+        ],
+        "evidence": "conformance/README.md",
+        "invariants": ["extra.function", "extra.arg_map_keys", "extra.arg_map_entries", "extra.keys_text_form_equal",
+                       "extra.return_equals_arg"],
     },
 ]
 
@@ -365,6 +419,70 @@ def extra_lp(op_body, proc, gen):
     }, probes
 
 
+def crc16_xmodem(data):
+    crc = 0
+    for b in data:
+        crc ^= b << 8
+        for _ in range(8):
+            crc = ((crc << 1) ^ 0x1021) & 0xFFFF if crc & 0x8000 else (crc << 1) & 0xFFFF
+    return crc
+
+
+def strkey_encode(version_char, payload):
+    """SEP-23 strkey: base32(version byte || payload || crc16-xmodem little-endian), no padding."""
+    raw = bytes([B32.index(version_char) << 3]) + payload
+    raw += crc16_xmodem(raw).to_bytes(2, "little")
+    bits = "".join(f"{b:08b}" for b in raw)
+    bits += "0" * (-len(bits) % 5)
+    return "".join(B32[int(bits[i : i + 5], 2)] for i in range(0, len(bits), 5))
+
+
+def muxed_parts(m):
+    """M... strkey -> (base G... account, id as decimal string)."""
+    _, payload = strkey_payload(m)
+    return strkey_encode("G", payload[:32]), str(int.from_bytes(payload[32:40], "big"))
+
+
+def extra_muxed_classic(op_body, proc, gen):
+    rec = {k: gen[k] for k in ("tx_source_muxed", "op_source_muxed", "destination_muxed")}
+    out = {}
+    for name, m in rec.items():
+        base, mid = muxed_parts(m)
+        if strkey_encode("M", strkey_payload(m)[1]) != m:
+            raise RuntimeError(f"strkey round trip failed for {m}")
+        prefix = name.removesuffix("_muxed")
+        out[f"{prefix}_muxed"] = m
+        out[f"{prefix}_base"] = base
+        out[f"{prefix}_muxed_id"] = mid
+    out["tx_and_op_source_same_base"] = out["tx_source_base"] == out["op_source_base"]
+    out["amount"] = op_body["amount"]
+    out["asset"] = op_body["asset"] if isinstance(op_body["asset"], str) else one_key(op_body["asset"])[0]
+    return out, []
+
+
+def scval_key(v):
+    """One ScVal map key as {"type": ..., "value": ...} (scalar keys only, which is what this pattern uses)."""
+    t, val = one_key(v)
+    return {"type": t, "value": val}
+
+
+def extra_scmap(op_body, proc, gen):
+    ic = op_body["host_function"]["invoke_contract"]
+    arg = ic["args"][0]["map"]
+    ret = proc["tx_apply_processing"]["v4"]["soroban_meta"]["return_value"]["map"]
+    keys = [scval_key(e["key"]) for e in arg]
+    return {
+        "contract": ic["contract_address"],
+        "function": ic["function_name"],
+        "arg_map_entries": len(arg),
+        "arg_map_keys": keys,
+        "keys_text_form_equal": len({str(k["value"]) for k in keys}) == 1,
+        "return_map_entries": len(ret),
+        "return_equals_arg": ret == arg,
+        "wasm_sha256": gen["wasm_sha256"],
+    }, []
+
+
 def decode_result(sub):
     res = json.loads(cli("xdr", "decode", "--type", "TransactionResult", "--output", "json",
                          data=sub["error_result_xdr"].encode()))
@@ -388,6 +506,8 @@ EXTRA = {
     "cap0040-signed-payload-signer-01": extra_signed_payload,
     "cap0027-muxed-sac-destination-01": extra_muxed_sac,
     "lp-issuer-order-01": extra_lp,
+    "cap0027-muxed-classic-payment-01": extra_muxed_classic,
+    "cap0046-scmap-key-collision-01": extra_scmap,
 }
 
 

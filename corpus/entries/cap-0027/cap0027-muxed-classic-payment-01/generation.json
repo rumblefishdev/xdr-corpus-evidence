@@ -1,0 +1,27 @@
+{
+  "entry": "cap0027-muxed-classic-payment-01",
+  "network_passphrase": "Test SDF Network ; September 2015",
+  "from": "GCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYTASS",
+  "to": "GB4PTBTAUA3W67JRDXTBI5LOUBOCCNP5LUDQ5MLSO46SJCFYKNPEIW76",
+  "tx_source_muxed": "MCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYTAAAAAAAAAAAAG72A",
+  "op_source_muxed": "MCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYSABAAAAAAAAAAHEDG",
+  "destination_muxed": "MB4PTBTAUA3W67JRDXTBI5LOUBOCCNP5LUDQ5MLSO46SJCFYKNPEJ7777777777774BBM",
+  "submissions": [
+    {
+      "purpose": "setup: create destination",
+      "tx_hash": "3cad41618fb55d191f039d08fb9efa2db608e72e45230e752f22a26f5446b82e",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 5710217
+    },
+    {
+      "purpose": "target: payment, muxed tx source, op source and destination",
+      "tx_hash": "4cb42e9c27d5f4858f235bf8fb2b1012eb163da9afd5a9c16d4432cd5e11b203",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 5710218
+    }
+  ],
+  "target_tx_hash": "4cb42e9c27d5f4858f235bf8fb2b1012eb163da9afd5a9c16d4432cd5e11b203",
+  "target_ledger": 5710218
+}
