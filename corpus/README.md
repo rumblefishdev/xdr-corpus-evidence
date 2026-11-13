@@ -11,7 +11,7 @@ An entry is **real ledger data emitted by stellar-core**, not hand-made bytes. E
 | --- | --- |
 | `FF…--<ledger>.xdr.zst` | the ledger exactly as Galexie wrote it to the data lake (zstd-compressed `LedgerCloseMetaBatch`) |
 | `ledger-<ledger>.LedgerCloseMetaBatch.xdr` | the same, decompressed: the ledger's transactions, results and every ledger change |
-| `tx-<hash>.TransactionEnvelope.xdr` | the target transaction alone, extracted from the ledger. Readers that can't decode the ledger's meta (e.g. SDKs without protocol-30 support) can still be tested on the pattern itself. |
+| `tx-<hash>.TransactionEnvelope.xdr` | the target transaction alone, extracted from the ledger. Readers that can't decode the ledger's meta (e.g. an SDK release from before protocol 30, as when testing an old fix) can still be tested on the pattern itself. |
 | `generation.json` | generated entries only: what the generator did, i.e. public keys, every submission, and core's answer to each (no secrets) |
 
 [`manifest.json`](manifest.json) describes every entry. **It is generated** by [`tools/build-manifest.py`](tools/build-manifest.py)

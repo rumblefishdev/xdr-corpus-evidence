@@ -6,16 +6,17 @@ issuers' **`G…` strkey text** instead. Strkeys are base32: the digits `2`–`7
 *before* them as text. So for some issuer pairs the SDK's order is reversed, and it rejects pools the network accepts.
 
 **Result: reproduced.** The same corpus entry is run through the release before the fix and the release with it
-(`v17.2.0...v17.2.1` contains #1766 and one docs commit):
+(`v17.2.0...v17.2.1` contains #1766 and one docs commit), and through the latest release, 17.4.0:
 
-| Check | 17.2.0 (pre-fix) | 17.2.1 (fixed) |
-| --- | --- | --- |
-| XDR: decode + re-encode the target transaction byte-exact | ok | ok |
-| `TransactionBuilder.fromXDR` parses the on-chain transaction | **throws** "Assets are not in lexicographic order" | ok; hash and pool pair match |
-| `Asset.compare(A, B)` | **`1`** (network order is `-1`) | `-1` |
-| `new LiquidityPoolAsset(A, B, 30)` | **throws** | accepted |
-| `getLiquidityPoolId(A, B, 30)` = the network's pool ID | **throws** | `dd709f02…1550`, equal |
-| **Verdict** | **`mishandled`** | **`pass`** |
+| Check | 17.2.0 (pre-fix) | 17.2.1 (fixed) | 17.4.0 (latest) |
+| --- | --- | --- | --- |
+| XDR: decode + re-encode the target transaction byte-exact | ok | ok | ok |
+| `TransactionBuilder.fromXDR` parses the on-chain transaction | **throws** "Assets are not in lexicographic order" | ok; hash and pool pair match | ok |
+| `Asset.compare(A, B)` | **`1`** (network order is `-1`) | `-1` | `-1` |
+| `new LiquidityPoolAsset(A, B, 30)` | **throws** | accepted | accepted |
+| `getLiquidityPoolId(A, B, 30)` = the network's pool ID | **throws** | `dd709f02…1550`, equal | equal |
+| **Verdict** | **`mishandled`** | **`pass`** | **`pass`** |
+| *info:* decode the full protocol-30 ledger file | fails | fails | ok, byte-exact |
 
 The second row is the most practical consequence: **before the fix, the SDK can't even load a valid transaction from the
 ledger.** `TransactionBuilder.fromXDR` throws on any transaction that touches such a pool.
@@ -32,8 +33,9 @@ The runner deliverable does this for every entry across JS, Go and Rust SDKs.
 conformance-1766/run.sh    # needs only Docker; ~30 s after the first run
 ```
 
-It installs both SDK versions with npm inside `node:22.12.0-bookworm-slim` (the SDK needs Node ≥ 22.12) and runs
-[`check.mjs`](check.mjs) with each. It exits 0 only if 17.2.0 = `mishandled` and 17.2.1 = `pass`. CI runs it on every push.
+It installs the three SDK versions with npm inside `node:22.12.0-bookworm-slim` (the SDK needs Node ≥ 22.12) and runs
+[`check.mjs`](check.mjs) with each. It exits 0 only if 17.2.0 = `mishandled`, 17.2.1 = `pass`, and 17.4.0 = `pass` with the
+full ledger decoding. CI runs it on every push.
 
 ## What `check.mjs` does
 
@@ -49,9 +51,12 @@ pool is typed in the script.
 
 All pass → `pass`; any failure after step 1 → `mishandled`. Results: [`evidence/`](evidence/) (`result-<version>.json`, `run.txt`).
 
-## Side finding: these SDK versions cannot decode protocol-30 ledgers
+## Side finding: the pre-fix and fixed releases cannot decode protocol-30 ledgers
 
-Both versions fail to decode the entry's full ledger file (`LedgerCloseMetaBatch`, protocol 30):
-`ledgerHeader.header.scpValue.ext.v: unknown enum value 3`. This is reported as `info`, not as part of the verdict. It is
-why the corpus also stores each target transaction's envelope on its own. Supporting a protocol's ledger meta can lag behind
-supporting its transactions, and the corpus should let both be tested separately.
+17.2.0 and 17.2.1 fail to decode the entry's full ledger file (`LedgerCloseMetaBatch`, protocol 30):
+`ledgerHeader.header.scpValue.ext.v: unknown enum value 3`. Releases from 17.3.0 on decode it and re-encode it byte-exactly
+(17.4.0 is checked on every run). This is reported as `info`, not as part of the verdict.
+
+It matters for testing bugs that were fixed in the past: the release just before a fix is often too old to read ledgers
+from today's protocol. That is why the corpus also stores each target transaction's envelope on its own. Without it, #1766
+could not be tested here at all, because the pre-fix SDK can't open the ledger file.

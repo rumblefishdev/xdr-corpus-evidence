@@ -23,9 +23,9 @@ Decisions already made (2026-11-13): apply for RFP 9; full $65K budget including
 
 Organised by deliverable; `README.md` maps each folder to RFP §4. `infra/` (compose + Galexie config),
 `corpus/` (entries/, manifest + schema, gen/, tools/), `sighting-729/` (#729 repro, harness prototype),
-`conformance-1766/` (js-stellar-sdk #1766 on entry lp-issuer-order-01: 17.2.0 mishandled, 17.2.1 pass; conformance-runner
-prototype). Each entry also stores its target tx envelope (`tx-<hash>.TransactionEnvelope.xdr`), because SDKs can lag on
-ledger-meta types (17.2.x can't decode protocol-30 LCM). Paths in the plan sections below are the old ones.
+`conformance-1766/` (js-stellar-sdk #1766 on entry lp-issuer-order-01: 17.2.0 mishandled, 17.2.1 pass, latest 17.4.0 pass;
+conformance-runner prototype). Each entry also stores its target tx envelope (`tx-<hash>.TransactionEnvelope.xdr`), because
+old SDK releases (e.g. the pre-fix one) can't decode current ledger meta: 17.2.x fails on protocol-30 LCM, 17.3.0+ decodes it. Paths in the plan sections below are the old ones.
 
 ## Done (2026-11-13): reproduce wallet-backend #729 (sighting)
 

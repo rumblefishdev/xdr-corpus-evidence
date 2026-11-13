@@ -14,7 +14,8 @@
 // Checks 3-5 build A and B from the manifest's decoded issuers, so they run even if 2 fails.
 // Verdict: pass (all ok) | mishandled (XDR decodes, but a check failed) | error (envelope not decodable).
 //
-// Reported but not part of the verdict: whether this SDK can decode the whole protocol-30 ledger file.
+// Reported but not part of the verdict: whether this SDK can decode the whole protocol-30 ledger file
+// (17.2.x can't; 17.3.0+ can).
 import fs from "node:fs";
 import path from "node:path";
 import * as sdk from "@stellar/stellar-sdk";

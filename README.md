@@ -13,7 +13,7 @@ things. This repository provides them, each as something a reviewer can rerun:
 | a draft manifest schema | [`corpus/manifest.schema.json`](corpus/manifest.schema.json), with the generated [`corpus/manifest.json`](corpus/manifest.json) | `corpus/tools/roundtrip.sh` and `python3 -I corpus/tools/build-manifest.py --check` (~10 s, offline) | 3 entries, every file round-trips byte-exactly, manifest = fresh decode |
 | 2–3 sample corpus entries | [`corpus/`](corpus/README.md): a CAP-40 signed-payload signer, a muxed token-contract recipient, a pool with differently ordered issuers | `corpus/tools/regen-entry.sh <entry>` regenerates one on testnet (3–8 min) | same pattern and same core verdicts as the committed entry |
 | evidence of reproducing one sighting | [`sighting-729/`](sighting-729/README.md): wallet-backend #729 | `sighting-729/repro.sh --clean --from-corpus` (~30 s; first run builds wallet-backend) | pre-fix **dropped**, fixed **pass** |
-| *(extra)* a corpus entry catching an SDK bug | [`conformance-1766/`](conformance-1766/README.md): js-stellar-sdk #1766 | `conformance-1766/run.sh` (~30 s) | 17.2.0 **mishandled**, 17.2.1 **pass** |
+| *(extra)* a corpus entry catching an SDK bug | [`conformance-1766/`](conformance-1766/README.md): js-stellar-sdk #1766 | `conformance-1766/run.sh` (~30 s) | 17.2.0 **mishandled**, 17.2.1 **pass**, latest 17.4.0 **pass** |
 
 ## How the parts fit together
 
