@@ -26,10 +26,20 @@
              ok   scval-maps: map of 3: rejected with an error (scvMap has more than one key that converts to "1"; read the )
   info: decodes 5 of 5 entries' full ledger files
 
-entry                               17.2.0       17.2.1       17.3.0       
-cap0040-signed-payload-signer-01    pass         pass         pass         
-cap0027-muxed-sac-destination-01    pass         pass         pass         
-lp-issuer-order-01                  mishandled   pass         pass         
-cap0027-muxed-classic-payment-01    pass         pass         pass         
-cap0046-scmap-key-collision-01      mishandled   mishandled   pass         
+@stellar/stellar-sdk 17.4.0
+  pass       cap0040-signed-payload-signer-01
+  pass       cap0027-muxed-sac-destination-01
+  pass       lp-issuer-order-01
+  pass       cap0027-muxed-classic-payment-01
+  pass       cap0046-scmap-key-collision-01
+             ok   scval-maps: map of 3: rejected with an error (scvMap has more than one key that converts to "1"; read the )
+  info: decodes 5 of 5 entries' full ledger files
+
+entry                               17.2.0       17.2.1       17.3.0       17.4.0       
+cap0040-signed-payload-signer-01    pass         pass         pass         pass         
+cap0027-muxed-sac-destination-01    pass         pass         pass         pass         
+lp-issuer-order-01                  mishandled   pass         pass         pass         
+cap0027-muxed-classic-payment-01    pass         pass         pass         pass         
+cap0046-scmap-key-collision-01      mishandled   mishandled   pass         pass         
+latest 17.4.0 decodes all full ledger files: yes
 AS EXPECTED: js-stellar-sdk #1766 (17.2.0 -> 17.2.1) and #1789 (17.2.1 -> 17.3.0) reproduced by generic checks

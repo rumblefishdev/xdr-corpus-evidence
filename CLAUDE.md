@@ -20,9 +20,10 @@ evidence of reproducing one sighting from section 7. `README.md` maps each folde
 ```bash
 corpus/tools/roundtrip.sh                              # hashes + byte-exact decode/encode (offline, seconds)
 python3 -I corpus/tools/build-manifest.py --check      # manifest = fresh decode of the files
-conformance/run.sh                                     # every entry through js-stellar-sdk 17.2.0 / 17.2.1 / 17.3.0
+conformance/run.sh                                     # every entry through js-stellar-sdk 17.2.0 / 17.2.1 / 17.3.0 / 17.4.0
 sighting-729/repro.sh --clean --from-corpus            # wallet-backend #729 pre-fix vs fixed
 corpus/tools/regen-entry.sh <entry-id>                 # regenerate a generated entry on testnet and compare
+python3 -I corpus/tools/coverage-targets.py            # XDR union arms / optionals vs the corpus (prototype)
 ```
 
 Ports 8333 (local S3) and 5433 (Postgres) can be changed with `XDR_S3_PORT` / `XDR_PG_PORT`.

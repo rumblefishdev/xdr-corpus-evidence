@@ -13,7 +13,7 @@ things. This repository provides them, each as something a reviewer can rerun:
 | a draft manifest schema | [`corpus/manifest.schema.json`](corpus/manifest.schema.json), with the generated [`corpus/manifest.json`](corpus/manifest.json) | `corpus/tools/roundtrip.sh` and `python3 -I corpus/tools/build-manifest.py --check` (~10 s, offline) | 5 entries, every file round-trips byte-exactly, manifest = fresh decode, schema validates (typed per pattern) |
 | 2–3 sample corpus entries | [`corpus/`](corpus/README.md), 5 entries: a CAP-40 signed-payload signer, a muxed token-contract recipient, a pool with differently ordered issuers, a classic payment with muxed sources, a contract map with colliding keys | `corpus/tools/regen-entry.sh <entry>` regenerates one on testnet (3–8 min) | same pattern and same core verdicts as the committed entry |
 | evidence of reproducing one sighting | [`sighting-729/`](sighting-729/README.md): wallet-backend #729 | `sighting-729/repro.sh --clean --from-corpus` (~30 s; first run builds wallet-backend) | pre-fix **dropped**, fixed **pass** |
-| *(extra)* SDK conformance on all entries | [`conformance/`](conformance/README.md): js-stellar-sdk #1766 and #1789, found by generic checks | `conformance/run.sh` (~30 s) | #1766: 17.2.0 **mishandled** → 17.2.1 **pass**; #1789: 17.2.1 **mishandled** → 17.3.0 **pass** |
+| *(extra)* SDK conformance on all entries | [`conformance/`](conformance/README.md): js-stellar-sdk #1766 and #1789, found by generic checks | `conformance/run.sh` (~30 s) | #1766: 17.2.0 **mishandled** → 17.2.1 **pass**; #1789: 17.2.1 **mishandled** → 17.3.0 **pass**; latest 17.4.0 **pass** |
 
 ## How the parts fit together
 
@@ -23,7 +23,7 @@ things. This repository provides them, each as something a reviewer can rerun:
   gen/ + testnet  ───► │ entry 2  cap0027-muxed-sac-destination-01   (generated)            │     pre-fix vs fixed (replay-harness prototype)
   gen/ + testnet  ───► │ entry 3  lp-issuer-order-01                 (generated)            │
   gen/ + testnet  ───► │ entry 4  cap0027-muxed-classic-payment-01   (generated)            │ ──► conformance/    js-stellar-sdk, ALL entries,
-  gen/ + testnet  ───► │ entry 5  cap0046-scmap-key-collision-01     (generated)            │     3 releases (conformance-runner prototype)
+  gen/ + testnet  ───► │ entry 5  cap0046-scmap-key-collision-01     (generated)            │     4 releases (conformance-runner prototype)
                        │ manifest.json  ◄── derived from the files by tools/build-manifest  │
                        └────────────────────────────────────────────────────────────────────┘
 ```
@@ -33,7 +33,7 @@ things. This repository provides them, each as something a reviewer can rerun:
   RFP's terms none is *synthetic*. The manifest lists the values a correct reader must decode, and they are all derived from the files.
   [`corpus/README.md`](corpus/README.md) explains how entries are made and what exactly is validated.
 - **`sighting-729/` and `conformance/` use the corpus.** `sighting-729/` feeds entry 1 to wallet-backend at the commit
-  before and after the #729 fix. `conformance/` feeds every entry to three js-stellar-sdk releases with generic checks that
+  before and after the #729 fix. `conformance/` feeds every entry to four js-stellar-sdk releases with generic checks that
   know no particular bug. Both report **pass / mishandled / dropped** and name the check or log line behind each verdict.
   They are first versions of the RFP's replay harness (indexers) and conformance runner (SDKs).
 - The `stellar` CLI appears throughout only as the **reference XDR decoder**: it wraps rs-stellar-xdr, the library the RFP names.
@@ -56,15 +56,16 @@ corpus/                     the corpus (RFP: schema + sample entries)
   README.md                   what an entry is, how entries are made, what is validated
   manifest.schema.json        draft manifest schema (JSON Schema 2020-12)
   manifest.json               generated manifest, 5 entries
+  coverage/                   coverage targets from the XDR (prototype): summary.md, targets.csv
   entries/cap-00NN/<id>/      ledger files, extracted target tx, generation record
   gen/                        generators (Go, run in a container), contracts/map-echo (Rust), records of local runs
-  tools/                      roundtrip.sh, build-manifest.py, regen-entry.sh, get-stellar-cli.sh
+  tools/                      roundtrip.sh, build-manifest.py, regen-entry.sh, get-stellar-cli.sh, coverage-targets.py
 sighting-729/               wallet-backend #729 reproduction (RFP: one sighting)
   README.md                   the bug, the result, every step of the script
   repro.sh                    end-to-end run with verdicts; plus env.sh, seed-backfill.sql, query.sql, strkey.py,
                               build-wallet-backend.sh
   evidence/                   logs, SQL output, decoded ledger, asciinema recording
-conformance/                every entry through js-stellar-sdk 17.2.0 / 17.2.1 / 17.3.0 (#1766, #1789)
+conformance/                every entry through js-stellar-sdk 17.2.0 / 17.2.1 / 17.3.0 / 17.4.0 (#1766, #1789)
   README.md, run.sh, check.mjs, expected.json, evidence/
 docs/rfp-09.md              our summary of the RFP
 .github/workflows/          CI on every push: corpus checks, the conformance run, the #729 repro on a clean runner

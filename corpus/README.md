@@ -11,7 +11,7 @@ An entry is **real ledger data emitted by stellar-core**, not hand-made bytes. E
 | --- | --- |
 | `FF…--<ledger>.xdr.zst` | the ledger exactly as Galexie wrote it to the data lake (zstd-compressed `LedgerCloseMetaBatch`) |
 | `ledger-<ledger>.LedgerCloseMetaBatch.xdr` | the same, decompressed: the ledger's transactions, results and every ledger change |
-| `tx-<hash>.TransactionEnvelope.xdr` | the target transaction alone, extracted from the ledger. Readers that can't decode the ledger's meta (e.g. SDKs without protocol-30 support) can still be tested on the pattern itself. |
+| `tx-<hash>.TransactionEnvelope.xdr` | the target transaction alone, extracted from the ledger. Readers that can't decode the ledger's meta (e.g. an SDK release from before protocol 30, as when testing an old fix) can still be tested on the pattern itself. |
 | `generation.json` | generated entries only: what the generator did, i.e. public keys, every submission, and core's answer to each (no secrets) |
 
 [`manifest.json`](manifest.json) describes every entry. **It is generated** by [`tools/build-manifest.py`](tools/build-manifest.py)
@@ -84,6 +84,43 @@ Checks 3–7 run in CI on every push (`.github/workflows/corpus.yml`), and so do
 before/after pair). Doing that, for every entry and indexer, is the harness deliverable.
 No stellar-core `--check-lcm` golden ledger files are published for these ledgers, so `check_lcm_golden` is `null`.
 
+## Coverage targets: how big should the corpus be? (prototype)
+
+Counting CAPs doesn't size the corpus: there are 102 CAPs, about 73 of them live, and one CAP can add several shapes while
+many add none that a reader sees. [`tools/coverage-targets.py`](tools/coverage-targets.py) counts from the XDR itself:
+
+1. it parses the stellar-xdr `.x` files at every protocol tag from v19 to v30;
+2. it keeps the types an indexer can meet: everything reachable from `LedgerCloseMetaBatch`;
+3. it lists each **union arm** (including the `v0`/`v1`/… extension slots that protocol upgrades switch on) and each
+   **optional field** (present and absent) as a coverage target;
+4. it dates each target to the first protocol tag that has it, and names the CAPs from the stellar-xdr commits that
+   added it in that protocol;
+5. it decodes every corpus file with the `stellar` CLI and walks the JSON alongside the schema, marking which targets each
+   entry contains.
+
+Output: [`coverage/summary.md`](coverage/summary.md) and the per-target [`coverage/targets.csv`](coverage/targets.csv).
+At protocol 30 there are **499 union arms in 97 unions plus 28 optional fields** reachable from ledger meta. The 5 sample
+entries cover 123 arms (25%), mostly by incidental content of their ledgers, not the target transactions.
+
+The list makes gaps concrete. For example, entry 2 covers the muxed `SCAddress` arm but not `MuxedAccount`'s
+`KEY_TYPE_MUXED_ED25519`; the list pointed at the missing classic muxed-source entry, and `cap0027-muxed-classic-payment-01`
+now covers that arm. Uncovered newer arms include the
+protocol-30 muxed contract address (`W…`, CAP-84), the protocol-26 freeze results (CAP-77/80), and two of the three new
+`SCAddress` arms from protocol 23 (claimable balance, liquidity pool).
+
+Limits of the prototype:
+- Not every arm can occur in a closed ledger. For example, many `TransactionResult` codes only occur for transactions rejected
+  before they reach a ledger. The next step is to classify each target as *in ledgers*, *rejected by core*, or *not
+  in meta*, which is the generated / `negative_probes` / out-of-scope split.
+- It covers arms and optional fields only. Length bounds (`<N>`, at their minimum and maximum) and fields core does not validate
+  (e.g. non-UTF-8 strings) are the next target kinds.
+- "Introduced" starts at v19, the oldest stellar-xdr tag. CAP names come from commit messages and are a best guess.
+- Coverage counts a target anywhere in an entry's files. The manifest should eventually record which targets are an
+  entry's *pattern*.
+
+Ranking which uncovered targets become entries first comes from known bugs (issues in indexers and SDKs, like the
+sightings so far) and from mainnet rarity, for example an arm-frequency count over the public stellar-etl dataset.
+
 ## Commands
 
 ```bash
@@ -94,6 +131,7 @@ corpus/tools/regen-entry.sh cap0027-muxed-sac-destination-01
 corpus/tools/regen-entry.sh cap0027-muxed-classic-payment-01
 corpus/tools/regen-entry.sh cap0046-scmap-key-collision-01
 corpus/tools/regen-entry.sh --new <entry-id> <dir>      # create a new entry: generate + export, no comparison
+python3 -I corpus/tools/coverage-targets.py           # coverage targets (first run clones stellar-xdr into .cache/; then ~5 s)
 ```
 
 Decoding protocol-30 ledgers needs stellar CLI ≥ 30. [`tools/get-stellar-cli.sh`](tools/get-stellar-cli.sh) downloads

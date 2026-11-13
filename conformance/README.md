@@ -1,6 +1,6 @@
 # SDK conformance: every corpus entry through js-stellar-sdk
 
-A first version of the RFP's **SDK conformance runner**, for one SDK (JavaScript) and three of its releases. It runs
+A first version of the RFP's **SDK conformance runner**, for one SDK (JavaScript) and four of its releases. It runs
 **every** corpus entry through each release with the **same generic checks**. None of the checks knows about a particular
 bug, and none was written for one entry. A defect shows up because an SDK disagrees with the network on data the network
 emitted.
@@ -8,12 +8,12 @@ emitted.
 ## Result
 
 ```
-entry                               17.2.0       17.2.1       17.3.0
-cap0040-signed-payload-signer-01    pass         pass         pass
-cap0027-muxed-sac-destination-01    pass         pass         pass
-lp-issuer-order-01                  mishandled   pass         pass
-cap0027-muxed-classic-payment-01    pass         pass         pass
-cap0046-scmap-key-collision-01      mishandled   mishandled   pass
+entry                               17.2.0       17.2.1       17.3.0       17.4.0
+cap0040-signed-payload-signer-01    pass         pass         pass         pass
+cap0027-muxed-sac-destination-01    pass         pass         pass         pass
+lp-issuer-order-01                  mishandled   pass         pass         pass
+cap0027-muxed-classic-payment-01    pass         pass         pass         pass
+cap0046-scmap-key-collision-01      mishandled   mishandled   pass         pass
 ```
 
 | Release | What changed | What the corpus shows |
@@ -21,6 +21,7 @@ cap0046-scmap-key-collision-01      mishandled   mishandled   pass
 | 17.2.0 | last release before [#1766](https://github.com/stellar/js-stellar-sdk/pull/1766) | `lp-issuer-order-01`: `TransactionBuilder.fromXDR` **throws** "Assets are not in lexicographic order" on a transaction the network accepted. The SDK orders a pool's issuers by `G…` text; the network orders them by key bytes. |
 | 17.2.1 | #1766 fixed | `lp-issuer-order-01` passes. `cap0046-scmap-key-collision-01` still fails: `scValToNative` returns **1 of 3** map entries, **with no error** ([#1789](https://github.com/stellar/js-stellar-sdk/issues/1789)). |
 | 17.3.0 | #1789 and #1785 fixed | `scValToNative` refuses the map with an error instead of losing entries. Everything passes, and this release also decodes all five protocol-30 ledger files. |
+| 17.4.0 | latest release on 2026-11-13 | everything passes; `run.sh` also requires the latest release to decode every entry's full ledger file |
 
 Full output: [`evidence/run.txt`](evidence/run.txt); per release: `evidence/result-<version>.json`.
 
@@ -36,7 +37,8 @@ For each entry, inputs come only from the corpus: the target transaction envelop
 | 4 | `muxed`: every muxed account (`M…`), as a `MuxedAccount` or an `ScAddress`, renders to an address that decodes back to the same bytes and id | muxed ids survive, including ids above 2^53 and 2^64−1 |
 
 All pass → `pass`; check 1 fails → `error`; any other failure → `mishandled`. Also reported, not part of the verdict:
-whether the release decodes the entry's full ledger file (17.2.x cannot decode protocol-30 ledgers; 17.3.0 can).
+whether the release decodes the entry's full ledger file (17.2.x cannot decode protocol-30 ledgers; 17.3.0 and later can,
+and `run.sh` requires it of the latest release).
 [`expected.json`](expected.json) lists the expected verdicts; `run.sh` fails on any difference.
 
 ## What these checks cannot catch: #1785

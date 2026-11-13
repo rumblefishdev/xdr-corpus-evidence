@@ -24,7 +24,7 @@ jobs:
           pipx run --spec check-jsonschema==0.29.4 check-jsonschema --schemafile corpus/manifest.schema.json corpus/manifest.json
 
   conformance:
-    # every corpus entry through js-stellar-sdk 17.2.0 / 17.2.1 / 17.3.0; verdicts must match conformance/expected.json
+    # every corpus entry through js-stellar-sdk 17.2.0 / 17.2.1 / 17.3.0 / 17.4.0; verdicts must match conformance/expected.json
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
