@@ -447,7 +447,7 @@ def main():
         f"reachable from `{ROOT_TYPE}`: {by_kind['arm']} arms in {len(unions)} unions "
         f"({len(ext_arms)} of them integer-versioned `v0/v1/…` slots), and {by_kind['optional'] // 2} optional fields.",
         "",
-        "| Target kind | Targets | Covered by the 3 entries |",
+        f"| Target kind | Targets | Covered by the {len(manifest['entries'])} entries |",
         "| --- | --- | --- |",
     ]
     for k in ("arm", "optional"):

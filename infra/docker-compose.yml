@@ -15,7 +15,7 @@ services:
         until echo s3.bucket.list | weed shell -master localhost:9333 2>/dev/null | grep -q ledgers; do
         echo s3.bucket.create -name ledgers | weed shell -master localhost:9333 2>/dev/null; sleep 1; done; wait
     ports:
-      - "8333:8333"
+      - "${XDR_S3_PORT:-8333}:8333"
     healthcheck:
       test: ["CMD-SHELL", "echo s3.bucket.list | weed shell -master localhost:9333 2>/dev/null | grep -q ledgers"]
       interval: 3s
@@ -29,7 +29,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_DB: postgres
     ports:
-      - "5433:5432"
+      - "${XDR_PG_PORT:-5433}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 3s

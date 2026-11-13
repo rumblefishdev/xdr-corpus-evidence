@@ -19,6 +19,9 @@ if [ ! -d "$WT" ]; then
 fi
 
 mkdir -p "$(dirname "$OUT")"
+# Create the Go cache as the current user: if Docker creates the bind-mount source, it is root-owned
+# and the build (run as this user) fails with "mkdir /cache/build: permission denied".
+mkdir -p "$ROOT/.cache/go"
 OUT_ABS=$(cd "$(dirname "$OUT")" && pwd)/$(basename "$OUT")
 
 docker run --rm \

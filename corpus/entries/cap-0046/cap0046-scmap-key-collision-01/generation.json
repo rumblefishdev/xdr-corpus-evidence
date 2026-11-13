@@ -1,0 +1,32 @@
+{
+  "entry": "cap0046-scmap-key-collision-01",
+  "network_passphrase": "Test SDF Network ; September 2015",
+  "from": "GAFPJAS6N2RGJBSGMQW2P3ADMDUTTG4DHJQIKMFNFYDJRHRMSPRZCGFS",
+  "wasm_sha256": "d0e2d38ddebe43b4d29dd876a51a850a85a6d8437d725546ce22d8020f34bb1b",
+  "contract": "CD4J2PQX7UVMWGMCJCF6SXJCIKL7IEHQ6743JPKQOEYFUQ3HDOMKZZ2R",
+  "submissions": [
+    {
+      "purpose": "setup: upload map-echo wasm",
+      "tx_hash": "370157277a4eb7c092cab8eaf33199a5d6213ae2f07c30b18f13d6255fb4c23e",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 5710297
+    },
+    {
+      "purpose": "setup: deploy map-echo",
+      "tx_hash": "555d2362fa0aa2325fedce8df56e8b1017a544c6201bd57ecd4fa996e11aac87",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 5710298
+    },
+    {
+      "purpose": "target: echo(map with keys u32 1, string \"1\", symbol \"1\")",
+      "tx_hash": "1f6a62276eb5dcc8d8fcc728d0aebf3a6539bd3a63fc66bd0386978ac910bf00",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 5710299
+    }
+  ],
+  "target_tx_hash": "1f6a62276eb5dcc8d8fcc728d0aebf3a6539bd3a63fc66bd0386978ac910bf00",
+  "target_ledger": 5710299
+}

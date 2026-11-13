@@ -1,70 +1,168 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/xdr-corpus-evidence/corpus/manifest.schema.json",
+  "$id": "https://github.com/rumblefishdev/xdr-corpus-evidence/blob/main/corpus/manifest.schema.json",
   "title": "XDR corpus manifest (draft)",
   "description": "Draft manifest for the RFP 9 XDR/CAP coverage corpus. RFP-required fields: id, cap, protocol, source, synthetic, expected. Values under expected/extra are derived from decoding the entry's files, never typed by hand.",
   "type": "object",
-  "required": ["manifest_version", "entries"],
+  "required": [
+    "manifest_version",
+    "entries"
+  ],
   "additionalProperties": false,
   "properties": {
-    "$schema": { "type": "string" },
-    "manifest_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.]+)?$" },
-    "generated_by": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
+    "manifest_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.]+)?$"
+    },
+    "generated_by": {
+      "type": "string"
+    },
     "entries": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/entry" }
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
     }
   },
   "$defs": {
-    "strkeyAccount": { "type": "string", "pattern": "^G[A-Z2-7]{55}$" },
-    "strkeyAnyAddress": { "type": "string", "pattern": "^[GMCPLBT][A-Z2-7]{55,}$" },
-    "hex32": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "uint64String": { "type": "string", "pattern": "^(0|[1-9][0-9]{0,19})$" },
+    "strkeyAccount": {
+      "type": "string",
+      "pattern": "^G[A-Z2-7]{55}$"
+    },
+    "hex32": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "uint64String": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]{0,19})$"
+    },
     "entry": {
       "type": "object",
-      "required": ["id", "title", "cap", "sep", "protocol", "network", "network_passphrase", "source", "synthetic",
-                   "pattern", "files", "core_validates", "negative_probes", "roundtrip", "check_lcm_golden",
-                   "expected", "extra", "related"],
+      "required": [
+        "id",
+        "title",
+        "cap",
+        "sep",
+        "protocol",
+        "network",
+        "network_passphrase",
+        "source",
+        "synthetic",
+        "pattern",
+        "files",
+        "core_validates",
+        "negative_probes",
+        "roundtrip",
+        "check_lcm_golden",
+        "expected",
+        "extra",
+        "related"
+      ],
       "additionalProperties": false,
       "properties": {
         "id": {
           "description": "Stable entry ID: <primary-tag>-<pattern>-<NN>.",
-          "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*-[0-9]{2}$"
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*-[0-9]{2}$"
         },
-        "title": { "type": "string" },
+        "title": {
+          "type": "string"
+        },
         "cap": {
           "description": "CAPs whose rules the pattern depends on. The first is the primary tag.",
-          "type": "array", "minItems": 1, "uniqueItems": true,
-          "items": { "type": "string", "pattern": "^CAP-[0-9]{4}$" }
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^CAP-[0-9]{4}$"
+          }
         },
         "sep": {
           "description": "SEPs that define how the values are rendered or used (e.g. SEP-0023 strkeys, SEP-0041 token events).",
-          "type": "array", "uniqueItems": true,
-          "items": { "type": "string", "pattern": "^SEP-[0-9]{4}$" }
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^SEP-[0-9]{4}$"
+          }
         },
         "protocol": {
           "description": "introduced_in: first protocol where the pattern can occur (from the CAP). ledger: protocol of the captured ledger (decoded). Both are kept: they answer different questions.",
-          "type": "object", "required": ["introduced_in", "ledger"], "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "introduced_in",
+            "ledger"
+          ],
+          "additionalProperties": false,
           "properties": {
-            "introduced_in": { "type": "integer", "minimum": 1 },
-            "ledger": { "type": "integer", "minimum": 1 }
+            "introduced_in": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ledger": {
+              "type": "integer",
+              "minimum": 1
+            }
           }
         },
-        "network": { "enum": ["pubnet", "testnet", "futurenet", "local", "other"] },
-        "network_passphrase": { "type": "string" },
+        "network": {
+          "enum": [
+            "pubnet",
+            "testnet",
+            "futurenet",
+            "local",
+            "other"
+          ]
+        },
+        "network_passphrase": {
+          "type": "string"
+        },
         "source": {
-          "type": "object", "required": ["kind", "ledger", "tx_hash", "generator", "generation_record"],
+          "type": "object",
+          "required": [
+            "kind",
+            "ledger",
+            "tx_hash",
+            "generator",
+            "generation_record"
+          ],
           "additionalProperties": false,
           "properties": {
             "kind": {
               "description": "mined: found in network history. generated: submitted by a generator in gen/ to a real network, which emitted the meta. local: emitted by a local stellar-core. handcrafted: bytes built by hand (must be synthetic).",
-              "enum": ["mined", "generated", "local", "handcrafted"]
+              "enum": [
+                "mined",
+                "generated",
+                "local",
+                "handcrafted"
+              ]
             },
-            "ledger": { "type": "integer", "minimum": 2 },
-            "tx_hash": { "$ref": "#/$defs/hex32" },
-            "generator": { "type": ["string", "null"] },
-            "generation_record": { "type": ["string", "null"], "description": "JSON record the generator wrote (public keys, submissions, rejections). Never contains secrets." }
+            "ledger": {
+              "type": "integer",
+              "minimum": 2
+            },
+            "tx_hash": {
+              "$ref": "#/$defs/hex32"
+            },
+            "generator": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "generation_record": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "JSON record the generator wrote (public keys, submissions, rejections). Never contains secrets."
+            }
           }
         },
         "synthetic": {
@@ -72,20 +170,70 @@
           "type": "boolean"
         },
         "pattern": {
-          "type": "object", "required": ["id", "description"], "additionalProperties": false,
-          "properties": { "id": { "type": "string" }, "description": { "type": "string" } }
+          "type": "object",
+          "required": [
+            "id",
+            "description"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "enum": [
+                "signed-payload-signer",
+                "muxed-soroban-recipient",
+                "lp-issuer-order",
+                "muxed-classic-sources",
+                "scmap-key-collision"
+              ],
+              "description": "Each pattern id has a typed `extra` definition ($defs/extra_*); add both together."
+            },
+            "description": {
+              "type": "string"
+            }
+          }
         },
         "files": {
-          "type": "array", "minItems": 1,
+          "type": "array",
+          "minItems": 1,
           "items": {
-            "type": "object", "required": ["path", "xdr_type", "encoding", "sha256"], "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "path",
+              "xdr_type",
+              "encoding",
+              "sha256"
+            ],
+            "additionalProperties": false,
             "properties": {
-              "path": { "type": "string" },
-              "xdr_type": { "type": "string", "description": "rs-stellar-xdr / stellar CLI type name, e.g. LedgerCloseMetaBatch." },
-              "encoding": { "enum": ["xdr", "xdr+zstd", "base64"] },
-              "layout": { "enum": ["galexie"], "description": "Object naming scheme, if the file is a data-lake object." },
-              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "The captured file is canonical: re-exports of the same ledger are not byte-identical (Soroban diagnostic timings)." },
-              "derived_from": { "type": "string", "description": "Set when this file was extracted from another file of the entry (e.g. the target tx envelope from the ledger)." }
+              "path": {
+                "type": "string"
+              },
+              "xdr_type": {
+                "type": "string",
+                "description": "rs-stellar-xdr / stellar CLI type name, e.g. LedgerCloseMetaBatch."
+              },
+              "encoding": {
+                "enum": [
+                  "xdr",
+                  "xdr+zstd",
+                  "base64"
+                ]
+              },
+              "layout": {
+                "enum": [
+                  "galexie"
+                ],
+                "description": "Object naming scheme, if the file is a data-lake object."
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "description": "The captured file is canonical: re-exports of the same ledger are not byte-identical (Soroban diagnostic timings)."
+              },
+              "derived_from": {
+                "type": "string",
+                "description": "Set when this file was extracted from another file of the entry (e.g. the target tx envelope from the ledger)."
+              }
             }
           }
         },
@@ -97,67 +245,606 @@
           "description": "Variants of the pattern that core rejected, recorded by the generator.",
           "type": "array",
           "items": {
-            "type": "object", "required": ["variant", "stage", "result", "diagnostic"], "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "variant",
+              "stage",
+              "result",
+              "diagnostic"
+            ],
+            "additionalProperties": false,
             "properties": {
-              "variant": { "type": "string" },
-              "stage": { "enum": ["simulation", "submission", "apply"] },
-              "result": { "type": "string" },
-              "diagnostic": { "type": "array", "items": { "type": "string" } }
+              "variant": {
+                "type": "string"
+              },
+              "stage": {
+                "enum": [
+                  "simulation",
+                  "submission",
+                  "apply"
+                ]
+              },
+              "result": {
+                "type": "string"
+              },
+              "diagnostic": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             }
           }
         },
         "roundtrip": {
-          "type": "object", "required": ["byte_exact", "tool"], "additionalProperties": false,
-          "properties": { "byte_exact": { "const": true }, "tool": { "type": "string" } }
+          "type": "object",
+          "required": [
+            "byte_exact",
+            "tool"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "byte_exact": {
+              "const": true
+            },
+            "tool": {
+              "type": "string"
+            }
+          }
         },
         "check_lcm_golden": {
           "description": "Path or URL of a stellar-core --check-lcm golden covering this ledger, or null if none is published.",
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
-        "expected": { "$ref": "#/$defs/expected" },
+        "expected": {
+          "$ref": "#/$defs/expected"
+        },
         "extra": {
-          "description": "Pattern-specific decoded values. Free-form per pattern.id; the harness compares indexer output against these.",
+          "description": "Pattern-specific decoded values, typed per pattern.id (see allOf). Derived from the files, never typed by hand.",
           "type": "object"
         },
         "related": {
           "type": "array",
           "items": {
-            "type": "object", "required": ["kind", "url"], "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "kind",
+              "url"
+            ],
+            "additionalProperties": false,
             "properties": {
-              "kind": { "enum": ["sighting", "target", "fix", "spec"] },
-              "url": { "type": "string", "format": "uri" }
+              "kind": {
+                "enum": [
+                  "sighting",
+                  "target",
+                  "fix",
+                  "spec"
+                ]
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
             }
           }
         },
-        "evidence": { "type": ["string", "null"] }
+        "evidence": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       },
       "allOf": [
-        { "if": { "properties": { "source": { "properties": { "kind": { "const": "handcrafted" } } } } },
-          "then": { "properties": { "synthetic": { "const": true } } },
-          "else": { "properties": { "synthetic": { "const": false } } } },
-        { "if": { "properties": { "source": { "properties": { "kind": { "const": "generated" } } } } },
-          "then": { "properties": { "source": { "properties": { "generator": { "type": "string" }, "generation_record": { "type": "string" } } } } } }
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "properties": {
+                  "kind": {
+                    "const": "handcrafted"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "synthetic": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "synthetic": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "properties": {
+                  "kind": {
+                    "const": "generated"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source": {
+                "properties": {
+                  "generator": {
+                    "type": "string"
+                  },
+                  "generation_record": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "pattern": {
+                "properties": {
+                  "id": {
+                    "const": "signed-payload-signer"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "extra": {
+                "$ref": "#/$defs/extra_signed_payload_signer"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "pattern": {
+                "properties": {
+                  "id": {
+                    "const": "muxed-soroban-recipient"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "extra": {
+                "$ref": "#/$defs/extra_muxed_soroban_recipient"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "pattern": {
+                "properties": {
+                  "id": {
+                    "const": "lp-issuer-order"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "extra": {
+                "$ref": "#/$defs/extra_lp_issuer_order"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "pattern": {
+                "properties": {
+                  "id": {
+                    "const": "muxed-classic-sources"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "extra": {
+                "$ref": "#/$defs/extra_muxed_classic_sources"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "pattern": {
+                "properties": {
+                  "id": {
+                    "const": "scmap-key-collision"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "extra": {
+                "$ref": "#/$defs/extra_scmap_key_collision"
+              }
+            }
+          }
+        }
       ]
     },
     "expected": {
       "description": "Fixed core of decoded values every entry has, for the target tx and operation.",
       "type": "object",
-      "required": ["lcm_version", "ledger_seq", "ledger_protocol", "tx_hash", "tx_apply_index", "tx_envelope_type",
-                   "tx_source_account", "tx_result", "op_index", "op_type", "op_source_account", "op_result"],
+      "required": [
+        "lcm_version",
+        "ledger_seq",
+        "ledger_protocol",
+        "tx_hash",
+        "tx_apply_index",
+        "tx_envelope_type",
+        "tx_source_account",
+        "tx_result",
+        "op_index",
+        "op_type",
+        "op_source_account",
+        "op_result"
+      ],
       "additionalProperties": false,
       "properties": {
-        "lcm_version": { "enum": ["v0", "v1", "v2"] },
-        "ledger_seq": { "type": "integer", "minimum": 2 },
-        "ledger_protocol": { "type": "integer", "minimum": 1 },
-        "tx_hash": { "$ref": "#/$defs/hex32" },
-        "tx_apply_index": { "type": "integer", "minimum": 0 },
-        "tx_envelope_type": { "enum": ["tx_v0", "tx", "tx_fee_bump"] },
-        "tx_source_account": { "type": "string", "pattern": "^[GM][A-Z2-7]{55,68}$" },
-        "tx_result": { "type": "string" },
-        "op_index": { "type": "integer", "minimum": 0 },
-        "op_type": { "type": "string" },
-        "op_source_account": { "type": ["string", "null"], "pattern": "^[GM][A-Z2-7]{55,68}$" },
-        "op_result": { "type": "string" }
+        "lcm_version": {
+          "enum": [
+            "v0",
+            "v1",
+            "v2"
+          ]
+        },
+        "ledger_seq": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "ledger_protocol": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tx_hash": {
+          "$ref": "#/$defs/hex32"
+        },
+        "tx_apply_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tx_envelope_type": {
+          "enum": [
+            "tx_v0",
+            "tx",
+            "tx_fee_bump"
+          ]
+        },
+        "tx_source_account": {
+          "type": "string",
+          "pattern": "^[GM][A-Z2-7]{55,68}$"
+        },
+        "tx_result": {
+          "type": "string"
+        },
+        "op_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "op_type": {
+          "type": "string"
+        },
+        "op_source_account": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[GM][A-Z2-7]{55,68}$"
+        },
+        "op_result": {
+          "type": "string"
+        }
+      }
+    },
+    "strkeyMuxed": {
+      "type": "string",
+      "pattern": "^M[A-Z2-7]{68}$",
+      "description": "SEP-23 muxed account: ed25519 key + 64-bit id."
+    },
+    "strkeyContract": {
+      "type": "string",
+      "pattern": "^C[A-Z2-7]{55}$"
+    },
+    "strkeyPool": {
+      "type": "string",
+      "pattern": "^L[A-Z2-7]{55}$"
+    },
+    "strkeySignedPayload": {
+      "type": "string",
+      "pattern": "^P[A-Z2-7]{68,163}$",
+      "description": "SEP-23 signed-payload signer: 32-byte key + 4-byte length + 1-64 payload bytes."
+    },
+    "int128String": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]{0,38})$"
+    },
+    "hex": {
+      "type": "string",
+      "pattern": "^([0-9a-f]{2})*$"
+    },
+    "extra_signed_payload_signer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "signer_key",
+        "signer_key_type",
+        "signer_key_payload_bytes",
+        "signed_payload_hex",
+        "signed_payload_len",
+        "signer_ed25519_hex",
+        "signer_weight"
+      ],
+      "properties": {
+        "signer_key": {
+          "$ref": "#/$defs/strkeySignedPayload"
+        },
+        "signer_key_type": {
+          "const": "SIGNER_KEY_TYPE_ED25519_SIGNED_PAYLOAD"
+        },
+        "signer_key_payload_bytes": {
+          "type": "integer",
+          "minimum": 40,
+          "maximum": 100
+        },
+        "signed_payload_hex": {
+          "$ref": "#/$defs/hex"
+        },
+        "signed_payload_len": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "signer_ed25519_hex": {
+          "$ref": "#/$defs/hex32"
+        },
+        "signer_weight": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        }
+      }
+    },
+    "extra_muxed_soroban_recipient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "function",
+        "from",
+        "to_scaddress",
+        "to_scaddress_type",
+        "to_base_account_ed25519_hex",
+        "muxed_id",
+        "amount",
+        "event_topic_to",
+        "event_to_muxed_id",
+        "event_amount"
+      ],
+      "properties": {
+        "contract": {
+          "$ref": "#/$defs/strkeyContract"
+        },
+        "function": {
+          "type": "string"
+        },
+        "from": {
+          "$ref": "#/$defs/strkeyAccount"
+        },
+        "to_scaddress": {
+          "$ref": "#/$defs/strkeyMuxed"
+        },
+        "to_scaddress_type": {
+          "const": "SC_ADDRESS_TYPE_MUXED_ACCOUNT"
+        },
+        "to_base_account_ed25519_hex": {
+          "$ref": "#/$defs/hex32"
+        },
+        "muxed_id": {
+          "$ref": "#/$defs/uint64String"
+        },
+        "amount": {
+          "$ref": "#/$defs/int128String"
+        },
+        "event_topic_to": {
+          "$ref": "#/$defs/strkeyAccount"
+        },
+        "event_to_muxed_id": {
+          "$ref": "#/$defs/uint64String"
+        },
+        "event_amount": {
+          "$ref": "#/$defs/int128String"
+        }
+      }
+    },
+    "extra_lp_issuer_order": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_code",
+        "asset_a_issuer",
+        "asset_b_issuer",
+        "issuers_byte_order_a_lt_b",
+        "issuers_text_order_a_lt_b",
+        "fee_bps",
+        "pool_id",
+        "pool_id_hex"
+      ],
+      "properties": {
+        "asset_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12
+        },
+        "asset_a_issuer": {
+          "$ref": "#/$defs/strkeyAccount"
+        },
+        "asset_b_issuer": {
+          "$ref": "#/$defs/strkeyAccount"
+        },
+        "issuers_byte_order_a_lt_b": {
+          "const": true,
+          "description": "network (key-byte) order: A before B"
+        },
+        "issuers_text_order_a_lt_b": {
+          "const": false,
+          "description": "the defining property: strkey text order disagrees"
+        },
+        "fee_bps": {
+          "type": "integer"
+        },
+        "pool_id": {
+          "$ref": "#/$defs/strkeyPool"
+        },
+        "pool_id_hex": {
+          "$ref": "#/$defs/hex32"
+        }
+      }
+    },
+    "extra_muxed_classic_sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tx_source_muxed",
+        "tx_source_base",
+        "tx_source_muxed_id",
+        "op_source_muxed",
+        "op_source_base",
+        "op_source_muxed_id",
+        "destination_muxed",
+        "destination_base",
+        "destination_muxed_id",
+        "tx_and_op_source_same_base",
+        "amount",
+        "asset"
+      ],
+      "properties": {
+        "tx_source_muxed": {
+          "$ref": "#/$defs/strkeyMuxed"
+        },
+        "tx_source_base": {
+          "$ref": "#/$defs/strkeyAccount"
+        },
+        "tx_source_muxed_id": {
+          "$ref": "#/$defs/uint64String"
+        },
+        "op_source_muxed": {
+          "$ref": "#/$defs/strkeyMuxed"
+        },
+        "op_source_base": {
+          "$ref": "#/$defs/strkeyAccount"
+        },
+        "op_source_muxed_id": {
+          "$ref": "#/$defs/uint64String"
+        },
+        "destination_muxed": {
+          "$ref": "#/$defs/strkeyMuxed"
+        },
+        "destination_base": {
+          "$ref": "#/$defs/strkeyAccount"
+        },
+        "destination_muxed_id": {
+          "$ref": "#/$defs/uint64String"
+        },
+        "tx_and_op_source_same_base": {
+          "type": "boolean"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "asset": {
+          "type": "string"
+        }
+      }
+    },
+    "extra_scmap_key_collision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "function",
+        "arg_map_entries",
+        "arg_map_keys",
+        "keys_text_form_equal",
+        "return_map_entries",
+        "return_equals_arg",
+        "wasm_sha256"
+      ],
+      "properties": {
+        "contract": {
+          "$ref": "#/$defs/strkeyContract"
+        },
+        "function": {
+          "type": "string"
+        },
+        "arg_map_entries": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "arg_map_keys": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "value"
+            ],
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "value": {}
+            }
+          }
+        },
+        "keys_text_form_equal": {
+          "const": true,
+          "description": "the defining property: distinct keys, same text form"
+        },
+        "return_map_entries": {
+          "type": "integer"
+        },
+        "return_equals_arg": {
+          "type": "boolean"
+        },
+        "wasm_sha256": {
+          "$ref": "#/$defs/hex32"
+        }
       }
     }
   }

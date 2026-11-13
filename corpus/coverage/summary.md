@@ -3,17 +3,17 @@
 stellar-xdr `v30.0`: 477 types; 363 reachable from `LedgerCloseMetaBatch`.
 All types: 583 union arms; reachable from `LedgerCloseMetaBatch`: 499 arms in 97 unions (51 of them integer-versioned `v0/v1/…` slots), and 28 optional fields.
 
-| Target kind | Targets | Covered by the 3 entries |
+| Target kind | Targets | Covered by the 5 entries |
 | --- | --- | --- |
-| arm | 499 | 109 (22%) |
-| optional | 56 | 22 (39%) |
+| arm | 499 | 123 (25%) |
+| optional | 56 | 26 (46%) |
 
 | Introduced in protocol | Targets | Covered |
 | --- | --- | --- |
-| <=19 | 242 | 74 |
-| 20 | 269 | 43 |
+| <=19 | 242 | 84 |
+| 20 | 269 | 49 |
 | 21 | 6 | 2 |
-| 22 | 2 | 0 |
+| 22 | 2 | 2 |
 | 23 | 19 | 11 |
 | 26 | 9 | 0 |
 | 27 | 2 | 0 |

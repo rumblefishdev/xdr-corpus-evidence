@@ -1,12 +1,12 @@
 kind,type,case,payload,introduced,cap,covered_by
 optional,AccountEntry,inflationDest=present,AccountID,<=19,,
-optional,AccountEntry,inflationDest=absent,AccountID,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,AccountEntry.ext,0,void,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,AccountEntry.ext,1,AccountEntryExtensionV1,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+optional,AccountEntry,inflationDest=absent,AccountID,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,AccountEntry.ext,0,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,AccountEntry.ext,1,AccountEntryExtensionV1,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,AccountEntryExtensionV1.ext,0,void,<=19,,
-arm,AccountEntryExtensionV1.ext,2,AccountEntryExtensionV2,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,AccountEntryExtensionV1.ext,2,AccountEntryExtensionV2,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,AccountEntryExtensionV2.ext,0,void,<=19,,
-arm,AccountEntryExtensionV2.ext,3,AccountEntryExtensionV3,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,AccountEntryExtensionV2.ext,3,AccountEntryExtensionV3,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,AccountMergeResult,ACCOUNT_MERGE_SUCCESS,int64,<=19,,
 arm,AccountMergeResult,ACCOUNT_MERGE_MALFORMED,void,20,,
 arm,AccountMergeResult,ACCOUNT_MERGE_NO_ACCOUNT,void,20,,
@@ -22,8 +22,8 @@ arm,AllowTrustResult,ALLOW_TRUST_TRUST_NOT_REQUIRED,void,20,,
 arm,AllowTrustResult,ALLOW_TRUST_CANT_REVOKE,void,20,,
 arm,AllowTrustResult,ALLOW_TRUST_SELF_NOT_ALLOWED,void,20,,
 arm,AllowTrustResult,ALLOW_TRUST_LOW_RESERVE,void,20,,
-arm,Asset,ASSET_TYPE_NATIVE,void,<=19,,cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,Asset,ASSET_TYPE_CREDIT_ALPHANUM4,AlphaNum4,<=19,,cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,Asset,ASSET_TYPE_NATIVE,void,<=19,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,Asset,ASSET_TYPE_CREDIT_ALPHANUM4,AlphaNum4,<=19,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,Asset,ASSET_TYPE_CREDIT_ALPHANUM12,AlphaNum12,<=19,,lp-issuer-order-01
 arm,AssetCode,ASSET_TYPE_CREDIT_ALPHANUM4,AssetCode4,<=19,,
 arm,AssetCode,ASSET_TYPE_CREDIT_ALPHANUM12,AssetCode12,<=19,,
@@ -101,15 +101,15 @@ arm,ConfigSettingEntry,CONFIG_SETTING_FREEZE_BYPASS_TXS,FreezeBypassTxs,26,CAP-0
 arm,ConfigSettingEntry,CONFIG_SETTING_FREEZE_BYPASS_TXS_DELTA,FreezeBypassTxsDelta,26,CAP-0077 CAP-0080,
 arm,ContractCodeEntry.ext,0,void,21,,
 arm,ContractCodeEntry.ext,1,__anon978.v1,21,,
-optional,ContractEvent,contractID=present,ContractID,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-optional,ContractEvent,contractID=absent,ContractID,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,ContractEvent.body,0,__anon771.v0,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,ContractExecutable,CONTRACT_EXECUTABLE_WASM,Hash,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+optional,ContractEvent,contractID=present,ContractID,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+optional,ContractEvent,contractID=absent,ContractID,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,ContractEvent.body,0,__anon771.v0,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,ContractExecutable,CONTRACT_EXECUTABLE_WASM,Hash,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,ContractExecutable,CONTRACT_EXECUTABLE_STELLAR_ASSET,void,20,,
 arm,ContractExecutable,CONTRACT_EXECUTABLE_EXTERNAL_REF,ContractExecutableExternalRef,28,CAP-0085,
 arm,ContractIDPreimage,CONTRACT_ID_PREIMAGE_FROM_ADDRESS,ContractIDPreimage.fromAddress,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,ContractIDPreimage,CONTRACT_ID_PREIMAGE_FROM_ASSET,Asset,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,CreateAccountResult,CREATE_ACCOUNT_SUCCESS,void,<=19,,lp-issuer-order-01
+arm,CreateAccountResult,CREATE_ACCOUNT_SUCCESS,void,<=19,,cap0027-muxed-classic-payment-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,CreateAccountResult,CREATE_ACCOUNT_MALFORMED,void,20,,
 arm,CreateAccountResult,CREATE_ACCOUNT_UNDERFUNDED,void,20,,
 arm,CreateAccountResult,CREATE_ACCOUNT_LOW_RESERVE,void,20,,
@@ -127,14 +127,14 @@ arm,ExtendFootprintTTLResult,EXTEND_FOOTPRINT_TTL_SUCCESS,void,20,,
 arm,ExtendFootprintTTLResult,EXTEND_FOOTPRINT_TTL_MALFORMED,void,20,,
 arm,ExtendFootprintTTLResult,EXTEND_FOOTPRINT_TTL_RESOURCE_LIMIT_EXCEEDED,void,20,,
 arm,ExtendFootprintTTLResult,EXTEND_FOOTPRINT_TTL_INSUFFICIENT_REFUNDABLE_FEE,void,20,,
-arm,ExtensionPoint,0,void,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,ExtensionPoint,0,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,FeeBumpTransaction.ext,0,void,<=19,,
 arm,FeeBumpTransaction.innerTx,ENVELOPE_TYPE_TX,TransactionV1Envelope,<=19,,
-arm,GeneralizedTransactionSet,1,TransactionSetV1,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,HostFunction,HOST_FUNCTION_TYPE_INVOKE_CONTRACT,InvokeContractArgs,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,GeneralizedTransactionSet,1,TransactionSetV1,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,HostFunction,HOST_FUNCTION_TYPE_INVOKE_CONTRACT,InvokeContractArgs,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,HostFunction,HOST_FUNCTION_TYPE_CREATE_CONTRACT,CreateContractArgs,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,HostFunction,HOST_FUNCTION_TYPE_UPLOAD_CONTRACT_WASM,opaque,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,HostFunction,HOST_FUNCTION_TYPE_CREATE_CONTRACT_V2,CreateContractArgsV2,22,,
+arm,HostFunction,HOST_FUNCTION_TYPE_CREATE_CONTRACT_V2,CreateContractArgsV2,22,,cap0027-muxed-classic-payment-01
 arm,InflationResult,INFLATION_SUCCESS,InflationPayout,<=19,,
 arm,InflationResult,INFLATION_NOT_TIME,void,20,,
 arm,InnerTransactionResult.ext,0,void,<=19,,
@@ -156,7 +156,7 @@ arm,InnerTransactionResult.result,txBAD_MIN_SEQ_AGE_OR_GAP,void,<=19,,
 arm,InnerTransactionResult.result,txMALFORMED,void,<=19,,
 arm,InnerTransactionResult.result,txSOROBAN_INVALID,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,InnerTransactionResult.result,txFROZEN_KEY_ACCESSED,void,26,CAP-0077 CAP-0080,
-arm,InvokeHostFunctionResult,INVOKE_HOST_FUNCTION_SUCCESS,Hash,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,InvokeHostFunctionResult,INVOKE_HOST_FUNCTION_SUCCESS,Hash,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,InvokeHostFunctionResult,INVOKE_HOST_FUNCTION_MALFORMED,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,InvokeHostFunctionResult,INVOKE_HOST_FUNCTION_TRAPPED,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,InvokeHostFunctionResult,INVOKE_HOST_FUNCTION_RESOURCE_LIMIT_EXCEEDED,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
@@ -164,41 +164,41 @@ arm,InvokeHostFunctionResult,INVOKE_HOST_FUNCTION_ENTRY_ARCHIVED,void,20,,
 arm,InvokeHostFunctionResult,INVOKE_HOST_FUNCTION_INSUFFICIENT_REFUNDABLE_FEE,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,LedgerCloseMeta,0,LedgerCloseMetaV0,<=19,,
 arm,LedgerCloseMeta,1,LedgerCloseMetaV1,20,,
-arm,LedgerCloseMeta,2,LedgerCloseMetaV2,23,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,LedgerCloseMeta,2,LedgerCloseMetaV2,23,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,LedgerCloseMetaExt,0,void,21,,
-arm,LedgerCloseMetaExt,1,LedgerCloseMetaExtV1,21,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,LedgerEntry.data,ACCOUNT,AccountEntry,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,LedgerEntry.data,TRUSTLINE,TrustLineEntry,<=19,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
+arm,LedgerCloseMetaExt,1,LedgerCloseMetaExtV1,21,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,LedgerEntry.data,ACCOUNT,AccountEntry,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,LedgerEntry.data,TRUSTLINE,TrustLineEntry,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,LedgerEntry.data,OFFER,OfferEntry,<=19,,
 arm,LedgerEntry.data,DATA,DataEntry,<=19,,
 arm,LedgerEntry.data,CLAIMABLE_BALANCE,ClaimableBalanceEntry,<=19,,
 arm,LedgerEntry.data,LIQUIDITY_POOL,LiquidityPoolEntry,<=19,,lp-issuer-order-01
-arm,LedgerEntry.data,CONTRACT_DATA,ContractDataEntry,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,LedgerEntry.data,CONTRACT_DATA,ContractDataEntry,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,LedgerEntry.data,CONTRACT_CODE,ContractCodeEntry,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,LedgerEntry.data,CONFIG_SETTING,ConfigSettingEntry,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,LedgerEntry.data,TTL,TTLEntry,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01
-arm,LedgerEntry.ext,0,void,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,LedgerEntry.data,TTL,TTLEntry,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01
+arm,LedgerEntry.ext,0,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,LedgerEntry.ext,1,LedgerEntryExtensionV1,<=19,,
-arm,LedgerEntryChange,LEDGER_ENTRY_CREATED,LedgerEntry,<=19,,cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,LedgerEntryChange,LEDGER_ENTRY_UPDATED,LedgerEntry,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,LedgerEntryChange,LEDGER_ENTRY_REMOVED,LedgerKey,<=19,,
-arm,LedgerEntryChange,LEDGER_ENTRY_STATE,LedgerEntry,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,LedgerEntryChange,LEDGER_ENTRY_CREATED,LedgerEntry,<=19,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,LedgerEntryChange,LEDGER_ENTRY_UPDATED,LedgerEntry,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,LedgerEntryChange,LEDGER_ENTRY_REMOVED,LedgerKey,<=19,,cap0046-scmap-key-collision-01
+arm,LedgerEntryChange,LEDGER_ENTRY_STATE,LedgerEntry,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,LedgerEntryChange,LEDGER_ENTRY_RESTORED,LedgerEntry,23,,cap0027-muxed-sac-destination-01
 arm,LedgerEntryExtensionV1.ext,0,void,<=19,,
-arm,LedgerHeader.ext,0,void,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,LedgerHeader.ext,0,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,LedgerHeader.ext,1,LedgerHeaderExtensionV1,<=19,,
 arm,LedgerHeaderExtensionV1.ext,0,void,<=19,,
-arm,LedgerHeaderHistoryEntry.ext,0,void,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,LedgerKey,ACCOUNT,LedgerKey.account,<=19,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
-arm,LedgerKey,TRUSTLINE,LedgerKey.trustLine,<=19,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
+arm,LedgerHeaderHistoryEntry.ext,0,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,LedgerKey,ACCOUNT,LedgerKey.account,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,LedgerKey,TRUSTLINE,LedgerKey.trustLine,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,LedgerKey,OFFER,LedgerKey.offer,<=19,,
 arm,LedgerKey,DATA,LedgerKey.data,<=19,,
 arm,LedgerKey,CLAIMABLE_BALANCE,LedgerKey.claimableBalance,<=19,,
 arm,LedgerKey,LIQUIDITY_POOL,LedgerKey.liquidityPool,<=19,,
-arm,LedgerKey,CONTRACT_DATA,LedgerKey.contractData,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,LedgerKey,CONTRACT_CODE,LedgerKey.contractCode,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,LedgerKey,CONTRACT_DATA,LedgerKey.contractData,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,LedgerKey,CONTRACT_CODE,LedgerKey.contractCode,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,LedgerKey,CONFIG_SETTING,LedgerKey.configSetting,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,LedgerKey,TTL,LedgerKey.ttl,20,,
+arm,LedgerKey,TTL,LedgerKey.ttl,20,,cap0046-scmap-key-collision-01
 arm,LedgerUpgrade,LEDGER_UPGRADE_VERSION,uint32,<=19,,
 arm,LedgerUpgrade,LEDGER_UPGRADE_BASE_FEE,uint32,<=19,,
 arm,LedgerUpgrade,LEDGER_UPGRADE_MAX_TX_SET_SIZE,uint32,<=19,,
@@ -237,7 +237,7 @@ arm,ManageBuyOfferResult,MANAGE_BUY_OFFER_SELL_NO_ISSUER,void,20,,
 arm,ManageBuyOfferResult,MANAGE_BUY_OFFER_BUY_NO_ISSUER,void,20,,
 arm,ManageBuyOfferResult,MANAGE_BUY_OFFER_NOT_FOUND,void,20,,
 arm,ManageBuyOfferResult,MANAGE_BUY_OFFER_LOW_RESERVE,void,20,,
-optional,ManageDataOp,dataValue=present,DataValue,<=19,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
+optional,ManageDataOp,dataValue=present,DataValue,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 optional,ManageDataOp,dataValue=absent,DataValue,<=19,,
 arm,ManageDataResult,MANAGE_DATA_SUCCESS,void,<=19,,
 arm,ManageDataResult,MANAGE_DATA_NOT_SUPPORTED_YET,void,20,,
@@ -260,18 +260,18 @@ arm,ManageSellOfferResult,MANAGE_SELL_OFFER_SELL_NO_ISSUER,void,20,,
 arm,ManageSellOfferResult,MANAGE_SELL_OFFER_BUY_NO_ISSUER,void,20,,
 arm,ManageSellOfferResult,MANAGE_SELL_OFFER_NOT_FOUND,void,20,,
 arm,ManageSellOfferResult,MANAGE_SELL_OFFER_LOW_RESERVE,void,20,,
-arm,Memo,MEMO_NONE,void,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,Memo,MEMO_TEXT,string,<=19,,lp-issuer-order-01
-arm,Memo,MEMO_ID,uint64,<=19,,
-arm,Memo,MEMO_HASH,Hash,<=19,,cap0040-signed-payload-signer-01
+arm,Memo,MEMO_NONE,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,Memo,MEMO_TEXT,string,<=19,,cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,Memo,MEMO_ID,uint64,<=19,,cap0046-scmap-key-collision-01
+arm,Memo,MEMO_HASH,Hash,<=19,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01
 arm,Memo,MEMO_RETURN,Hash,<=19,,
-arm,MuxedAccount,KEY_TYPE_ED25519,uint256,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,MuxedAccount,KEY_TYPE_MUXED_ED25519,MuxedAccount.med25519,<=19,,
+arm,MuxedAccount,KEY_TYPE_ED25519,uint256,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,MuxedAccount,KEY_TYPE_MUXED_ED25519,MuxedAccount.med25519,<=19,,cap0027-muxed-classic-payment-01
 arm,OfferEntry.ext,0,void,<=19,,
-optional,Operation,sourceAccount=present,MuxedAccount,<=19,,cap0040-signed-payload-signer-01 lp-issuer-order-01
-optional,Operation,sourceAccount=absent,MuxedAccount,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,Operation.body,CREATE_ACCOUNT,CreateAccountOp,<=19,,lp-issuer-order-01
-arm,Operation.body,PAYMENT,PaymentOp,<=19,,cap0040-signed-payload-signer-01 lp-issuer-order-01
+optional,Operation,sourceAccount=present,MuxedAccount,<=19,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+optional,Operation,sourceAccount=absent,MuxedAccount,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,Operation.body,CREATE_ACCOUNT,CreateAccountOp,<=19,,cap0027-muxed-classic-payment-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,Operation.body,PAYMENT,PaymentOp,<=19,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,Operation.body,PATH_PAYMENT_STRICT_RECEIVE,PathPaymentStrictReceiveOp,<=19,,
 arm,Operation.body,MANAGE_SELL_OFFER,ManageSellOfferOp,<=19,,
 arm,Operation.body,CREATE_PASSIVE_SELL_OFFER,CreatePassiveSellOfferOp,<=19,,
@@ -280,7 +280,7 @@ arm,Operation.body,CHANGE_TRUST,ChangeTrustOp,<=19,,lp-issuer-order-01
 arm,Operation.body,ALLOW_TRUST,AllowTrustOp,<=19,,
 arm,Operation.body,ACCOUNT_MERGE,MuxedAccount,<=19,,
 arm,Operation.body,INFLATION,void,<=19,,
-arm,Operation.body,MANAGE_DATA,ManageDataOp,<=19,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
+arm,Operation.body,MANAGE_DATA,ManageDataOp,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,Operation.body,BUMP_SEQUENCE,BumpSequenceOp,<=19,,
 arm,Operation.body,MANAGE_BUY_OFFER,ManageBuyOfferOp,<=19,,
 arm,Operation.body,PATH_PAYMENT_STRICT_SEND,PathPaymentStrictSendOp,<=19,,
@@ -294,18 +294,18 @@ arm,Operation.body,CLAWBACK_CLAIMABLE_BALANCE,ClawbackClaimableBalanceOp,<=19,,
 arm,Operation.body,SET_TRUST_LINE_FLAGS,SetTrustLineFlagsOp,<=19,,lp-issuer-order-01
 arm,Operation.body,LIQUIDITY_POOL_DEPOSIT,LiquidityPoolDepositOp,<=19,,
 arm,Operation.body,LIQUIDITY_POOL_WITHDRAW,LiquidityPoolWithdrawOp,<=19,,
-arm,Operation.body,INVOKE_HOST_FUNCTION,InvokeHostFunctionOp,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,Operation.body,INVOKE_HOST_FUNCTION,InvokeHostFunctionOp,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,Operation.body,EXTEND_FOOTPRINT_TTL,ExtendFootprintTTLOp,20,,
 arm,Operation.body,RESTORE_FOOTPRINT,RestoreFootprintOp,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01
-arm,OperationResult,opINNER,OperationResult.tr,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,OperationResult,opINNER,OperationResult.tr,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,OperationResult,opBAD_AUTH,void,20,,
 arm,OperationResult,opNO_ACCOUNT,void,20,,
 arm,OperationResult,opNOT_SUPPORTED,void,20,,
-arm,OperationResult,opTOO_MANY_SUBENTRIES,void,20,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
+arm,OperationResult,opTOO_MANY_SUBENTRIES,void,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,OperationResult,opEXCEEDED_WORK_LIMIT,void,20,,
 arm,OperationResult,opTOO_MANY_SPONSORING,void,20,,
-arm,OperationResult.tr,CREATE_ACCOUNT,CreateAccountResult,<=19,,lp-issuer-order-01
-arm,OperationResult.tr,PAYMENT,PaymentResult,<=19,,cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,OperationResult.tr,CREATE_ACCOUNT,CreateAccountResult,<=19,,cap0027-muxed-classic-payment-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,OperationResult.tr,PAYMENT,PaymentResult,<=19,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,OperationResult.tr,PATH_PAYMENT_STRICT_RECEIVE,PathPaymentStrictReceiveResult,<=19,,
 arm,OperationResult.tr,MANAGE_SELL_OFFER,ManageSellOfferResult,<=19,,
 arm,OperationResult.tr,CREATE_PASSIVE_SELL_OFFER,ManageSellOfferResult,<=19,,
@@ -328,10 +328,10 @@ arm,OperationResult.tr,CLAWBACK_CLAIMABLE_BALANCE,ClawbackClaimableBalanceResult
 arm,OperationResult.tr,SET_TRUST_LINE_FLAGS,SetTrustLineFlagsResult,<=19,,lp-issuer-order-01
 arm,OperationResult.tr,LIQUIDITY_POOL_DEPOSIT,LiquidityPoolDepositResult,<=19,,
 arm,OperationResult.tr,LIQUIDITY_POOL_WITHDRAW,LiquidityPoolWithdrawResult,<=19,,
-arm,OperationResult.tr,INVOKE_HOST_FUNCTION,InvokeHostFunctionResult,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,OperationResult.tr,INVOKE_HOST_FUNCTION,InvokeHostFunctionResult,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,OperationResult.tr,EXTEND_FOOTPRINT_TTL,ExtendFootprintTTLResult,20,,
 arm,OperationResult.tr,RESTORE_FOOTPRINT,RestoreFootprintResult,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01
-optional,ParallelTxsComponent,baseFee=present,int64,23,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+optional,ParallelTxsComponent,baseFee=present,int64,23,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 optional,ParallelTxsComponent,baseFee=absent,int64,23,,
 arm,PathPaymentStrictReceiveResult,PATH_PAYMENT_STRICT_RECEIVE_SUCCESS,PathPaymentStrictReceiveResult.success,<=19,,
 arm,PathPaymentStrictReceiveResult,PATH_PAYMENT_STRICT_RECEIVE_MALFORMED,void,20,,
@@ -359,26 +359,26 @@ arm,PathPaymentStrictSendResult,PATH_PAYMENT_STRICT_SEND_NO_ISSUER,Asset,<=19,,
 arm,PathPaymentStrictSendResult,PATH_PAYMENT_STRICT_SEND_TOO_FEW_OFFERS,void,20,,
 arm,PathPaymentStrictSendResult,PATH_PAYMENT_STRICT_SEND_OFFER_CROSS_SELF,void,20,,
 arm,PathPaymentStrictSendResult,PATH_PAYMENT_STRICT_SEND_UNDER_DESTMIN,void,20,,
-arm,PaymentResult,PAYMENT_SUCCESS,void,<=19,,cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,PaymentResult,PAYMENT_SUCCESS,void,<=19,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,PaymentResult,PAYMENT_MALFORMED,void,20,,
-arm,PaymentResult,PAYMENT_UNDERFUNDED,void,20,,
+arm,PaymentResult,PAYMENT_UNDERFUNDED,void,20,,cap0046-scmap-key-collision-01
 arm,PaymentResult,PAYMENT_SRC_NO_TRUST,void,20,,
 arm,PaymentResult,PAYMENT_SRC_NOT_AUTHORIZED,void,20,,
-arm,PaymentResult,PAYMENT_NO_DESTINATION,void,20,,cap0040-signed-payload-signer-01
+arm,PaymentResult,PAYMENT_NO_DESTINATION,void,20,,cap0027-muxed-classic-payment-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01
 arm,PaymentResult,PAYMENT_NO_TRUST,void,20,,lp-issuer-order-01
 arm,PaymentResult,PAYMENT_NOT_AUTHORIZED,void,20,,
 arm,PaymentResult,PAYMENT_LINE_FULL,void,20,,
 arm,PaymentResult,PAYMENT_NO_ISSUER,void,20,,
-arm,Preconditions,PRECOND_NONE,void,<=19,,cap0027-muxed-sac-destination-01
-arm,Preconditions,PRECOND_TIME,TimeBounds,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,Preconditions,PRECOND_V2,PreconditionsV2,<=19,,
-optional,PreconditionsV2,timeBounds=present,TimeBounds,<=19,,
-optional,PreconditionsV2,timeBounds=absent,TimeBounds,<=19,,
-optional,PreconditionsV2,ledgerBounds=present,LedgerBounds,<=19,,
+arm,Preconditions,PRECOND_NONE,void,<=19,,cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01
+arm,Preconditions,PRECOND_TIME,TimeBounds,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,Preconditions,PRECOND_V2,PreconditionsV2,<=19,,cap0027-muxed-classic-payment-01 cap0046-scmap-key-collision-01
+optional,PreconditionsV2,timeBounds=present,TimeBounds,<=19,,cap0046-scmap-key-collision-01
+optional,PreconditionsV2,timeBounds=absent,TimeBounds,<=19,,cap0027-muxed-classic-payment-01
+optional,PreconditionsV2,ledgerBounds=present,LedgerBounds,<=19,,cap0027-muxed-classic-payment-01 cap0046-scmap-key-collision-01
 optional,PreconditionsV2,ledgerBounds=absent,LedgerBounds,<=19,,
 optional,PreconditionsV2,minSeqNum=present,SequenceNumber,<=19,,
-optional,PreconditionsV2,minSeqNum=absent,SequenceNumber,<=19,,
-arm,PublicKey,PUBLIC_KEY_TYPE_ED25519,uint256,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+optional,PreconditionsV2,minSeqNum=absent,SequenceNumber,<=19,,cap0027-muxed-classic-payment-01 cap0046-scmap-key-collision-01
+arm,PublicKey,PUBLIC_KEY_TYPE_ED25519,uint256,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,RestoreFootprintResult,RESTORE_FOOTPRINT_SUCCESS,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01
 arm,RestoreFootprintResult,RESTORE_FOOTPRINT_MALFORMED,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,RestoreFootprintResult,RESTORE_FOOTPRINT_RESOURCE_LIMIT_EXCEEDED,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
@@ -391,13 +391,13 @@ arm,RevokeSponsorshipResult,REVOKE_SPONSORSHIP_NOT_SPONSOR,void,20,,
 arm,RevokeSponsorshipResult,REVOKE_SPONSORSHIP_LOW_RESERVE,void,20,,
 arm,RevokeSponsorshipResult,REVOKE_SPONSORSHIP_ONLY_TRANSFERABLE,void,20,,
 arm,RevokeSponsorshipResult,REVOKE_SPONSORSHIP_MALFORMED,void,20,,
-arm,SCAddress,SC_ADDRESS_TYPE_ACCOUNT,AccountID,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCAddress,SC_ADDRESS_TYPE_CONTRACT,ContractID,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,SCAddress,SC_ADDRESS_TYPE_ACCOUNT,AccountID,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCAddress,SC_ADDRESS_TYPE_CONTRACT,ContractID,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,SCAddress,SC_ADDRESS_TYPE_MUXED_ACCOUNT,MuxedEd25519Account,23,CAP-0067,cap0027-muxed-sac-destination-01
 arm,SCAddress,SC_ADDRESS_TYPE_CLAIMABLE_BALANCE,ClaimableBalanceID,23,CAP-0067,
 arm,SCAddress,SC_ADDRESS_TYPE_LIQUIDITY_POOL,PoolID,23,CAP-0067,
 arm,SCAddress,SC_ADDRESS_TYPE_MUXED_CONTRACT,MuxedContract,30,,
-optional,SCContractInstance,storage=present,SCMap,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+optional,SCContractInstance,storage=present,SCMap,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 optional,SCContractInstance,storage=absent,SCMap,20,,
 arm,SCError,SCE_CONTRACT,uint32,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,SCError,SCE_WASM_VM,SCErrorCode,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
@@ -414,28 +414,28 @@ arm,SCPStatement.pledges,SCP_ST_PREPARE,__anon68.prepare,<=19,,
 arm,SCPStatement.pledges,SCP_ST_CONFIRM,__anon68.confirm,<=19,,
 arm,SCPStatement.pledges,SCP_ST_EXTERNALIZE,__anon68.externalize,<=19,,
 arm,SCPStatement.pledges,SCP_ST_NOMINATE,SCPNomination,<=19,,
-arm,SCVal,SCV_BOOL,bool,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_VOID,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,SCVal,SCV_BOOL,bool,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_VOID,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,SCVal,SCV_ERROR,SCError,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,SCVal,SCV_U32,uint32,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_I32,int32,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,SCVal,SCV_U64,uint64,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_I64,int64,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,lp-issuer-order-01
+arm,SCVal,SCV_U32,uint32,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_I32,int32,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01
+arm,SCVal,SCV_U64,uint64,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_I64,int64,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 lp-issuer-order-01
 arm,SCVal,SCV_TIMEPOINT,TimePoint,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
 arm,SCVal,SCV_DURATION,Duration,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,SCVal,SCV_U128,UInt128Parts,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 lp-issuer-order-01
-arm,SCVal,SCV_I128,Int128Parts,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_U256,UInt256Parts,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
+arm,SCVal,SCV_U128,UInt128Parts,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_I128,Int128Parts,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_U256,UInt256Parts,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0046-scmap-key-collision-01
 arm,SCVal,SCV_I256,Int256Parts,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,SCVal,SCV_BYTES,SCBytes,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_STRING,SCString,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_SYMBOL,SCSymbol,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_VEC,SCVec,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_MAP,SCMap,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_ADDRESS,SCAddress,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_CONTRACT_INSTANCE,SCContractInstance,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_LEDGER_KEY_CONTRACT_INSTANCE,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SCVal,SCV_LEDGER_KEY_NONCE,SCNonceKey,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
+arm,SCVal,SCV_BYTES,SCBytes,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_STRING,SCString,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_SYMBOL,SCSymbol,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_VEC,SCVec,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_MAP,SCMap,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_ADDRESS,SCAddress,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_CONTRACT_INSTANCE,SCContractInstance,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_LEDGER_KEY_CONTRACT_INSTANCE,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SCVal,SCV_LEDGER_KEY_NONCE,SCNonceKey,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0046-scmap-key-collision-01
 arm,SCVal,SCV_EXECUTABLE_TAG,SCString,28,CAP-0085,
 optional,SCVal,vec=present,SCVec,20,,
 optional,SCVal,vec=absent,SCVec,20,,
@@ -480,45 +480,45 @@ arm,SignerKey,SIGNER_KEY_TYPE_ED25519,uint256,<=19,,lp-issuer-order-01
 arm,SignerKey,SIGNER_KEY_TYPE_PRE_AUTH_TX,uint256,<=19,,
 arm,SignerKey,SIGNER_KEY_TYPE_HASH_X,uint256,<=19,,
 arm,SignerKey,SIGNER_KEY_TYPE_ED25519_SIGNED_PAYLOAD,SignerKey.ed25519SignedPayload,<=19,,cap0040-signed-payload-signer-01
-arm,SorobanAuthorizedFunction,SOROBAN_AUTHORIZED_FUNCTION_TYPE_CONTRACT_FN,InvokeContractArgs,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,SorobanAuthorizedFunction,SOROBAN_AUTHORIZED_FUNCTION_TYPE_CONTRACT_FN,InvokeContractArgs,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,SorobanAuthorizedFunction,SOROBAN_AUTHORIZED_FUNCTION_TYPE_CREATE_CONTRACT_HOST_FN,CreateContractArgs,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
-arm,SorobanAuthorizedFunction,SOROBAN_AUTHORIZED_FUNCTION_TYPE_CREATE_CONTRACT_V2_HOST_FN,CreateContractArgsV2,22,CAP-0058,
-arm,SorobanCredentials,SOROBAN_CREDENTIALS_SOURCE_ACCOUNT,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,SorobanCredentials,SOROBAN_CREDENTIALS_ADDRESS,SorobanAddressCredentials,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,
+arm,SorobanAuthorizedFunction,SOROBAN_AUTHORIZED_FUNCTION_TYPE_CREATE_CONTRACT_V2_HOST_FN,CreateContractArgsV2,22,CAP-0058,cap0027-muxed-classic-payment-01
+arm,SorobanCredentials,SOROBAN_CREDENTIALS_SOURCE_ACCOUNT,void,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,SorobanCredentials,SOROBAN_CREDENTIALS_ADDRESS,SorobanAddressCredentials,20,CAP-0042 CAP-0046 CAP-0047 CAP-0056,cap0046-scmap-key-collision-01
 arm,SorobanCredentials,SOROBAN_CREDENTIALS_ADDRESS_V2,SorobanAddressCredentials,27,CAP-0071,
 arm,SorobanCredentials,SOROBAN_CREDENTIALS_ADDRESS_WITH_DELEGATES,SorobanAddressCredentialsWithDelegates,27,CAP-0071,
-arm,SorobanTransactionData.ext,0,void,23,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,SorobanTransactionData.ext,0,void,23,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,SorobanTransactionData.ext,1,SorobanResourcesExtV0,23,,
 arm,SorobanTransactionMetaExt,0,void,21,,
-arm,SorobanTransactionMetaExt,1,SorobanTransactionMetaExtV1,21,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-optional,SorobanTransactionMetaV2,returnValue=present,SCVal,23,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,SorobanTransactionMetaExt,1,SorobanTransactionMetaExtV1,21,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+optional,SorobanTransactionMetaV2,returnValue=present,SCVal,23,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 optional,SorobanTransactionMetaV2,returnValue=absent,SCVal,23,,cap0027-muxed-sac-destination-01
 arm,StellarValue.ext,STELLAR_VALUE_BASIC,void,<=19,,
 arm,StellarValue.ext,STELLAR_VALUE_SIGNED,LedgerCloseValueSignature,<=19,,cap0040-signed-payload-signer-01
 arm,StellarValue.ext,STELLAR_VALUE_EMPTY_TX_SET,__anon61.proposedValue,28,,
-arm,StellarValue.ext,STELLAR_VALUE_SIGNED_MS,__anon61.signedMsValue,30,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
+arm,StellarValue.ext,STELLAR_VALUE_SIGNED_MS,__anon61.signedMsValue,30,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,StellarValue.ext,STELLAR_VALUE_EMPTY_TX_SET_MS,__anon61.proposedMsValue,30,,
-arm,Transaction.ext,0,void,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,Transaction.ext,1,SorobanTransactionData,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,Transaction.ext,0,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,Transaction.ext,1,SorobanTransactionData,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,TransactionEnvelope,ENVELOPE_TYPE_TX_V0,TransactionV0Envelope,<=19,,
-arm,TransactionEnvelope,ENVELOPE_TYPE_TX,TransactionV1Envelope,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,TransactionEnvelope,ENVELOPE_TYPE_TX,TransactionV1Envelope,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,TransactionEnvelope,ENVELOPE_TYPE_TX_FEE_BUMP,FeeBumpTransactionEnvelope,<=19,,
 arm,TransactionMeta,0,OperationMeta,<=19,,
 arm,TransactionMeta,1,TransactionMetaV1,<=19,,
 arm,TransactionMeta,2,TransactionMetaV2,<=19,,
 arm,TransactionMeta,3,TransactionMetaV3,20,,
-arm,TransactionMeta,4,TransactionMetaV4,23,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,TransactionMeta,4,TransactionMetaV4,23,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 optional,TransactionMetaV3,sorobanMeta=present,SorobanTransactionMeta,20,,
 optional,TransactionMetaV3,sorobanMeta=absent,SorobanTransactionMeta,20,,
-optional,TransactionMetaV4,sorobanMeta=present,SorobanTransactionMetaV2,23,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-optional,TransactionMetaV4,sorobanMeta=absent,SorobanTransactionMetaV2,23,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,TransactionPhase,0,TxSetComponent,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,TransactionPhase,1,ParallelTxsComponent,23,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,TransactionResult.ext,0,void,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+optional,TransactionMetaV4,sorobanMeta=present,SorobanTransactionMetaV2,23,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+optional,TransactionMetaV4,sorobanMeta=absent,SorobanTransactionMetaV2,23,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,TransactionPhase,0,TxSetComponent,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,TransactionPhase,1,ParallelTxsComponent,23,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,TransactionResult.ext,0,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,TransactionResult.result,txFEE_BUMP_INNER_SUCCESS,InnerTransactionResultPair,<=19,,
 arm,TransactionResult.result,txFEE_BUMP_INNER_FAILED,InnerTransactionResultPair,<=19,,
-arm,TransactionResult.result,txSUCCESS,OperationResult,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-arm,TransactionResult.result,txFAILED,OperationResult,<=19,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,TransactionResult.result,txSUCCESS,OperationResult,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,TransactionResult.result,txFAILED,OperationResult,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,TransactionResult.result,txTOO_EARLY,void,20,,
 arm,TransactionResult.result,txTOO_LATE,void,20,,
 arm,TransactionResult.result,txMISSING_OPERATION,void,20,,
@@ -539,16 +539,16 @@ optional,TransactionV0,timeBounds=present,TimeBounds,<=19,,
 optional,TransactionV0,timeBounds=absent,TimeBounds,<=19,,
 arm,TransactionV0.ext,0,void,<=19,,
 arm,TrustLineAsset,ASSET_TYPE_NATIVE,void,<=19,,
-arm,TrustLineAsset,ASSET_TYPE_CREDIT_ALPHANUM4,AlphaNum4,<=19,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
-arm,TrustLineAsset,ASSET_TYPE_CREDIT_ALPHANUM12,AlphaNum12,<=19,,
+arm,TrustLineAsset,ASSET_TYPE_CREDIT_ALPHANUM4,AlphaNum4,<=19,,cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,TrustLineAsset,ASSET_TYPE_CREDIT_ALPHANUM12,AlphaNum12,<=19,,cap0027-muxed-classic-payment-01 cap0046-scmap-key-collision-01
 arm,TrustLineAsset,ASSET_TYPE_POOL_SHARE,PoolID,<=19,,lp-issuer-order-01
-arm,TrustLineEntry.ext,0,void,<=19,,cap0027-muxed-sac-destination-01 lp-issuer-order-01
-arm,TrustLineEntry.ext,1,__anon529.v1,<=19,,lp-issuer-order-01
+arm,TrustLineEntry.ext,0,void,<=19,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+arm,TrustLineEntry.ext,1,__anon529.v1,<=19,,cap0046-scmap-key-collision-01 lp-issuer-order-01
 arm,TrustLineEntryExtensionV2.ext,0,void,<=19,,lp-issuer-order-01
-arm,TxSetComponent,TXSET_COMP_TXS_MAYBE_DISCOUNTED_FEE,TxSetComponent.txsMaybeDiscountedFee,20,CAP-0042,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
-optional,TxSetComponent.txsMaybeDiscountedFee,baseFee=present,int64,20,,cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 lp-issuer-order-01
+arm,TxSetComponent,TXSET_COMP_TXS_MAYBE_DISCOUNTED_FEE,TxSetComponent.txsMaybeDiscountedFee,20,CAP-0042,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
+optional,TxSetComponent.txsMaybeDiscountedFee,baseFee=present,int64,20,,cap0027-muxed-classic-payment-01 cap0027-muxed-sac-destination-01 cap0040-signed-payload-signer-01 cap0046-scmap-key-collision-01 lp-issuer-order-01
 optional,TxSetComponent.txsMaybeDiscountedFee,baseFee=absent,int64,20,,
-arm,__anon544.ext,0,void,<=19,,
+arm,__anon544.ext,0,void,<=19,,cap0046-scmap-key-collision-01
 arm,__anon544.ext,2,TrustLineEntryExtensionV2,<=19,,lp-issuer-order-01
 optional,__anon68.prepare,prepared=present,SCPBallot,<=19,,
 optional,__anon68.prepare,prepared=absent,SCPBallot,<=19,,

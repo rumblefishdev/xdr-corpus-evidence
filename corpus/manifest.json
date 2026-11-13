@@ -295,7 +295,202 @@
           "url": "https://github.com/stellar/js-stellar-sdk/pull/1766"
         }
       ],
-      "evidence": "conformance-1766/README.md"
+      "evidence": "conformance/README.md"
+    },
+    {
+      "id": "cap0027-muxed-classic-payment-01",
+      "title": "classic payment with a muxed transaction source, operation source and destination (three M... ids)",
+      "cap": [
+        "CAP-0027"
+      ],
+      "sep": [
+        "SEP-0023"
+      ],
+      "protocol": {
+        "introduced_in": 13,
+        "ledger": 30
+      },
+      "network": "testnet",
+      "network_passphrase": "Test SDF Network ; September 2015",
+      "source": {
+        "kind": "generated",
+        "ledger": 5710218,
+        "tx_hash": "4cb42e9c27d5f4858f235bf8fb2b1012eb163da9afd5a9c16d4432cd5e11b203",
+        "generator": "corpus/gen/run.sh muxed-classic",
+        "generation_record": "corpus/entries/cap-0027/cap0027-muxed-classic-payment-01/generation.json"
+      },
+      "synthetic": false,
+      "pattern": {
+        "id": "muxed-classic-sources",
+        "description": "A classic payment whose transaction source, operation source and destination are muxed accounts with three different ids: 2^63+1, 2^53+1 (the smallest a float64 cannot hold) and 2^64-1. The tx and op sources share one base account. Readers that store 32-byte keys truncate the M... addresses; readers that keep ids as floats or confuse the three accounts are visible. This is the muxed-source shape: on Soroban it is rejected since protocol 25 (see cap0027-muxed-sac-destination-01)."
+      },
+      "files": [
+        {
+          "path": "corpus/entries/cap-0027/cap0027-muxed-classic-payment-01/FFA8DE75--5710218.xdr.zst",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr+zstd",
+          "layout": "galexie",
+          "sha256": "50f85bf42b2d6ab337794eb501df8ef14b478529d9504ed28ace1886707c4fd6"
+        },
+        {
+          "path": "corpus/entries/cap-0027/cap0027-muxed-classic-payment-01/ledger-5710218.LedgerCloseMetaBatch.xdr",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr",
+          "sha256": "b6e87bf8e766f4247b71f307d315aeea767f7a17768e99a740ea396b48b21a85"
+        },
+        {
+          "path": "corpus/entries/cap-0027/cap0027-muxed-classic-payment-01/tx-4cb42e9c27d5f485.TransactionEnvelope.xdr",
+          "xdr_type": "TransactionEnvelope",
+          "encoding": "xdr",
+          "sha256": "f9ae689839c5e5c9c3f67d4c5701769e760e1858f50f937df3b5d0a26f201fdc",
+          "derived_from": "corpus/entries/cap-0027/cap0027-muxed-classic-payment-01/ledger-5710218.LedgerCloseMetaBatch.xdr"
+        }
+      ],
+      "core_validates": true,
+      "negative_probes": [],
+      "roundtrip": {
+        "byte_exact": true,
+        "tool": "stellar-xdr 30.0.0 (3c2aa43d2ab54d429ae44aa5143d805bf5dba7e2)"
+      },
+      "check_lcm_golden": null,
+      "expected": {
+        "lcm_version": "v2",
+        "ledger_seq": 5710218,
+        "ledger_protocol": 30,
+        "tx_hash": "4cb42e9c27d5f4858f235bf8fb2b1012eb163da9afd5a9c16d4432cd5e11b203",
+        "tx_apply_index": 0,
+        "tx_envelope_type": "tx",
+        "tx_source_account": "MCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYTAAAAAAAAAAAAG72A",
+        "tx_result": "tx_success",
+        "op_index": 0,
+        "op_type": "payment",
+        "op_source_account": "MCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYSABAAAAAAAAAAHEDG",
+        "op_result": "success"
+      },
+      "extra": {
+        "tx_source_muxed": "MCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYTAAAAAAAAAAAAG72A",
+        "tx_source_base": "GCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYTASS",
+        "tx_source_muxed_id": "9223372036854775809",
+        "op_source_muxed": "MCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYSABAAAAAAAAAAHEDG",
+        "op_source_base": "GCEEGHHIIPPVJASQP7P5QVCNVKXB52PNQLHW3SLG6GMT3SLXUKAYTASS",
+        "op_source_muxed_id": "9007199254740993",
+        "destination_muxed": "MB4PTBTAUA3W67JRDXTBI5LOUBOCCNP5LUDQ5MLSO46SJCFYKNPEJ7777777777774BBM",
+        "destination_base": "GB4PTBTAUA3W67JRDXTBI5LOUBOCCNP5LUDQ5MLSO46SJCFYKNPEIW76",
+        "destination_muxed_id": "18446744073709551615",
+        "tx_and_op_source_same_base": true,
+        "amount": "10000000",
+        "asset": "native"
+      },
+      "related": [
+        {
+          "kind": "target",
+          "url": "https://github.com/stellar/wallet-backend/issues/716"
+        },
+        {
+          "kind": "target",
+          "url": "https://github.com/stellar/js-stellar-sdk/issues/1785"
+        }
+      ],
+      "evidence": null
+    },
+    {
+      "id": "cap0046-scmap-key-collision-01",
+      "title": "contract call whose argument and return value are an ScMap with keys u32 1, string \"1\", symbol \"1\"",
+      "cap": [
+        "CAP-0046"
+      ],
+      "sep": [],
+      "protocol": {
+        "introduced_in": 20,
+        "ledger": 30
+      },
+      "network": "testnet",
+      "network_passphrase": "Test SDF Network ; September 2015",
+      "source": {
+        "kind": "generated",
+        "ledger": 5710299,
+        "tx_hash": "1f6a62276eb5dcc8d8fcc728d0aebf3a6539bd3a63fc66bd0386978ac910bf00",
+        "generator": "corpus/gen/run.sh scmap-collision",
+        "generation_record": "corpus/entries/cap-0046/cap0046-scmap-key-collision-01/generation.json"
+      },
+      "synthetic": false,
+      "pattern": {
+        "id": "scmap-key-collision",
+        "description": "An ScMap whose keys have different ScVal types but the same text form (u32 1, string \"1\", symbol \"1\"). It is a valid map: keys are distinct and in host order (by type). Code that turns map keys into text, such as JavaScript object properties, merges them and loses entries. The map is the argument of a call to corpus/gen/contracts/map-echo, and its return value in the ledger meta."
+      },
+      "files": [
+        {
+          "path": "corpus/entries/cap-0046/cap0046-scmap-key-collision-01/FFA8DE24--5710299.xdr.zst",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr+zstd",
+          "layout": "galexie",
+          "sha256": "051eccfb8bb2a69f18019ae237073932f321c7eaa443e288f622db73d59c6bf6"
+        },
+        {
+          "path": "corpus/entries/cap-0046/cap0046-scmap-key-collision-01/ledger-5710299.LedgerCloseMetaBatch.xdr",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr",
+          "sha256": "e2641c416a4291848aded064d54ae649eb26cff2d21a5999123570a00c21d7ce"
+        },
+        {
+          "path": "corpus/entries/cap-0046/cap0046-scmap-key-collision-01/tx-1f6a62276eb5dcc8.TransactionEnvelope.xdr",
+          "xdr_type": "TransactionEnvelope",
+          "encoding": "xdr",
+          "sha256": "0df1a83ca66daec52aef24ccfa457d0836df53fd20168510fa5d64c164f4c9d0",
+          "derived_from": "corpus/entries/cap-0046/cap0046-scmap-key-collision-01/ledger-5710299.LedgerCloseMetaBatch.xdr"
+        }
+      ],
+      "core_validates": true,
+      "negative_probes": [],
+      "roundtrip": {
+        "byte_exact": true,
+        "tool": "stellar-xdr 30.0.0 (3c2aa43d2ab54d429ae44aa5143d805bf5dba7e2)"
+      },
+      "check_lcm_golden": null,
+      "expected": {
+        "lcm_version": "v2",
+        "ledger_seq": 5710299,
+        "ledger_protocol": 30,
+        "tx_hash": "1f6a62276eb5dcc8d8fcc728d0aebf3a6539bd3a63fc66bd0386978ac910bf00",
+        "tx_apply_index": 8,
+        "tx_envelope_type": "tx",
+        "tx_source_account": "GAFPJAS6N2RGJBSGMQW2P3ADMDUTTG4DHJQIKMFNFYDJRHRMSPRZCGFS",
+        "tx_result": "tx_success",
+        "op_index": 0,
+        "op_type": "invoke_host_function",
+        "op_source_account": null,
+        "op_result": "success"
+      },
+      "extra": {
+        "contract": "CD4J2PQX7UVMWGMCJCF6SXJCIKL7IEHQ6743JPKQOEYFUQ3HDOMKZZ2R",
+        "function": "echo",
+        "arg_map_entries": 3,
+        "arg_map_keys": [
+          {
+            "type": "u32",
+            "value": 1
+          },
+          {
+            "type": "string",
+            "value": "1"
+          },
+          {
+            "type": "symbol",
+            "value": "1"
+          }
+        ],
+        "keys_text_form_equal": true,
+        "return_map_entries": 3,
+        "return_equals_arg": true,
+        "wasm_sha256": "d0e2d38ddebe43b4d29dd876a51a850a85a6d8437d725546ce22d8020f34bb1b"
+      },
+      "related": [
+        {
+          "kind": "sighting",
+          "url": "https://github.com/stellar/js-stellar-sdk/issues/1789"
+        }
+      ],
+      "evidence": "conformance/README.md"
     }
   ]
 }

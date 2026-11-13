@@ -1,4 +1,4 @@
-module github.com/xdr-corpus-evidence/gen
+module github.com/rumblefishdev/xdr-corpus-evidence/corpus/gen
 
 go 1.25.9
 

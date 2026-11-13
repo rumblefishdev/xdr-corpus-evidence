@@ -1,0 +1,171 @@
+{
+  "sdk": "@stellar/stellar-sdk",
+  "version": "17.3.0",
+  "results": [
+    {
+      "entry": "cap0040-signed-payload-signer-01",
+      "verdict": "pass",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "252 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "no maps"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "no muxed addresses"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": true,
+          "detail": "protocol 28 ledger, byte-exact"
+        }
+      ]
+    },
+    {
+      "entry": "cap0027-muxed-sac-destination-01",
+      "verdict": "pass",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "676 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "no maps"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "2 muxed address(es) round-trip"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": true,
+          "detail": "protocol 30 ledger, byte-exact"
+        }
+      ]
+    },
+    {
+      "entry": "lp-issuer-order-01",
+      "verdict": "pass",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "732 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "no maps"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "no muxed addresses"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": true,
+          "detail": "protocol 30 ledger, byte-exact"
+        }
+      ]
+    },
+    {
+      "entry": "cap0027-muxed-classic-payment-01",
+      "verdict": "pass",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "276 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "no maps"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "3 muxed address(es) round-trip"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": true,
+          "detail": "protocol 30 ledger, byte-exact"
+        }
+      ]
+    },
+    {
+      "entry": "cap0046-scmap-key-collision-01",
+      "verdict": "pass",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "408 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "map of 3: rejected with an error (scvMap has more than one key that converts to \"1\"; read the )"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "no muxed addresses"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": true,
+          "detail": "protocol 30 ledger, byte-exact"
+        }
+      ]
+    }
+  ]
+}
