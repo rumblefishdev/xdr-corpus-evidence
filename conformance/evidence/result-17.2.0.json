@@ -1,0 +1,171 @@
+{
+  "sdk": "@stellar/stellar-sdk",
+  "version": "17.2.0",
+  "results": [
+    {
+      "entry": "cap0040-signed-payload-signer-01",
+      "verdict": "pass",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "252 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "no maps"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "no muxed addresses"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": true,
+          "detail": "protocol 28 ledger, byte-exact"
+        }
+      ]
+    },
+    {
+      "entry": "cap0027-muxed-sac-destination-01",
+      "verdict": "pass",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "676 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "no maps"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "2 muxed address(es) round-trip"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": false,
+          "detail": "LedgerCloseMetaBatch.ledgerCloseMetas[0].v2.v2.ledgerHeader.header.scpValue.ext.v: unknown enum value 3"
+        }
+      ]
+    },
+    {
+      "entry": "lp-issuer-order-01",
+      "verdict": "mishandled",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "732 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": false,
+          "detail": "Assets are not in lexicographic order"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "no maps"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "no muxed addresses"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": false,
+          "detail": "LedgerCloseMetaBatch.ledgerCloseMetas[0].v2.v2.ledgerHeader.header.scpValue.ext.v: unknown enum value 3"
+        }
+      ]
+    },
+    {
+      "entry": "cap0027-muxed-classic-payment-01",
+      "verdict": "pass",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "276 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": true,
+          "detail": "no maps"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "3 muxed address(es) round-trip"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": false,
+          "detail": "LedgerCloseMetaBatch.ledgerCloseMetas[0].v2.v2.ledgerHeader.header.scpValue.ext.v: unknown enum value 3"
+        }
+      ]
+    },
+    {
+      "entry": "cap0046-scmap-key-collision-01",
+      "verdict": "mishandled",
+      "checks": [
+        {
+          "name": "xdr-roundtrip",
+          "ok": true,
+          "detail": "408 bytes"
+        },
+        {
+          "name": "tx-roundtrip",
+          "ok": true,
+          "detail": "parsed, hash ok, re-encodes identically"
+        },
+        {
+          "name": "scval-maps",
+          "ok": false,
+          "detail": "scValToNative returned 1 of 3 map entries, with no error"
+        },
+        {
+          "name": "muxed",
+          "ok": true,
+          "detail": "no muxed addresses"
+        }
+      ],
+      "info": [
+        {
+          "name": "ledger-decode (info)",
+          "ok": false,
+          "detail": "LedgerCloseMetaBatch.ledgerCloseMetas[0].v2.v2.ledgerHeader.header.scpValue.ext.v: unknown enum value 3"
+        }
+      ]
+    }
+  ]
+}

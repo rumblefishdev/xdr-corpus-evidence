@@ -1,0 +1,11 @@
+{
+  "_comment": "Expected verdict per SDK version and corpus entry; entries not listed are expected to pass. Read by run.sh.",
+  "17.2.0": {
+    "lp-issuer-order-01": "mishandled",
+    "cap0046-scmap-key-collision-01": "mishandled"
+  },
+  "17.2.1": {
+    "cap0046-scmap-key-collision-01": "mishandled"
+  },
+  "17.3.0": {}
+}

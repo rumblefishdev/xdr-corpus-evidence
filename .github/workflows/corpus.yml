@@ -23,13 +23,13 @@ jobs:
           pipx run --spec check-jsonschema==0.29.4 check-jsonschema --check-metaschema corpus/manifest.schema.json
           pipx run --spec check-jsonschema==0.29.4 check-jsonschema --schemafile corpus/manifest.schema.json corpus/manifest.json
 
-  conformance-1766:
-    # js-stellar-sdk #1766 on corpus entry lp-issuer-order-01: 17.2.0 = mishandled, 17.2.1 = pass
+  conformance:
+    # every corpus entry through js-stellar-sdk 17.2.0 / 17.2.1 / 17.3.0; verdicts must match conformance/expected.json
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Run the entry through @stellar/stellar-sdk before and after the fix
-        run: conformance-1766/run.sh
+      - name: Run all corpus entries through three SDK releases (#1766 and #1789 before/after)
+        run: conformance/run.sh
 
   sighting-729:
     # wallet-backend #729 on corpus entry cap0040-signed-payload-signer-01, from a clean checkout:
