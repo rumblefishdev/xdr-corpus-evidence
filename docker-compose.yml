@@ -1,0 +1,51 @@
+# Local infrastructure for the wallet-backend #729 reproduction.
+# Images and startup commands mirror wallet-backend's own setup:
+#   - object store: internal/integrationtests/infrastructure/containers.go (SeaweedFS, bucket "ledgers")
+#   - database:     docker-compose.yaml (TimescaleDB 2.28.2 on PostgreSQL 17)
+# The S3 gateway runs without auth; the AWS SDK only needs non-empty dummy keys (test/test).
+name: xdr-corpus-evidence
+
+services:
+  s3:
+    image: chrislusf/seaweedfs:4.46
+    entrypoint: ["sh", "-c"]
+    command:
+      - >-
+        weed server -dir=/data -s3 &
+        until echo s3.bucket.list | weed shell -master localhost:9333 2>/dev/null | grep -q ledgers; do
+        echo s3.bucket.create -name ledgers | weed shell -master localhost:9333 2>/dev/null; sleep 1; done; wait
+    ports:
+      - "8333:8333"
+    healthcheck:
+      test: ["CMD-SHELL", "echo s3.bucket.list | weed shell -master localhost:9333 2>/dev/null | grep -q ledgers"]
+      interval: 3s
+      timeout: 10s
+      retries: 40
+
+  db:
+    image: timescale/timescaledb:2.28.2-pg17
+    command: ["postgres", "-c", "timescaledb.enable_chunk_skipping=on", "-c", "timescaledb.enable_sparse_index_bloom=on"]
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: postgres
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 5s
+      retries: 40
+
+  # One-shot exporter: `docker compose run --rm galexie scan-and-fill --start N --end N --config-file /config/testnet.toml`
+  galexie:
+    image: stellar/stellar-galexie:30.0.1
+    profiles: ["export"]
+    depends_on:
+      s3:
+        condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_REGION: us-east-1
+    volumes:
+      - ./galexie:/config:ro

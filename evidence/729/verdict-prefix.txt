@@ -1,0 +1,7 @@
+variant:          prefix
+commit:           2a0a84ea12523b6c92e278c0c84b443041240095
+tx persisted:     0
+signer (decoded): <none>
+account:          <none>
+signer weight:    <none>
+verdict:          dropped

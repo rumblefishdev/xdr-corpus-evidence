@@ -1,0 +1,17 @@
+# Galexie config: export testnet ledgers into the local SeaweedFS bucket, in the layout wallet-backend reads.
+admin_port = 6061
+
+[datastore_config]
+type = "S3"
+
+[datastore_config.params]
+destination_bucket_path = "ledgers/testnet"
+region = "us-east-1"
+endpoint_url = "http://s3:8333"
+
+[datastore_config.schema]
+ledgers_per_file = 1
+files_per_partition = 64000
+
+[stellar_core_config]
+network = "testnet"

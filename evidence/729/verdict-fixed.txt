@@ -1,0 +1,7 @@
+variant:          fixed
+commit:           2c873353c1f0f3c9b145e25a7d009023ad104a1c
+tx persisted:     1
+signer (decoded): PBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSAAAAAAB55LN6AANMS
+account:          GBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSBB7B
+signer weight:    1
+verdict:          pass

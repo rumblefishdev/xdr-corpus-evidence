@@ -1,0 +1,14 @@
+time="2026-11-13T11:41:40.086+01:00" level=info msg="📦 Git Commit: " pid=179050
+time="2026-11-13T11:41:40.086+01:00" level=info msg="📦 Version: 0.2.0" pid=179050
+time="2026-11-13T11:41:40.086+01:00" level=debug msg="Setting log level to: info" pid=179050
+SDK 2026/11/13 11:41:40 WARN Response has no supported checksum. Not validating response payload.
+time="2026-11-13T11:41:40.096+01:00" level=info msg="Using datastore backend with buffer size 100, 10 workers" pid=179050
+SDK 2026/11/13 11:41:40 WARN Response has no supported checksum. Not validating response payload.
+time="2026-11-13T11:41:40.107+01:00" level=info msg="Using datastore backend with buffer size 100, 10 workers" pid=179050
+SDK 2026/11/13 11:41:40 WARN Response has no supported checksum. Not validating response payload.
+time="2026-11-13T11:41:40.129+01:00" level=info msg="Batch 1/1 [4437357 - 4437357] completed: 1 ledgers in 25.635083ms" pid=179050
+time="2026-11-13T11:41:40.129+01:00" level=info msg="Backfilling completed: 0/1 batches failed" pid=179050
+time="2026-11-13T11:41:40.139+01:00" level=info msg="Progressive compression complete: 0 total chunks compressed" pid=179050
+time="2026-11-13T11:41:40.139+01:00" level=info msg="Backfilling completed in 25.719141ms: 1 batches" pid=179050
+time="2026-11-13T11:41:40.139+01:00" level=info msg="Shutting down servers..." pid=179050
+time="2026-11-13T11:41:40.139+01:00" level=info msg="Servers gracefully stopped" pid=179050
