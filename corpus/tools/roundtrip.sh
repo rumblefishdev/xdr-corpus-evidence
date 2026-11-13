@@ -3,11 +3,11 @@
 #   * sha256 matches the manifest,
 #   * .xdr.zst decompresses to bytes that decode,
 #   * decode -> encode is byte-exact (stellar CLI = rs-stellar-xdr).
-# Usage: scripts/roundtrip.sh   (STELLAR=<cli path> to override the pinned CLI)
+# Usage: corpus/tools/roundtrip.sh   (STELLAR=<cli path> to override the pinned CLI)
 set -euo pipefail
-ROOT=$(cd "$(dirname "$0")/.." && pwd)
+ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$ROOT"
-STELLAR=${STELLAR:-$(scripts/get-stellar-cli.sh | tail -1)}
+STELLAR=${STELLAR:-$(corpus/tools/get-stellar-cli.sh | tail -1)}
 echo "decoder: $("$STELLAR" --version | sed -n 2p)"
 
 TMP=$(mktemp -d)

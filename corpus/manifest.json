@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "manifest_version": "0.1.0-draft",
-  "generated_by": "scripts/build-manifest.py",
+  "generated_by": "corpus/tools/build-manifest.py",
   "entries": [
     {
       "id": "cap0040-signed-payload-signer-01",
@@ -32,17 +32,24 @@
       },
       "files": [
         {
-          "path": "corpus/cap-0040/cap0040-signed-payload-signer-01/FFBC4A92--4437357.xdr.zst",
+          "path": "corpus/entries/cap-0040/cap0040-signed-payload-signer-01/FFBC4A92--4437357.xdr.zst",
           "xdr_type": "LedgerCloseMetaBatch",
           "encoding": "xdr+zstd",
           "layout": "galexie",
           "sha256": "afaad11d33b71f2754eaf04a96924f3245621d35c613ff1c53f7e7a734751d4f"
         },
         {
-          "path": "corpus/cap-0040/cap0040-signed-payload-signer-01/ledger-4437357.LedgerCloseMetaBatch.xdr",
+          "path": "corpus/entries/cap-0040/cap0040-signed-payload-signer-01/ledger-4437357.LedgerCloseMetaBatch.xdr",
           "xdr_type": "LedgerCloseMetaBatch",
           "encoding": "xdr",
           "sha256": "c7d9fc65963658f108755435a97b8da4d22d4dd4ae9672a6d87d5b1ded395c56"
+        },
+        {
+          "path": "corpus/entries/cap-0040/cap0040-signed-payload-signer-01/tx-d9f78749cd01297c.TransactionEnvelope.xdr",
+          "xdr_type": "TransactionEnvelope",
+          "encoding": "xdr",
+          "sha256": "7bbbcb0681f9b7b8310547745fdfd59203f0c39f0684360aafa46de8ccdf90b7",
+          "derived_from": "corpus/entries/cap-0040/cap0040-signed-payload-signer-01/ledger-4437357.LedgerCloseMetaBatch.xdr"
         }
       ],
       "core_validates": true,
@@ -85,7 +92,7 @@
           "url": "https://github.com/stellar/wallet-backend/issues/716"
         }
       ],
-      "evidence": "evidence/729/README.md"
+      "evidence": "sighting-729/README.md"
     },
     {
       "id": "cap0027-muxed-sac-destination-01",
@@ -108,8 +115,8 @@
         "kind": "generated",
         "ledger": 5708671,
         "tx_hash": "166eadcbe815f7158d90691fa2c4dfa978ab2a7c5aa3e481a56435862f693cf6",
-        "generator": "gen/run.sh muxed-soroban",
-        "generation_record": "corpus/cap-0027/cap0027-muxed-sac-destination-01/generation.json"
+        "generator": "corpus/gen/run.sh muxed-soroban",
+        "generation_record": "corpus/entries/cap-0027/cap0027-muxed-sac-destination-01/generation.json"
       },
       "synthetic": false,
       "pattern": {
@@ -118,17 +125,24 @@
       },
       "files": [
         {
-          "path": "corpus/cap-0027/cap0027-muxed-sac-destination-01/FFA8E480--5708671.xdr.zst",
+          "path": "corpus/entries/cap-0027/cap0027-muxed-sac-destination-01/FFA8E480--5708671.xdr.zst",
           "xdr_type": "LedgerCloseMetaBatch",
           "encoding": "xdr+zstd",
           "layout": "galexie",
           "sha256": "c892a1f1c81918d860873b4dccc1ebebd5164df37deb7970cb07685c864e2839"
         },
         {
-          "path": "corpus/cap-0027/cap0027-muxed-sac-destination-01/ledger-5708671.LedgerCloseMetaBatch.xdr",
+          "path": "corpus/entries/cap-0027/cap0027-muxed-sac-destination-01/ledger-5708671.LedgerCloseMetaBatch.xdr",
           "xdr_type": "LedgerCloseMetaBatch",
           "encoding": "xdr",
           "sha256": "2da217cec724edbab01fb17cab8afae80023ce43937104efd5a89eadee1e34cc"
+        },
+        {
+          "path": "corpus/entries/cap-0027/cap0027-muxed-sac-destination-01/tx-166eadcbe815f715.TransactionEnvelope.xdr",
+          "xdr_type": "TransactionEnvelope",
+          "encoding": "xdr",
+          "sha256": "6630fcc0c263f16465811e2116307e0c0b560afe239421be2305a3d3f36a41fc",
+          "derived_from": "corpus/entries/cap-0027/cap0027-muxed-sac-destination-01/ledger-5708671.LedgerCloseMetaBatch.xdr"
         }
       ],
       "core_validates": true,
@@ -207,8 +221,8 @@
         "kind": "generated",
         "ledger": 5708628,
         "tx_hash": "d765c2492db224c54c0b72ccff21c69d78f1dd1faa503e8661233b64b509190c",
-        "generator": "gen/run.sh lp-issuer-order",
-        "generation_record": "corpus/cap-0038/lp-issuer-order-01/generation.json"
+        "generator": "corpus/gen/run.sh lp-issuer-order",
+        "generation_record": "corpus/entries/cap-0038/lp-issuer-order-01/generation.json"
       },
       "synthetic": false,
       "pattern": {
@@ -217,17 +231,24 @@
       },
       "files": [
         {
-          "path": "corpus/cap-0038/lp-issuer-order-01/FFA8E4AB--5708628.xdr.zst",
+          "path": "corpus/entries/cap-0038/lp-issuer-order-01/FFA8E4AB--5708628.xdr.zst",
           "xdr_type": "LedgerCloseMetaBatch",
           "encoding": "xdr+zstd",
           "layout": "galexie",
           "sha256": "878fcbc7ca1b33bc1a7dc494bac12bbb5f2646b8f8a8a5d059d2aa973e6a4fc2"
         },
         {
-          "path": "corpus/cap-0038/lp-issuer-order-01/ledger-5708628.LedgerCloseMetaBatch.xdr",
+          "path": "corpus/entries/cap-0038/lp-issuer-order-01/ledger-5708628.LedgerCloseMetaBatch.xdr",
           "xdr_type": "LedgerCloseMetaBatch",
           "encoding": "xdr",
           "sha256": "d50d038a3ae5a35c2d6ab846e7fbdca7443c810c20436aee5879d62cc16c5994"
+        },
+        {
+          "path": "corpus/entries/cap-0038/lp-issuer-order-01/tx-d765c2492db224c5.TransactionEnvelope.xdr",
+          "xdr_type": "TransactionEnvelope",
+          "encoding": "xdr",
+          "sha256": "7270d3f352408c746e94a15cfff9773f19e1371aea0c9d2ee323558fb12c2c91",
+          "derived_from": "corpus/entries/cap-0038/lp-issuer-order-01/ledger-5708628.LedgerCloseMetaBatch.xdr"
         }
       ],
       "core_validates": true,
@@ -274,7 +295,7 @@
           "url": "https://github.com/stellar/js-stellar-sdk/pull/1766"
         }
       ],
-      "evidence": null
+      "evidence": "conformance-1766/README.md"
     }
   ]
 }

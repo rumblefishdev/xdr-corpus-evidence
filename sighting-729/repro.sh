@@ -2,7 +2,7 @@
 # Reproduce wallet-backend #729: a CAP-40 signed-payload signer (P... strkey) added by set_options
 # in testnet ledger 4437357 cannot be persisted by the pre-fix commit; the fix stores it.
 #
-# Usage: scripts/repro-729.sh [--from-corpus] [--clean]
+# Usage: sighting-729/repro.sh [--from-corpus] [--clean]
 #   --from-corpus  upload the committed ledger file to the local S3 instead of exporting it with
 #                  Galexie (no testnet history archive needed; survives a testnet reset)
 #   --clean        remove the local S3/DB containers and volumes first
@@ -24,9 +24,9 @@ LEDGER=4437357
 TX_HASH=d9f78749cd01297cd5f22c7f2c798c9eec93d56f399e1c4cc2f8977ca52b9fed
 EXPECTED_SIGNER=PBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSAAAAAAB55LN6AANMS
 EXPECTED_ACCOUNT=GBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSBB7B
-CORPUS_DIR=corpus/cap-0040/cap0040-signed-payload-signer-01
+CORPUS_DIR=corpus/entries/cap-0040/cap0040-signed-payload-signer-01
 OBJECT_KEY=testnet/FFBC9DFF--4416000-4479999/FFBC4A92--4437357.xdr.zst
-OUT=evidence/729
+OUT=sighting-729/evidence
 PG="psql -h localhost -p 5433 -U postgres -v ON_ERROR_STOP=1"
 export PGCONNECT_TIMEOUT=5
 
@@ -40,16 +40,17 @@ for a in "$@"; do
   esac
 done
 
+compose() { docker compose -f "$ROOT/infra/docker-compose.yml" "$@"; }
 step() { printf '\n\033[1m==> %s\033[0m\n' "$*"; }
-mkdir -p "$OUT" bin
+mkdir -p "$OUT"
 
 # --- 1. local S3 + database -------------------------------------------------------------------
 if [ $CLEAN = 1 ]; then
   step "Removing old containers and volumes"
-  docker compose down -v --remove-orphans
+  compose down -v --remove-orphans
 fi
 step "Starting SeaweedFS (S3 :8333) and TimescaleDB (:5433)"
-docker compose up -d --wait s3 db
+compose up -d --wait s3 db
 
 # --- 2. put ledger 4437357 in the data lake ---------------------------------------------------
 if [ $FROM_CORPUS = 1 ]; then
@@ -62,7 +63,7 @@ if [ $FROM_CORPUS = 1 ]; then
 else
   step "Exporting ledgers $LEDGER..$((LEDGER + 1)) with Galexie (captive core catches up from the testnet archive)"
   # Galexie requires end > start; 4437358 is exported too and is harmless.
-  docker compose run --rm galexie scan-and-fill --start $LEDGER --end $((LEDGER + 1)) \
+  compose run --rm galexie scan-and-fill --start $LEDGER --end $((LEDGER + 1)) \
     --config-file /config/testnet.toml > "$OUT/galexie-export.log" 2>&1 ||
     { tail -20 "$OUT/galexie-export.log"; exit 1; }
   # captive core logs the network root secret (sha256 of the passphrase; public, but keep secrets out of the repo)
@@ -70,12 +71,13 @@ else
     "$OUT/galexie-export.log"
 fi
 
+STELLAR=${STELLAR:-$(corpus/tools/get-stellar-cli.sh | tail -1)}
 step "Verifying the exported object against the committed corpus file"
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 curl -sf -o "$TMP/l.xdr.zst" "http://localhost:8333/ledgers/$OBJECT_KEY"
 zstd -qdc "$TMP/l.xdr.zst" > "$TMP/l.xdr"
-stellar xdr decode --type LedgerCloseMetaBatch --input single --output json "$TMP/l.xdr" > "$TMP/l.json"
+"$STELLAR" xdr decode --type LedgerCloseMetaBatch --input single --output json "$TMP/l.xdr" > "$TMP/l.json"
 grep -q "$TX_HASH" "$TMP/l.json" || { echo "tx $TX_HASH not in exported ledger" >&2; exit 1; }
 grep -q "$EXPECTED_SIGNER" "$TMP/l.json" || { echo "signer $EXPECTED_SIGNER not in exported ledger" >&2; exit 1; }
 echo "tx $TX_HASH and signer ${EXPECTED_SIGNER:0:8}... present"
@@ -85,7 +87,7 @@ else
   # A fresh captive-core replay is not byte-reproducible: Soroban txs carry wall-clock
   # core_metrics diagnostic events and may order ledger-entry changes differently.
   # The ledger header and the #729 transaction's meta must still match exactly.
-  stellar xdr decode --type LedgerCloseMetaBatch --input single --output json \
+  "$STELLAR" xdr decode --type LedgerCloseMetaBatch --input single --output json \
     "$CORPUS_DIR/ledger-4437357.LedgerCloseMetaBatch.xdr" > "$TMP/c.json"
   pick() { jq -cS --arg h "$TX_HASH" '.ledger_close_metas[0].v2 |
     [.ledger_header, (.tx_processing[] | select(.result.transaction_hash == $h))]' "$1"; }
@@ -99,21 +101,21 @@ else
 fi
 
 # --- 3. build, migrate, seed, backfill, verdict ----------------------------------------------
-# shellcheck source=env-729.sh
-. scripts/env-729.sh
+# shellcheck source=env.sh
+. sighting-729/env.sh
 
 run_variant() { # <name> <commit>
-  local name=$1 commit=$2 db=wb_$1 bin=bin/wallet-backend-$1
+  local name=$1 commit=$2 db=wb_$1 bin=.cache/wb-bin/wallet-backend-$1
   if [ ! -x "$bin" ]; then
     step "[$name] Building wallet-backend at $commit"
-    scripts/build-wallet-backend.sh "$commit" "$bin"
+    sighting-729/build-wallet-backend.sh "$commit" "$bin"
   fi
   step "[$name] Fresh database $db, migrations, backfill seed"
   $PG -qc "DROP DATABASE IF EXISTS $db WITH (FORCE)" -qc "CREATE DATABASE $db" 2>&1 | grep -v NOTICE || true
   $PG -d "$db" -qc "CREATE EXTENSION IF NOT EXISTS timescaledb" 2>&1 | grep -v NOTICE || true
   export DATABASE_URL="postgres://postgres@localhost:5433/$db?sslmode=disable"
   "$bin" migrate up > "$OUT/migrate-$name.log" 2>&1
-  $PG -d "$db" -qf scripts/seed-backfill.sql
+  $PG -d "$db" -qf sighting-729/seed-backfill.sql
 
   step "[$name] wallet-backend ingest (backfill $START_LEDGER..$END_LEDGER from the data lake)"
   local rc=0
@@ -121,7 +123,7 @@ run_variant() { # <name> <commit>
   echo "ingest exit code: $rc (not used for the verdict)"
   grep -E 'Batch .*(failed|completed)|Backfilling completed' "$OUT/ingest-$name.log" | sed 's/^time="[^"]*" //' | cut -c1-400
 
-  $PG -d "$db" -f scripts/query-729.sql > "$OUT/sql-$name.txt" 2>&1
+  $PG -d "$db" -f sighting-729/query.sql > "$OUT/sql-$name.txt" 2>&1
 
   local tx_rows signer_hex signer account_hex account weight
   tx_rows=$($PG -d "$db" -Atc "SELECT count(*) FROM transactions WHERE hash = decode('$TX_HASH','hex')")
@@ -131,8 +133,8 @@ run_variant() { # <name> <commit>
      WHERE ledger_number = $LEDGER AND state_change_category = 'SIGNER' AND state_change_reason = 'ADD' LIMIT 1")
   weight=$($PG -d "$db" -Atc "SELECT signer_weight_new FROM state_changes
      WHERE ledger_number = $LEDGER AND state_change_category = 'SIGNER' AND state_change_reason = 'ADD' LIMIT 1")
-  signer=$([ -n "$signer_hex" ] && python3 -I scripts/strkey.py "$signer_hex" || echo "")
-  account=$([ -n "$account_hex" ] && python3 -I scripts/strkey.py "$account_hex" || echo "")
+  signer=$([ -n "$signer_hex" ] && python3 -I sighting-729/strkey.py "$signer_hex" || echo "")
+  account=$([ -n "$account_hex" ] && python3 -I sighting-729/strkey.py "$account_hex" || echo "")
 
   local verdict
   if [ "$tx_rows" = 0 ]; then

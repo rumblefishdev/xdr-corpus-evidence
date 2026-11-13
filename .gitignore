@@ -1,3 +1,2 @@
 .cache/
-bin/
 corpus/**/*.decoded.json

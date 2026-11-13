@@ -37,9 +37,9 @@ services:
       retries: 40
 
   # Local standalone network for running gen/ offline:
-  #   docker compose --profile local up -d quickstart
+  #   docker compose -f infra/docker-compose.yml --profile local up -d quickstart
   #   RPC_URL=http://localhost:8000/rpc FRIENDBOT_URL=http://localhost:8000/friendbot \
-  #   NETWORK_PASSPHRASE="Standalone Network ; February 2017" gen/run.sh lp-issuer-order
+  #   NETWORK_PASSPHRASE="Standalone Network ; February 2017" corpus/gen/run.sh lp-issuer-order
   quickstart:
     image: stellar/quickstart:latest
     profiles: ["local"]
@@ -47,7 +47,7 @@ services:
     ports:
       - "8000:8000"
 
-  # One-shot exporter: `docker compose run --rm galexie scan-and-fill --start N --end N --config-file /config/testnet.toml`
+  # One-shot exporter: `docker compose -f infra/docker-compose.yml run --rm galexie scan-and-fill --start N --end N+1 --config-file /config/testnet.toml`
   galexie:
     image: stellar/stellar-galexie:30.0.1
     profiles: ["export"]

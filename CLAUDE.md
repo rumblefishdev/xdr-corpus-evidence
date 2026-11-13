@@ -19,14 +19,22 @@ This repo produces all three. The team: Marek (owner) and Oskar. The plan lives 
 Decisions already made (2026-11-13): apply for RFP 9; full $65K budget including the linter; repo public; use the
 **Galexie data lake path** (not RPC `getLedgers`) because wallet-backend reads it and it is simpler.
 
+## Current layout (2026-11-13)
+
+Organised by deliverable; `README.md` maps each folder to RFP §4. `infra/` (compose + Galexie config),
+`corpus/` (entries/, manifest + schema, gen/, tools/), `sighting-729/` (#729 repro, harness prototype),
+`conformance-1766/` (js-stellar-sdk #1766 on entry lp-issuer-order-01: 17.2.0 mishandled, 17.2.1 pass; conformance-runner
+prototype). Each entry also stores its target tx envelope (`tx-<hash>.TransactionEnvelope.xdr`), because SDKs can lag on
+ledger-meta types (17.2.x can't decode protocol-30 LCM). Paths in the plan sections below are the old ones.
+
 ## Done (2026-11-13): reproduce wallet-backend #729 (sighting)
 
-Status: reproduced; `scripts/repro-729.sh` passes (pre-fix = dropped, fixed = pass). Evidence + write-up in
-`evidence/729/README.md`. Corrections to the plan below, learned while doing it:
+Status: reproduced; `sighting-729/repro.sh` passes (pre-fix = dropped, fixed = pass). Evidence + write-up in
+`sighting-729/README.md`. Corrections to the plan below, learned while doing it:
 - Galexie `scan-and-fill` rejects start = end; export 4437357..4437358.
 - Backfill on an empty DB also needs a row in `transactions` (oldest ledger comes from there, not `ingest_store`);
-  see `scripts/seed-backfill.sql`. Seeding only `latest_ingest_ledger` gives "No gaps to backfill".
-- `ingest` also requires `STELLAR_ENVIRONMENT`. Full env: `scripts/env-729.sh`. DB runs on port **5433**.
+  see `sighting-729/seed-backfill.sql`. Seeding only `latest_ingest_ledger` gives "No gaps to backfill".
+- `ingest` also requires `STELLAR_ENVIRONMENT`. Full env: `sighting-729/env.sh`. DB runs on port **5433**.
 - Backfill exits 0 even when a batch fails: verdicts must come from the DB.
 - Galexie re-exports are NOT byte-identical (Soroban `core_metrics` diagnostic timings, change ordering). The committed
   file is canonical; compare re-exports only on a normalized view. Relevant for the manifest schema (sha256 of captured file).
@@ -83,8 +91,8 @@ wallet-backend PR #729 (https://github.com/stellar/wallet-backend/pull/729): a C
    Expected: an encode error on `signer_account_id`, and the transaction is not persisted. Save the full log.
 7. **Run the fixed commit the same way** on a fresh DB. Expected: `Backfilling completed …`. Query `state_changes` for the tx:
    `signer_account_id` must decode to the full `PBCK2RYY…AANMS`. Optionally, GraphQL `signerAddress` returns it.
-8. **Save evidence** into `evidence/729/`: both logs, SQL output, decoded XDR, and an asciinema recording of steps 6–7.
-9. **Automate:** `scripts/repro-729.sh` builds, exports, runs both, and asserts. It must fail on pre-fix and pass on the fix, the
+8. **Save evidence** into `sighting-729/evidence/`: both logs, SQL output, decoded XDR, and an asciinema recording of steps 6–7.
+9. **Automate:** `sighting-729/repro.sh` builds, exports, runs both, and asserts. It must fail on pre-fix and pass on the fix, the
    same shape as the future harness verdict (pass / mishandled / dropped). A reviewer must be able to rerun it from the
    README in under 30 minutes.
 
@@ -106,7 +114,7 @@ See `corpus/README.md` (entries, schema decisions, findings). Deviations from th
   The RFP also asks for a "muxed source" pattern; that needs a classic-tx entry (not done yet).
 - Decided: keep both `protocol.introduced_in` and `protocol.ledger`; fixed `expected` core + per-pattern `extra`.
   `synthetic` = hand-crafted bytes only (all three entries are `false`).
-- Protocol-30 ledgers need stellar CLI ≥ 30 (`scripts/get-stellar-cli.sh`); the installed 23.4.1 fails on them.
+- Protocol-30 ledgers need stellar CLI ≥ 30 (`corpus/tools/get-stellar-cli.sh`); the installed 23.4.1 fails on them.
 - Not yet done: mainnet passphrase for generators (only testnet + standalone tested), `--check-lcm` goldens.
 
 ## Original plan for the tasks after #729 (same repo)

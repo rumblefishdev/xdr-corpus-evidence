@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Build wallet-backend at a given commit inside a golang container (no local Go needed).
-# Usage: scripts/build-wallet-backend.sh <commit> <output-binary>
+# Usage: sighting-729/build-wallet-backend.sh <commit> <output-binary>
 set -euo pipefail
 
 COMMIT=${1:?commit}

@@ -10,12 +10,12 @@ For each entry the script also checks:
   * decode -> encode of the .xdr file is byte-exact,
   * the target tx is in the ledger and succeeded.
 
-Usage: scripts/build-manifest.py [--check]
-       scripts/build-manifest.py --regen-check <entry-id> <dir>
+Usage: corpus/tools/build-manifest.py [--check]
+       corpus/tools/build-manifest.py --regen-check <entry-id> <dir>
   --check        do not write; exit 1 if corpus/manifest.json differs from what would be written
-  --regen-check  build the entry from a regenerated <dir> (see scripts/regen-entry.sh) and compare it with
+  --regen-check  build the entry from a regenerated <dir> (see corpus/tools/regen-entry.sh) and compare it with
                  the committed entry on the fields that must not change (COMMON_INVARIANTS + "invariants")
-Env: STELLAR=<path to stellar CLI> (default: scripts/get-stellar-cli.sh)
+Env: STELLAR=<path to stellar CLI> (default: corpus/tools/get-stellar-cli.sh)
 """
 import base64
 import hashlib
@@ -26,7 +26,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 MANIFEST = ROOT / "corpus" / "manifest.json"
 TESTNET = "Test SDF Network ; September 2015"
 
@@ -38,7 +38,7 @@ ENTRIES = [
         "cap": ["CAP-0040"],
         "sep": ["SEP-0023"],
         "introduced_in": 19,
-        "dir": "corpus/cap-0040/cap0040-signed-payload-signer-01",
+        "dir": "corpus/entries/cap-0040/cap0040-signed-payload-signer-01",
         "ledger": 4437357,
         "tx_hash": "d9f78749cd01297cd5f22c7f2c798c9eec93d56f399e1c4cc2f8977ca52b9fed",
         "op_index": 0,
@@ -53,7 +53,7 @@ ENTRIES = [
             {"kind": "sighting", "url": "https://github.com/stellar/wallet-backend/pull/729"},
             {"kind": "sighting", "url": "https://github.com/stellar/wallet-backend/issues/716"},
         ],
-        "evidence": "evidence/729/README.md",
+        "evidence": "sighting-729/README.md",
         "invariants": ["extra.signer_key_type", "extra.signer_weight"],
     },
     {
@@ -62,12 +62,12 @@ ENTRIES = [
         "cap": ["CAP-0027", "CAP-0067"],
         "sep": ["SEP-0023", "SEP-0041"],
         "introduced_in": 23,
-        "dir": "corpus/cap-0027/cap0027-muxed-sac-destination-01",
+        "dir": "corpus/entries/cap-0027/cap0027-muxed-sac-destination-01",
         "ledger": 5708671,
         "tx_hash": None,  # from generation.json
         "op_index": 0,
         "source_kind": "generated",
-        "generator": "gen/run.sh muxed-soroban",
+        "generator": "corpus/gen/run.sh muxed-soroban",
         "pattern": {
             "id": "muxed-soroban-recipient",
             "description": "A Soroban SAC transfer whose `to` is an ScAddress of type MUXED_ACCOUNT. The event topic "
@@ -88,12 +88,12 @@ ENTRIES = [
         "cap": ["CAP-0038"],
         "sep": [],
         "introduced_in": 18,
-        "dir": "corpus/cap-0038/lp-issuer-order-01",
+        "dir": "corpus/entries/cap-0038/lp-issuer-order-01",
         "ledger": 5708628,
         "tx_hash": None,  # from generation.json
         "op_index": 5,
         "source_kind": "generated",
-        "generator": "gen/run.sh lp-issuer-order",
+        "generator": "corpus/gen/run.sh lp-issuer-order",
         "pattern": {
             "id": "lp-issuer-order",
             "description": "Two assets with the same code whose issuers' G... strkeys sort in the opposite order "
@@ -103,7 +103,7 @@ ENTRIES = [
         "related": [
             {"kind": "target", "url": "https://github.com/stellar/js-stellar-sdk/pull/1766"},
         ],
-        "evidence": None,
+        "evidence": "conformance-1766/README.md",
         "invariants": ["extra.asset_code", "extra.issuers_byte_order_a_lt_b", "extra.issuers_text_order_a_lt_b",
                        "extra.fee_bps"],
     },
@@ -123,7 +123,7 @@ B32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
 def stellar_bin():
     if os.environ.get("STELLAR"):
         return os.environ["STELLAR"]
-    out = subprocess.run([str(ROOT / "scripts" / "get-stellar-cli.sh")], check=True, capture_output=True, text=True)
+    out = subprocess.run([str(ROOT / "corpus" / "tools" / "get-stellar-cli.sh")], check=True, capture_output=True, text=True)
     return out.stdout.strip().splitlines()[-1]
 
 
@@ -223,6 +223,18 @@ def build_entry(e, entry_dir=None):
     if set(by_hash) != {p["result"]["transaction_hash"] for p in procs}:
         raise RuntimeError(f"{e['id']}: tx_set envelope hashes do not match tx_processing hashes")
     env = by_hash[tx_hash]
+
+    # Derived file: the target tx's envelope on its own, so an SDK that cannot decode this ledger's
+    # meta (newer protocol) can still be tested on the pattern. Re-encoded from the decode; its hash is
+    # the tx hash, so the bytes are the on-chain envelope.
+    env_bytes = cli("xdr", "encode", "--type", "TransactionEnvelope", "--input", "json", "--output", "single",
+                    data=json.dumps(env).encode())
+    env_file = d / f"tx-{tx_hash[:16]}.TransactionEnvelope.xdr"
+    if CHECK_ONLY:
+        if not env_file.exists() or env_file.read_bytes() != env_bytes:
+            raise RuntimeError(f"{rel(env_file)} is missing or differs from the envelope in the ledger")
+    else:
+        env_file.write_bytes(env_bytes)
     env_kind, env_body = one_key(env)
     tx = env_body["tx"]
     op = tx["operations"][e["op_index"]]
@@ -270,6 +282,8 @@ def build_entry(e, entry_dir=None):
              "layout": "galexie", "sha256": sha256(zst)},
             {"path": rel(xdr), "xdr_type": "LedgerCloseMetaBatch", "encoding": "xdr",
              "sha256": sha256(xdr)},
+            {"path": rel(env_file), "xdr_type": "TransactionEnvelope", "encoding": "xdr",
+             "sha256": sha256(env_file), "derived_from": rel(xdr)},
         ],
         "core_validates": True,
         "negative_probes": probes,
@@ -407,6 +421,9 @@ def regen_check(entry_id, entry_dir):
     sys.exit(0 if ok else 1)
 
 
+CHECK_ONLY = "--check" in sys.argv
+
+
 def main():
     if len(sys.argv) == 4 and sys.argv[1] == "--regen-check":
         regen_check(sys.argv[2], sys.argv[3])
@@ -414,13 +431,13 @@ def main():
     manifest = {
         "$schema": "./manifest.schema.json",
         "manifest_version": "0.1.0-draft",
-        "generated_by": "scripts/build-manifest.py",
+        "generated_by": "corpus/tools/build-manifest.py",
         "entries": [build_entry(e) for e in ENTRIES],
     }
     text = json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"
     if "--check" in sys.argv:
         if not MANIFEST.exists() or MANIFEST.read_text() != text:
-            print("corpus/manifest.json is out of date; run scripts/build-manifest.py", file=sys.stderr)
+            print("corpus/manifest.json is out of date; run corpus/tools/build-manifest.py", file=sys.stderr)
             sys.exit(1)
         print(f"manifest up to date: {len(manifest['entries'])} entries, all round-trip byte-exact")
         return

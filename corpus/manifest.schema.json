@@ -84,7 +84,8 @@
               "xdr_type": { "type": "string", "description": "rs-stellar-xdr / stellar CLI type name, e.g. LedgerCloseMetaBatch." },
               "encoding": { "enum": ["xdr", "xdr+zstd", "base64"] },
               "layout": { "enum": ["galexie"], "description": "Object naming scheme, if the file is a data-lake object." },
-              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "The captured file is canonical: re-exports of the same ledger are not byte-identical (Soroban diagnostic timings)." }
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "The captured file is canonical: re-exports of the same ledger are not byte-identical (Soroban diagnostic timings)." },
+              "derived_from": { "type": "string", "description": "Set when this file was extracted from another file of the entry (e.g. the target tx envelope from the ledger)." }
             }
           }
         },

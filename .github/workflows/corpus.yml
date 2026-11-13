@@ -15,10 +15,18 @@ jobs:
       - name: Install tools
         run: sudo apt-get update -qq && sudo apt-get install -y -qq zstd jq
       - name: Round-trip every corpus file (sha256 + decode/encode byte-exact)
-        run: scripts/roundtrip.sh
+        run: corpus/tools/roundtrip.sh
       - name: Manifest is up to date with the corpus files
-        run: python3 -I scripts/build-manifest.py --check
+        run: python3 -I corpus/tools/build-manifest.py --check
       - name: Validate the schema and the manifest
         run: |
           pipx run --spec check-jsonschema==0.29.4 check-jsonschema --check-metaschema corpus/manifest.schema.json
           pipx run --spec check-jsonschema==0.29.4 check-jsonschema --schemafile corpus/manifest.schema.json corpus/manifest.json
+
+  conformance-1766:
+    # js-stellar-sdk #1766 on corpus entry lp-issuer-order-01: 17.2.0 = mishandled, 17.2.1 = pass
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the entry through @stellar/stellar-sdk before and after the fix
+        run: conformance-1766/run.sh
