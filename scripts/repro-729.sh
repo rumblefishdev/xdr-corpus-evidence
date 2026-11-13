@@ -65,6 +65,9 @@ else
   docker compose run --rm galexie scan-and-fill --start $LEDGER --end $((LEDGER + 1)) \
     --config-file /config/testnet.toml > "$OUT/galexie-export.log" 2>&1 ||
     { tail -20 "$OUT/galexie-export.log"; exit 1; }
+  # captive core logs the network root secret (sha256 of the passphrase; public, but keep secrets out of the repo)
+  sed -i -E 's/(Root account seed: )S[A-Z2-7]{55}/\1<redacted: the network root key, sha256 of the testnet passphrase>/' \
+    "$OUT/galexie-export.log"
 fi
 
 step "Verifying the exported object against the committed corpus file"
