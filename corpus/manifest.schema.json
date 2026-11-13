@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/xdr-corpus-evidence/corpus/manifest.schema.json",
+  "title": "XDR corpus manifest (draft)",
+  "description": "Draft manifest for the RFP 9 XDR/CAP coverage corpus. RFP-required fields: id, cap, protocol, source, synthetic, expected. Values under expected/extra are derived from decoding the entry's files, never typed by hand.",
+  "type": "object",
+  "required": ["manifest_version", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "manifest_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.]+)?$" },
+    "generated_by": { "type": "string" },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "strkeyAccount": { "type": "string", "pattern": "^G[A-Z2-7]{55}$" },
+    "strkeyAnyAddress": { "type": "string", "pattern": "^[GMCPLBT][A-Z2-7]{55,}$" },
+    "hex32": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "uint64String": { "type": "string", "pattern": "^(0|[1-9][0-9]{0,19})$" },
+    "entry": {
+      "type": "object",
+      "required": ["id", "title", "cap", "sep", "protocol", "network", "network_passphrase", "source", "synthetic",
+                   "pattern", "files", "core_validates", "negative_probes", "roundtrip", "check_lcm_golden",
+                   "expected", "extra", "related"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Stable entry ID: <primary-tag>-<pattern>-<NN>.",
+          "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*-[0-9]{2}$"
+        },
+        "title": { "type": "string" },
+        "cap": {
+          "description": "CAPs whose rules the pattern depends on. The first is the primary tag.",
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^CAP-[0-9]{4}$" }
+        },
+        "sep": {
+          "description": "SEPs that define how the values are rendered or used (e.g. SEP-0023 strkeys, SEP-0041 token events).",
+          "type": "array", "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^SEP-[0-9]{4}$" }
+        },
+        "protocol": {
+          "description": "introduced_in: first protocol where the pattern can occur (from the CAP). ledger: protocol of the captured ledger (decoded). Both are kept: they answer different questions.",
+          "type": "object", "required": ["introduced_in", "ledger"], "additionalProperties": false,
+          "properties": {
+            "introduced_in": { "type": "integer", "minimum": 1 },
+            "ledger": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "network": { "enum": ["pubnet", "testnet", "futurenet", "local", "other"] },
+        "network_passphrase": { "type": "string" },
+        "source": {
+          "type": "object", "required": ["kind", "ledger", "tx_hash", "generator", "generation_record"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "description": "mined: found in network history. generated: submitted by a generator in gen/ to a real network, which emitted the meta. local: emitted by a local stellar-core. handcrafted: bytes built by hand (must be synthetic).",
+              "enum": ["mined", "generated", "local", "handcrafted"]
+            },
+            "ledger": { "type": "integer", "minimum": 2 },
+            "tx_hash": { "$ref": "#/$defs/hex32" },
+            "generator": { "type": ["string", "null"] },
+            "generation_record": { "type": ["string", "null"], "description": "JSON record the generator wrote (public keys, submissions, rejections). Never contains secrets." }
+          }
+        },
+        "synthetic": {
+          "description": "true only for hand-crafted XDR that stellar-core did not emit.",
+          "type": "boolean"
+        },
+        "pattern": {
+          "type": "object", "required": ["id", "description"], "additionalProperties": false,
+          "properties": { "id": { "type": "string" }, "description": { "type": "string" } }
+        },
+        "files": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["path", "xdr_type", "encoding", "sha256"], "additionalProperties": false,
+            "properties": {
+              "path": { "type": "string" },
+              "xdr_type": { "type": "string", "description": "rs-stellar-xdr / stellar CLI type name, e.g. LedgerCloseMetaBatch." },
+              "encoding": { "enum": ["xdr", "xdr+zstd", "base64"] },
+              "layout": { "enum": ["galexie"], "description": "Object naming scheme, if the file is a data-lake object." },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "The captured file is canonical: re-exports of the same ledger are not byte-identical (Soroban diagnostic timings)." }
+            }
+          }
+        },
+        "core_validates": {
+          "description": "true if stellar-core accepted the target tx into a ledger.",
+          "type": "boolean"
+        },
+        "negative_probes": {
+          "description": "Variants of the pattern that core rejected, recorded by the generator.",
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["variant", "stage", "result", "diagnostic"], "additionalProperties": false,
+            "properties": {
+              "variant": { "type": "string" },
+              "stage": { "enum": ["simulation", "submission", "apply"] },
+              "result": { "type": "string" },
+              "diagnostic": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "roundtrip": {
+          "type": "object", "required": ["byte_exact", "tool"], "additionalProperties": false,
+          "properties": { "byte_exact": { "const": true }, "tool": { "type": "string" } }
+        },
+        "check_lcm_golden": {
+          "description": "Path or URL of a stellar-core --check-lcm golden covering this ledger, or null if none is published.",
+          "type": ["string", "null"]
+        },
+        "expected": { "$ref": "#/$defs/expected" },
+        "extra": {
+          "description": "Pattern-specific decoded values. Free-form per pattern.id; the harness compares indexer output against these.",
+          "type": "object"
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["kind", "url"], "additionalProperties": false,
+            "properties": {
+              "kind": { "enum": ["sighting", "target", "fix", "spec"] },
+              "url": { "type": "string", "format": "uri" }
+            }
+          }
+        },
+        "evidence": { "type": ["string", "null"] }
+      },
+      "allOf": [
+        { "if": { "properties": { "source": { "properties": { "kind": { "const": "handcrafted" } } } } },
+          "then": { "properties": { "synthetic": { "const": true } } },
+          "else": { "properties": { "synthetic": { "const": false } } } },
+        { "if": { "properties": { "source": { "properties": { "kind": { "const": "generated" } } } } },
+          "then": { "properties": { "source": { "properties": { "generator": { "type": "string" }, "generation_record": { "type": "string" } } } } } }
+      ]
+    },
+    "expected": {
+      "description": "Fixed core of decoded values every entry has, for the target tx and operation.",
+      "type": "object",
+      "required": ["lcm_version", "ledger_seq", "ledger_protocol", "tx_hash", "tx_apply_index", "tx_envelope_type",
+                   "tx_source_account", "tx_result", "op_index", "op_type", "op_source_account", "op_result"],
+      "additionalProperties": false,
+      "properties": {
+        "lcm_version": { "enum": ["v0", "v1", "v2"] },
+        "ledger_seq": { "type": "integer", "minimum": 2 },
+        "ledger_protocol": { "type": "integer", "minimum": 1 },
+        "tx_hash": { "$ref": "#/$defs/hex32" },
+        "tx_apply_index": { "type": "integer", "minimum": 0 },
+        "tx_envelope_type": { "enum": ["tx_v0", "tx", "tx_fee_bump"] },
+        "tx_source_account": { "type": "string", "pattern": "^[GM][A-Z2-7]{55,68}$" },
+        "tx_result": { "type": "string" },
+        "op_index": { "type": "integer", "minimum": 0 },
+        "op_type": { "type": "string" },
+        "op_source_account": { "type": ["string", "null"], "pattern": "^[GM][A-Z2-7]{55,68}$" },
+        "op_result": { "type": "string" }
+      }
+    }
+  }
+}

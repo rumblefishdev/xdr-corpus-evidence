@@ -7,8 +7,8 @@ The RFP's reviewability section asks a proposal for three things:
 | Requirement | Status |
 | --- | --- |
 | Evidence of reproducing one sighting | **Done:** wallet-backend #729, see [`evidence/729/`](evidence/729/README.md) |
-| 2–3 sample corpus entries | 1 of 3: [`corpus/cap-0040/cap0040-signed-payload-signer-01`](corpus/cap-0040/cap0040-signed-payload-signer-01/) (manifest entry pending) |
-| Draft manifest schema | pending |
+| 2–3 sample corpus entries | **Done:** 3 entries (CAP-40 signed-payload signer, muxed SAC recipient, LP issuer order), see [`corpus/`](corpus/README.md) |
+| Draft manifest schema | **Done (draft):** [`corpus/manifest.schema.json`](corpus/manifest.schema.json) + generated [`corpus/manifest.json`](corpus/manifest.json) |
 
 ## Reproduce wallet-backend #729
 
@@ -44,7 +44,7 @@ The S3 keys `test`/`test` are dummies, because the local S3 runs without auth.
 ## Layout
 
 ```
-docker-compose.yml          local S3 (SeaweedFS) + TimescaleDB + Galexie exporter
+docker-compose.yml          local S3 (SeaweedFS) + TimescaleDB + Galexie exporter + local quickstart
 galexie/testnet.toml        Galexie config (S3 → ledgers/testnet, 1 ledger per file)
 scripts/
   repro-729.sh              end-to-end reproduction with verdicts
@@ -53,8 +53,14 @@ scripts/
   seed-backfill.sql         makes backfill possible on an empty DB (see evidence/729)
   query-729.sql             evidence queries
   strkey.py                 independent strkey encoder for the stored key bytes
-corpus/cap-0040/…           corpus entry files (ledger 4437357)
+  roundtrip.sh              sha256 + byte-exact decode/encode of every corpus file
+  build-manifest.py         derive corpus/manifest.json from the corpus files (--check in CI)
+  get-stellar-cli.sh        fetch the pinned stellar CLI 30.0.1 (sha256-checked)
+gen/                        corpus generators (Go, run in a container): muxed-soroban, lp-issuer-order
+corpus/                     manifest schema, manifest, entry files (see corpus/README.md)
 evidence/729/               logs, SQL output, decoded XDR, asciinema recording
+evidence/gen-local/         generator runs against a local quickstart network
+.github/workflows/          CI: round trip, manifest check, schema validation
 ```
 
 This repo is public from day one. It contains no credentials; the only keys are the dummy local S3 keys above.

@@ -1,0 +1,280 @@
+{
+  "$schema": "./manifest.schema.json",
+  "manifest_version": "0.1.0-draft",
+  "generated_by": "scripts/build-manifest.py",
+  "entries": [
+    {
+      "id": "cap0040-signed-payload-signer-01",
+      "title": "set_options adds an ed25519 signed-payload signer (P... strkey)",
+      "cap": [
+        "CAP-0040"
+      ],
+      "sep": [
+        "SEP-0023"
+      ],
+      "protocol": {
+        "introduced_in": 19,
+        "ledger": 28
+      },
+      "network": "testnet",
+      "network_passphrase": "Test SDF Network ; September 2015",
+      "source": {
+        "kind": "mined",
+        "ledger": 4437357,
+        "tx_hash": "d9f78749cd01297cd5f22c7f2c798c9eec93d56f399e1c4cc2f8977ca52b9fed",
+        "generator": null,
+        "generation_record": null
+      },
+      "synthetic": false,
+      "pattern": {
+        "id": "signed-payload-signer",
+        "description": "A signer key of type SIGNER_KEY_TYPE_ED25519_SIGNED_PAYLOAD: 32-byte ed25519 key plus a 1-64 byte payload, 40-100 bytes in all. Code that assumes signer keys are 32 bytes fails or truncates."
+      },
+      "files": [
+        {
+          "path": "corpus/cap-0040/cap0040-signed-payload-signer-01/FFBC4A92--4437357.xdr.zst",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr+zstd",
+          "layout": "galexie",
+          "sha256": "afaad11d33b71f2754eaf04a96924f3245621d35c613ff1c53f7e7a734751d4f"
+        },
+        {
+          "path": "corpus/cap-0040/cap0040-signed-payload-signer-01/ledger-4437357.LedgerCloseMetaBatch.xdr",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr",
+          "sha256": "c7d9fc65963658f108755435a97b8da4d22d4dd4ae9672a6d87d5b1ded395c56"
+        }
+      ],
+      "core_validates": true,
+      "negative_probes": [],
+      "roundtrip": {
+        "byte_exact": true,
+        "tool": "stellar-xdr 30.0.0 (3c2aa43d2ab54d429ae44aa5143d805bf5dba7e2)"
+      },
+      "check_lcm_golden": null,
+      "expected": {
+        "lcm_version": "v2",
+        "ledger_seq": 4437357,
+        "ledger_protocol": 28,
+        "tx_hash": "d9f78749cd01297cd5f22c7f2c798c9eec93d56f399e1c4cc2f8977ca52b9fed",
+        "tx_apply_index": 0,
+        "tx_envelope_type": "tx",
+        "tx_source_account": "GBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSBB7B",
+        "tx_result": "tx_success",
+        "op_index": 0,
+        "op_type": "set_options",
+        "op_source_account": null,
+        "op_result": "success"
+      },
+      "extra": {
+        "signer_key": "PBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSAAAAAAB55LN6AANMS",
+        "signer_key_type": "SIGNER_KEY_TYPE_ED25519_SIGNED_PAYLOAD",
+        "signer_key_payload_bytes": 40,
+        "signed_payload_hex": "deadbe",
+        "signed_payload_len": 3,
+        "signer_ed25519_hex": "44ad47185a30e91c245e8b0582b191e27d99fb40f9ff48ca0d7e1264ec879b20",
+        "signer_weight": 1
+      },
+      "related": [
+        {
+          "kind": "sighting",
+          "url": "https://github.com/stellar/wallet-backend/pull/729"
+        },
+        {
+          "kind": "sighting",
+          "url": "https://github.com/stellar/wallet-backend/issues/716"
+        }
+      ],
+      "evidence": "evidence/729/README.md"
+    },
+    {
+      "id": "cap0027-muxed-sac-destination-01",
+      "title": "native SAC transfer to a muxed account ScAddress (M... recipient)",
+      "cap": [
+        "CAP-0027",
+        "CAP-0067"
+      ],
+      "sep": [
+        "SEP-0023",
+        "SEP-0041"
+      ],
+      "protocol": {
+        "introduced_in": 23,
+        "ledger": 30
+      },
+      "network": "testnet",
+      "network_passphrase": "Test SDF Network ; September 2015",
+      "source": {
+        "kind": "generated",
+        "ledger": 5708671,
+        "tx_hash": "166eadcbe815f7158d90691fa2c4dfa978ab2a7c5aa3e481a56435862f693cf6",
+        "generator": "gen/run.sh muxed-soroban",
+        "generation_record": "corpus/cap-0027/cap0027-muxed-sac-destination-01/generation.json"
+      },
+      "synthetic": false,
+      "pattern": {
+        "id": "muxed-soroban-recipient",
+        "description": "A Soroban SAC transfer whose `to` is an ScAddress of type MUXED_ACCOUNT. The event topic carries the base G... account and the muxed id moves to a `to_muxed_id` data field. Readers that render the ScAddress as M... and store 32-byte keys truncate it. A muxed op or tx source on a Soroban tx is rejected by core since protocol 25 (see negative_probes)."
+      },
+      "files": [
+        {
+          "path": "corpus/cap-0027/cap0027-muxed-sac-destination-01/FFA8E480--5708671.xdr.zst",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr+zstd",
+          "layout": "galexie",
+          "sha256": "c892a1f1c81918d860873b4dccc1ebebd5164df37deb7970cb07685c864e2839"
+        },
+        {
+          "path": "corpus/cap-0027/cap0027-muxed-sac-destination-01/ledger-5708671.LedgerCloseMetaBatch.xdr",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr",
+          "sha256": "2da217cec724edbab01fb17cab8afae80023ce43937104efd5a89eadee1e34cc"
+        }
+      ],
+      "core_validates": true,
+      "negative_probes": [
+        {
+          "variant": "invoke_host_function with muxed op source",
+          "stage": "submission",
+          "result": "tx_soroban_invalid",
+          "diagnostic": [
+            "Soroban transactions are not allowed to use memo or muxed source account"
+          ]
+        },
+        {
+          "variant": "invoke_host_function with muxed tx source",
+          "stage": "submission",
+          "result": "tx_soroban_invalid",
+          "diagnostic": [
+            "Soroban transactions are not allowed to use memo or muxed source account"
+          ]
+        }
+      ],
+      "roundtrip": {
+        "byte_exact": true,
+        "tool": "stellar-xdr 30.0.0 (3c2aa43d2ab54d429ae44aa5143d805bf5dba7e2)"
+      },
+      "check_lcm_golden": null,
+      "expected": {
+        "lcm_version": "v2",
+        "ledger_seq": 5708671,
+        "ledger_protocol": 30,
+        "tx_hash": "166eadcbe815f7158d90691fa2c4dfa978ab2a7c5aa3e481a56435862f693cf6",
+        "tx_apply_index": 4,
+        "tx_envelope_type": "tx",
+        "tx_source_account": "GAZPOBOCZWIADZ6VXA3IKMPSZFQYGY6BBP5BZNYZI5RWL35I22R2MDHZ",
+        "tx_result": "tx_success",
+        "op_index": 0,
+        "op_type": "invoke_host_function",
+        "op_source_account": null,
+        "op_result": "success"
+      },
+      "extra": {
+        "contract": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+        "function": "transfer",
+        "from": "GAZPOBOCZWIADZ6VXA3IKMPSZFQYGY6BBP5BZNYZI5RWL35I22R2MDHZ",
+        "to_scaddress": "MBTU4DFEGRV2SZE77CE7NQFO4MHGHNBQI2GYP3WMG2D5WPDLPUQZBAAAAAAAAAAAAFWPS",
+        "to_scaddress_type": "SC_ADDRESS_TYPE_MUXED_ACCOUNT",
+        "to_base_account_ed25519_hex": "674e0ca4346ba9649ff889f6c0aee30e63b430468d87eecc3687db3c6b7d2190",
+        "muxed_id": "9223372036854775809",
+        "amount": "10000000",
+        "event_topic_to": "GBTU4DFEGRV2SZE77CE7NQFO4MHGHNBQI2GYP3WMG2D5WPDLPUQZBKW3",
+        "event_to_muxed_id": "9223372036854775809",
+        "event_amount": "10000000"
+      },
+      "related": [
+        {
+          "kind": "target",
+          "url": "https://github.com/stellar/wallet-backend/issues/716"
+        }
+      ],
+      "evidence": null
+    },
+    {
+      "id": "lp-issuer-order-01",
+      "title": "change_trust on a pool share whose issuers sort differently as strkey text and as key bytes",
+      "cap": [
+        "CAP-0038"
+      ],
+      "sep": [],
+      "protocol": {
+        "introduced_in": 18,
+        "ledger": 30
+      },
+      "network": "testnet",
+      "network_passphrase": "Test SDF Network ; September 2015",
+      "source": {
+        "kind": "generated",
+        "ledger": 5708628,
+        "tx_hash": "d765c2492db224c54c0b72ccff21c69d78f1dd1faa503e8661233b64b509190c",
+        "generator": "gen/run.sh lp-issuer-order",
+        "generation_record": "corpus/cap-0038/lp-issuer-order-01/generation.json"
+      },
+      "synthetic": false,
+      "pattern": {
+        "id": "lp-issuer-order",
+        "description": "Two assets with the same code whose issuers' G... strkeys sort in the opposite order to their raw key bytes (base32 digits 2-7 encode values after A-Z but sort before them in ASCII). Core requires byte order; the text-ordered pair is rejected as malformed (see negative_probes)."
+      },
+      "files": [
+        {
+          "path": "corpus/cap-0038/lp-issuer-order-01/FFA8E4AB--5708628.xdr.zst",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr+zstd",
+          "layout": "galexie",
+          "sha256": "878fcbc7ca1b33bc1a7dc494bac12bbb5f2646b8f8a8a5d059d2aa973e6a4fc2"
+        },
+        {
+          "path": "corpus/cap-0038/lp-issuer-order-01/ledger-5708628.LedgerCloseMetaBatch.xdr",
+          "xdr_type": "LedgerCloseMetaBatch",
+          "encoding": "xdr",
+          "sha256": "d50d038a3ae5a35c2d6ab846e7fbdca7443c810c20436aee5879d62cc16c5994"
+        }
+      ],
+      "core_validates": true,
+      "negative_probes": [
+        {
+          "variant": "pool assets in strkey-text order (must be rejected)",
+          "stage": "submission",
+          "result": "tx_failed (op 5 change_trust: malformed)",
+          "diagnostic": []
+        }
+      ],
+      "roundtrip": {
+        "byte_exact": true,
+        "tool": "stellar-xdr 30.0.0 (3c2aa43d2ab54d429ae44aa5143d805bf5dba7e2)"
+      },
+      "check_lcm_golden": null,
+      "expected": {
+        "lcm_version": "v2",
+        "ledger_seq": 5708628,
+        "ledger_protocol": 30,
+        "tx_hash": "d765c2492db224c54c0b72ccff21c69d78f1dd1faa503e8661233b64b509190c",
+        "tx_apply_index": 1,
+        "tx_envelope_type": "tx",
+        "tx_source_account": "GDVXKUIZTNGGWQ5KEK7AVQJU6GUBXBKQRUBNVYYB7T7S3LKWCO27PN7I",
+        "tx_result": "tx_success",
+        "op_index": 5,
+        "op_type": "change_trust",
+        "op_source_account": "GCUQPWRWJMDVNHECXA7L6CLJDD6AEP5SALRL5OQMZ4WERGWHRIGZAFPP",
+        "op_result": "success"
+      },
+      "extra": {
+        "asset_code": "LPO",
+        "asset_a_issuer": "GBZDVJTLAUBPFAIL3XJINF23VBOTYR7OXBXPOPLZPOAZQRPHXDUFNFP5",
+        "asset_b_issuer": "GB5F7HE63G2S3KQABB27FCHUSCVBT4QAPV34B7JNMDQLBEYYUL64362Y",
+        "issuers_byte_order_a_lt_b": true,
+        "issuers_text_order_a_lt_b": false,
+        "fee_bps": 30,
+        "pool_id": "LDOXBHYCPLEUEQFVGKUWZQGYK43GWLTNLS5EZXYBN263DNYWRAKVBULO",
+        "pool_id_hex": "dd709f027ac94240b532a96cc0d857366b2e6d5cba4cdf016ebdb1b716881550"
+      },
+      "related": [
+        {
+          "kind": "target",
+          "url": "https://github.com/stellar/js-stellar-sdk/pull/1766"
+        }
+      ],
+      "evidence": null
+    }
+  ]
+}

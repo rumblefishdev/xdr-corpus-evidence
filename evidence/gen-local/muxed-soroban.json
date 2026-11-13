@@ -1,0 +1,55 @@
+{
+  "entry": "cap0027-muxed-sac-destination-01",
+  "network_passphrase": "Standalone Network ; February 2017",
+  "from": "GC6FFM2APWXULOURTUDKRVJYKOGW6UF7UCNCJDNGAZMLJLRGILKY5ZU6",
+  "to": "GAXO34CYHYEDUHQ2OSPHTEBM2BLZUVV26KG4HSZQZORTKTXXYKKA6NSL",
+  "muxed_id": "9223372036854775809",
+  "muxed_address": "MC6FFM2APWXULOURTUDKRVJYKOGW6UF7UCNCJDNGAZMLJLRGILKY5AAAAAAAAAAAAGC4Q",
+  "native_sac": "CDMLFMKMMD7MWZP3FKUBZPVHTUEDLSX4BYGYKH4GCESXYHS3IHQ4EIG4",
+  "submissions": [
+    {
+      "purpose": "setup: create destination",
+      "tx_hash": "602a12c9a61b23dba27965540b90c4e7100cae8b61edd7ff4ba32fe79c7de9f7",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 63
+    },
+    {
+      "purpose": "setup: deploy native SAC",
+      "tx_hash": "68f86bab2fb0a24194653aacd316401b140d20723da0b2b3196bba34c965d5c7",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 64
+    },
+    {
+      "purpose": "target: invoke_host_function with muxed op source",
+      "tx_hash": "bfb904d4c835e99b3b0e61205cf6454aa0ca191ec880b6a3791aecc4f1150355",
+      "accepted": false,
+      "status": "ERROR",
+      "error_result_xdr": "AAAAAAAALin////vAAAAAA==",
+      "diagnostic_events_xdr": [
+        "AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAADwAAAAVlcnJvcgAAAAAAAAIAAAAIAAAAAgAAAA4AAABIU29yb2JhbiB0cmFuc2FjdGlvbnMgYXJlIG5vdCBhbGxvd2VkIHRvIHVzZSBtZW1vIG9yIG11eGVkIHNvdXJjZSBhY2NvdW50"
+      ]
+    },
+    {
+      "purpose": "target: invoke_host_function with muxed tx source",
+      "tx_hash": "b8f9795dcddd6289f6ab5ac5676196136c2da2ca0e7f1a95514c08fd97d5e7cc",
+      "accepted": false,
+      "status": "ERROR",
+      "error_result_xdr": "AAAAAAAALin////vAAAAAA==",
+      "diagnostic_events_xdr": [
+        "AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAADwAAAAVlcnJvcgAAAAAAAAIAAAAIAAAAAgAAAA4AAABIU29yb2JhbiB0cmFuc2FjdGlvbnMgYXJlIG5vdCBhbGxvd2VkIHRvIHVzZSBtZW1vIG9yIG11eGVkIHNvdXJjZSBhY2NvdW50"
+      ]
+    },
+    {
+      "purpose": "target: sac_transfer_to_muxed_scaddress",
+      "tx_hash": "dd05b3a4e0c30feccb2c809b0f44562ffbca3d46bd7a8c6835085123337fc31c",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 66
+    }
+  ],
+  "target_tx_hash": "dd05b3a4e0c30feccb2c809b0f44562ffbca3d46bd7a8c6835085123337fc31c",
+  "target_ledger": 66,
+  "target_pattern": "sac_transfer_to_muxed_scaddress"
+}

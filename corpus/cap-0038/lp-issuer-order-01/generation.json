@@ -1,0 +1,28 @@
+{
+  "entry": "lp-issuer-order-01",
+  "network_passphrase": "Test SDF Network ; September 2015",
+  "asset_code": "LPO",
+  "issuer_a": "GBZDVJTLAUBPFAIL3XJINF23VBOTYR7OXBXPOPLZPOAZQRPHXDUFNFP5",
+  "issuer_b": "GB5F7HE63G2S3KQABB27FCHUSCVBT4QAPV34B7JNMDQLBEYYUL64362Y",
+  "trustor": "GCUQPWRWJMDVNHECXA7L6CLJDD6AEP5SALRL5OQMZ4WERGWHRIGZAFPP",
+  "pool_id": "dd709f027ac94240b532a96cc0d857366b2e6d5cba4cdf016ebdb1b716881550",
+  "grind_tries": 8,
+  "submissions": [
+    {
+      "purpose": "probe: pool assets in strkey-text order (must be rejected)",
+      "tx_hash": "bc0f5fb3087b8a639ce4e9d5c96be067b5df6ea7a88033d28452b81a259e1572",
+      "accepted": false,
+      "status": "ERROR",
+      "error_result_xdr": "AAAAAAAAAlj/////AAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAG/////wAAAAA="
+    },
+    {
+      "purpose": "target: change_trust on the pool share in network order",
+      "tx_hash": "d765c2492db224c54c0b72ccff21c69d78f1dd1faa503e8661233b64b509190c",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 5708628
+    }
+  ],
+  "target_tx_hash": "d765c2492db224c54c0b72ccff21c69d78f1dd1faa503e8661233b64b509190c",
+  "target_ledger": 5708628
+}

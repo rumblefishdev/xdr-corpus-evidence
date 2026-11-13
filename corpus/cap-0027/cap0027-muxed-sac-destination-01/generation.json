@@ -1,0 +1,48 @@
+{
+  "entry": "cap0027-muxed-sac-destination-01",
+  "network_passphrase": "Test SDF Network ; September 2015",
+  "from": "GAZPOBOCZWIADZ6VXA3IKMPSZFQYGY6BBP5BZNYZI5RWL35I22R2MDHZ",
+  "to": "GBTU4DFEGRV2SZE77CE7NQFO4MHGHNBQI2GYP3WMG2D5WPDLPUQZBKW3",
+  "muxed_id": "9223372036854775809",
+  "muxed_address": "MAZPOBOCZWIADZ6VXA3IKMPSZFQYGY6BBP5BZNYZI5RWL35I22R2NAAAAAAAAAAAAGEGS",
+  "native_sac": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+  "submissions": [
+    {
+      "purpose": "setup: create destination",
+      "tx_hash": "aae1d278980b07929f60bd4e08a27648f825a606282a2a8a62d3ead67f25da25",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 5708670
+    },
+    {
+      "purpose": "target: invoke_host_function with muxed op source",
+      "tx_hash": "73b3bedc16f811a3ee0efb804b4464ec458fd46a96b3b7e2f0cd7e2e52f6a9ea",
+      "accepted": false,
+      "status": "ERROR",
+      "error_result_xdr": "AAAAAAAALin////vAAAAAA==",
+      "diagnostic_events_xdr": [
+        "AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAADwAAAAVlcnJvcgAAAAAAAAIAAAAIAAAAAgAAAA4AAABIU29yb2JhbiB0cmFuc2FjdGlvbnMgYXJlIG5vdCBhbGxvd2VkIHRvIHVzZSBtZW1vIG9yIG11eGVkIHNvdXJjZSBhY2NvdW50"
+      ]
+    },
+    {
+      "purpose": "target: invoke_host_function with muxed tx source",
+      "tx_hash": "00d2a0b7915298505124a141a39bfd1e9876fca2b96e865286eebb16d0a4f021",
+      "accepted": false,
+      "status": "ERROR",
+      "error_result_xdr": "AAAAAAAALin////vAAAAAA==",
+      "diagnostic_events_xdr": [
+        "AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAADwAAAAVlcnJvcgAAAAAAAAIAAAAIAAAAAgAAAA4AAABIU29yb2JhbiB0cmFuc2FjdGlvbnMgYXJlIG5vdCBhbGxvd2VkIHRvIHVzZSBtZW1vIG9yIG11eGVkIHNvdXJjZSBhY2NvdW50"
+      ]
+    },
+    {
+      "purpose": "target: sac_transfer_to_muxed_scaddress",
+      "tx_hash": "166eadcbe815f7158d90691fa2c4dfa978ab2a7c5aa3e481a56435862f693cf6",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 5708671
+    }
+  ],
+  "target_tx_hash": "166eadcbe815f7158d90691fa2c4dfa978ab2a7c5aa3e481a56435862f693cf6",
+  "target_ledger": 5708671,
+  "target_pattern": "sac_transfer_to_muxed_scaddress"
+}

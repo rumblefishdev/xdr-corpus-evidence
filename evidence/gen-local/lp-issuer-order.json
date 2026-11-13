@@ -1,0 +1,28 @@
+{
+  "entry": "lp-issuer-order-01",
+  "network_passphrase": "Standalone Network ; February 2017",
+  "asset_code": "LPO",
+  "issuer_a": "GAFWSWIXCPGTFPWGX5DFMWXBWAIP6HNH4HNCL35RPY67K3PDLIRUDWLZ",
+  "issuer_b": "GA7GMARF4MGZWOO6SCKX347DXLNBRHI4WICSQVSCAIAS52EXMPYZ3JC6",
+  "trustor": "GCHUSSEYUXP25W4FLOTZV5P5ZZK6VZMEUM6753I7FVSECXAXGUO64CGW",
+  "pool_id": "825037845da6d4ec1f261030184c07533c1ef4d5f7b392938071b542be4eca29",
+  "grind_tries": 5,
+  "submissions": [
+    {
+      "purpose": "probe: pool assets in strkey-text order (must be rejected)",
+      "tx_hash": "3c156ed776a2e0e85ad1b02f1c3c8205f79aefee19dd938b43458fd6b0abd9a5",
+      "accepted": false,
+      "status": "ERROR",
+      "error_result_xdr": "AAAAAAAAAlj/////AAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAG/////wAAAAA="
+    },
+    {
+      "purpose": "target: change_trust on the pool share in network order",
+      "tx_hash": "c1bef751a94178e70d142ad850d89b69cd1717e2f26fc54dc3fc8d8cbe8ddabc",
+      "accepted": true,
+      "status": "SUCCESS",
+      "ledger": 24
+    }
+  ],
+  "target_tx_hash": "c1bef751a94178e70d142ad850d89b69cd1717e2f26fc54dc3fc8d8cbe8ddabc",
+  "target_ledger": 24
+}

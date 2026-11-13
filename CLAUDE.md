@@ -97,7 +97,19 @@ wallet-backend PR #729 (https://github.com/stellar/wallet-backend/pull/729): a C
 
 Useful wallet-backend docs: `docs/deploy/ingest.md`, `docs/deploy/backfill.md`, `docs/deploy/configuration.md`.
 
-## Next tasks after #729 (same repo)
+## Done (2026-11-13): corpus entries + draft manifest schema
+
+See `corpus/README.md` (entries, schema decisions, findings). Deviations from the plan below:
+- `cap0027-muxed-soroban-source-01` became **`cap0027-muxed-sac-destination-01`**: core (protocol ≥ 25) rejects a muxed tx
+  or op source on `invoke_host_function` (`tx_soroban_invalid`). Both rejections are recorded as `negative_probes`; the entry is a
+  SAC transfer to a muxed `ScAddress` (#716 producer 2). The classic M→M payment fallback is still in the generator.
+  The RFP also asks for a "muxed source" pattern; that needs a classic-tx entry (not done yet).
+- Decided: keep both `protocol.introduced_in` and `protocol.ledger`; fixed `expected` core + per-pattern `extra`.
+  `synthetic` = hand-crafted bytes only (all three entries are `false`).
+- Protocol-30 ledgers need stellar CLI ≥ 30 (`scripts/get-stellar-cli.sh`); the installed 23.4.1 fails on them.
+- Not yet done: mainnet passphrase for generators (only testnet + standalone tested), `--check-lcm` goldens.
+
+## Original plan for the tasks after #729 (same repo)
 
 ### Two more sample corpus entries
 | ID | Pattern | Source | Targets |
