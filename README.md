@@ -52,9 +52,10 @@ corpus/                     the corpus (RFP: schema + sample entries)
   README.md                   what an entry is, how entries are made, what is validated
   manifest.schema.json        draft manifest schema (JSON Schema 2020-12)
   manifest.json               generated manifest, 3 entries
+  coverage/                   coverage targets from the XDR (prototype): summary.md, targets.csv
   entries/cap-00NN/<id>/      ledger files, extracted target tx, generation record
   gen/                        generators (Go, run in a container) + records of runs on a local network
-  tools/                      roundtrip.sh, build-manifest.py, regen-entry.sh, get-stellar-cli.sh
+  tools/                      roundtrip.sh, build-manifest.py, regen-entry.sh, get-stellar-cli.sh, coverage-targets.py
 sighting-729/               wallet-backend #729 reproduction (RFP: one sighting)
   README.md                   the bug, the result, every step of the script
   repro.sh                    end-to-end run with verdicts; plus env.sh, seed-backfill.sql, query.sql, strkey.py,
