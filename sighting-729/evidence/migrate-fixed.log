@@ -1,5 +1,5 @@
-time="2026-11-13T11:41:39.918+01:00" level=info msg="📦 Git Commit: " pid=179012
-time="2026-11-13T11:41:39.918+01:00" level=info msg="📦 Version: 0.2.0" pid=179012
-time="2026-11-13T11:41:40.012+01:00" level=info msg="Successfully applied 17 migrations up." pid=179012
-time="2026-11-13T11:41:40.022+01:00" level=info msg="Executed protocol migration: 000_placeholder.sql" pid=179012
-time="2026-11-13T11:41:40.025+01:00" level=info msg="Executed protocol migration: 001_sep41.sql" pid=179012
+time="2026-11-13T14:16:57.229+01:00" level=info msg="📦 Git Commit: " pid=273986
+time="2026-11-13T14:16:57.229+01:00" level=info msg="📦 Version: 0.2.0" pid=273986
+time="2026-11-13T14:16:57.310+01:00" level=info msg="Successfully applied 17 migrations up." pid=273986
+time="2026-11-13T14:16:57.314+01:00" level=info msg="Executed protocol migration: 000_placeholder.sql" pid=273986
+time="2026-11-13T14:16:57.315+01:00" level=info msg="Executed protocol migration: 001_sep41.sql" pid=273986

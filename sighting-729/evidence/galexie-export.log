@@ -1,203 +1,534 @@
- Container xdr-corpus-evidence-s3-1 Running 
- Container xdr-corpus-evidence-s3-1 Waiting 
- Container xdr-corpus-evidence-s3-1 Healthy 
- Container xdr-corpus-evidence-galexie-run-b51af0d621da Creating 
- Container xdr-corpus-evidence-galexie-run-b51af0d621da Created 
-time="2026-11-13T10:40:53.199Z" level=info msg="Starting Galexie with version 10ea468" pid=1 service=galexie
-time="2026-11-13T10:40:53.199Z" level=info msg="Requested Scan and Fill mode with start=4437357, end=4437358" pid=1 service=galexie
-time="2026-11-13T10:40:53.199Z" level=info msg="Network Config Archive URLs: [https://history.stellar.org/prd/core-testnet/core_testnet_001/ https://history.stellar.org/prd/core-testnet/core_testnet_002/ https://history.stellar.org/prd/core-testnet/core_testnet_003]" pid=1 service=galexie
-time="2026-11-13T10:40:53.199Z" level=info msg="Network Config Archive Passphrase: Test SDF Network ; September 2015" pid=1 service=galexie
-time="2026-11-13T10:40:53.199Z" level=info msg="Network Config Stellar Core Binary Path: " pid=1 service=galexie
-time="2026-11-13T10:40:53.199Z" level=info msg="Network Config Stellar Core Toml Config: NETWORK_PASSPHRASE=\"Test SDF Network ; September 2015\"\nUNSAFE_QUORUM=true\nFAILURE_SAFETY=1\n\n[[HOME_DOMAINS]]\nHOME_DOMAIN=\"testnet.stellar.org\"\nQUALITY=\"HIGH\"\n\n[[VALIDATORS]]\nNAME=\"sdf_testnet_1\"\nHOME_DOMAIN=\"testnet.stellar.org\"\nPUBLIC_KEY=\"GDKXE2OZMJIPOSLNA6N6F2BVCI3O777I2OOC4BV7VOYUEHYX7RTRYA7Y\"\nADDRESS=\"core-testnet1.stellar.org\"\nHISTORY=\"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_001/{0} -o {1}\"\n\n[[VALIDATORS]]\nNAME=\"sdf_testnet_2\"\nHOME_DOMAIN=\"testnet.stellar.org\"\nPUBLIC_KEY=\"GCUCJTIYXSOXKBSNFGNFWW5MUQ54HKRPGJUTQFJ5RQXZXNOLNXYDHRAP\"\nADDRESS=\"core-testnet2.stellar.org\"\nHISTORY=\"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_002/{0} -o {1}\"\n\n[[VALIDATORS]]\nNAME=\"sdf_testnet_3\"\nHOME_DOMAIN=\"testnet.stellar.org\"\nPUBLIC_KEY=\"GC2V2EFSXN6SQTWVYA5EPJPBWWIMSD2XQNKUOHGEKB535AQE2I6IXV2Z\"\nADDRESS=\"core-testnet3.stellar.org\"\nHISTORY=\"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_003/{0} -o {1}\"" pid=1 service=galexie
-time="2026-11-13T10:40:53.701Z" level=info msg="Latest ledger sequence was detected as 5708671" pid=1 service=galexie
-time="2026-11-13T10:40:53.723Z" level=info msg="Computed effective export boundary ledger range: start=4437357, end=4437358" pid=1 service=galexie
-time="2026-11-13T10:40:53.723Z" level=info msg="Attempting to configure datastore..." pid=1 service=galexie
-time="2026-11-13T10:40:53.726Z" level=info msg="Datastore config manifest already exists." manifest="{Test SDF Network ; September 2015 1.0 zstd 1 64000}" pid=1 service=galexie
-time="2026-11-13T10:40:53.726Z" level=info msg="Final computed ledger range for backend retrieval and export, start=4437357, end=4437358" pid=1 service=galexie
-time="2026-11-13T10:40:53.742Z" level=info msg="stellar-core version: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1)" pid=1 service=galexie
-time="2026-11-13T10:40:53.786Z" level=info msg="stellar-core version: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:53.786Z" level=info msg="Starting admin server on port 6061" pid=1 service=galexie
-time="2026-11-13T10:40:54.110Z" level=info msg="stellar-core version: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.110Z" level=debug msg="captive core config file contents:\n# Generated file, do not edit\nBACKFILL_RESTORE_META = true\nBACKFILL_STELLAR_ASSET_EVENTS = true\nBUCKETLIST_DB_INDEX_PAGE_SIZE_EXPONENT = 12\nBUCKETLIST_DB_MEMORY_FOR_CACHING = 0\nDATABASE = \"sqlite3://stellar.db\"\nEMIT_CLASSIC_EVENTS = true\nEMIT_LEDGER_CLOSE_META_EXT_V1 = true\nEMIT_SOROBAN_TRANSACTION_META_EXT_V1 = true\nENABLE_DIAGNOSTICS_FOR_TX_SUBMISSION = true\nENABLE_SOROBAN_DIAGNOSTIC_EVENTS = true\nFAILURE_SAFETY = 0\nHTTP_PORT = 0\nLOG_FILE_PATH = \"\"\nNETWORK_PASSPHRASE = \"Test SDF Network ; September 2015\"\nRUN_STANDALONE = true\nUNSAFE_QUORUM = true\n\n[[HOME_DOMAINS]]\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  QUALITY = \"HIGH\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet1.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_001/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_1\"\n  PUBLIC_KEY = \"GDKXE2OZMJIPOSLNA6N6F2BVCI3O777I2OOC4BV7VOYUEHYX7RTRYA7Y\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet2.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_002/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_2\"\n  PUBLIC_KEY = \"GCUCJTIYXSOXKBSNFGNFWW5MUQ54HKRPGJUTQFJ5RQXZXNOLNXYDHRAP\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet3.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_003/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_3\"\n  PUBLIC_KEY = \"GC2V2EFSXN6SQTWVYA5EPJPBWWIMSD2XQNKUOHGEKB535AQE2I6IXV2Z\"\n" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.116Z" level=info msg="Warning: running non-release version stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1) of stellar-core" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.117Z" level=info msg="default: Config from /captive-core-80e07d5e/stellar-core.conf" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.117Z" level=info msg="default: 'RUN_STANDALONE' enabled in configuration file - node will not function properly with most networks" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.117Z" level=info msg="default: Generated QUORUM_SET: {" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.117Z" level=info msg="\"t\" : 2," pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.117Z" level=info msg="\"v\" : [ \"sdf_testnet_2\", \"sdf_testnet_3\", \"sdf_testnet_1\" ]" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.117Z" level=info msg="}" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.118Z" level=info msg="Database: Connecting to: sqlite3://stellar.db" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.135Z" level=info msg="SCP: LocalNode::LocalNode@GARDK qSet: 59d361" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.169Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.169Z" level=info msg="default: * The database has been initialized" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.170Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.174Z" level=info msg="Database: Misc: Applying DB schema upgrade to version 1" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.177Z" level=info msg="Database: Successfully copied 0 rows from table peers" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.178Z" level=info msg="Database: Successfully copied 0 rows from table ban" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.178Z" level=info msg="Database: Successfully copied 0 rows from table quoruminfo" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.178Z" level=info msg="Database: Successfully copied 0 rows from table scpquorums" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.178Z" level=info msg="Database: Successfully copied 0 rows from table scphistory" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.178Z" level=info msg="Database: Successfully copied 0 rows from table slotstate" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.183Z" level=info msg="Database: Misc: Applying DB schema upgrade to version 2" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.186Z" level=info msg="Database: Misc: Applying DB schema upgrade to version 3" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.189Z" level=info msg="Database: Main: Applying DB schema upgrade to version 26" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.194Z" level=info msg="Database: Main: Applying DB schema upgrade to version 27" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.196Z" level=info msg="Database: Main: Applying DB schema upgrade to version 28" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.201Z" level=info msg="Database: Main: Applying DB schema upgrade to version 29" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.204Z" level=info msg="Database: DB schema is in current version" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.204Z" level=info msg="default: Dropping offers" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.207Z" level=info msg="default: Successfully rebuilt ledger tables" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.209Z" level=info msg="default: Establishing 8-entry connection pool to: sqlite3://stellar.db" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.211Z" level=info msg="Ledger: Established genesis ledger, closing" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.212Z" level=info msg="Ledger: Root account: GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.212Z" level=info msg="Ledger: Root account seed: <redacted: the network root key, sha256 of the testnet passphrase>" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="Bucket: BucketListDB enabled: pageSizeExponent: 12 indexCutOff: 20MB, persist indexes: true" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: Connection effective settings:" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: TARGET_PEER_CONNECTIONS: 8" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: MAX_ADDITIONAL_PEER_CONNECTIONS: 64" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: MAX_PENDING_CONNECTIONS: 500" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: MAX_OUTBOUND_PENDING_CONNECTIONS: 56" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: MAX_INBOUND_PENDING_CONNECTIONS: 444" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: BACKGROUND_OVERLAY_PROCESSING=true" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: PARALLEL_LEDGER_APPLY=true" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: * The next launch will catchup from the network afresh." pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: Application destructing" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.221Z" level=info msg="default: Joining ledger apply thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining overlay thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joining eviction thread" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.222Z" level=info msg="default: Joined all 12 threads" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.223Z" level=info msg="default: Application destroyed" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.233Z" level=debug msg="captive core config file contents:\n# Generated file, do not edit\nBACKFILL_RESTORE_META = true\nBACKFILL_STELLAR_ASSET_EVENTS = true\nBUCKETLIST_DB_INDEX_PAGE_SIZE_EXPONENT = 12\nBUCKETLIST_DB_MEMORY_FOR_CACHING = 0\nDATABASE = \"sqlite3://stellar.db\"\nEMIT_CLASSIC_EVENTS = true\nEMIT_LEDGER_CLOSE_META_EXT_V1 = true\nEMIT_SOROBAN_TRANSACTION_META_EXT_V1 = true\nENABLE_DIAGNOSTICS_FOR_TX_SUBMISSION = true\nENABLE_SOROBAN_DIAGNOSTIC_EVENTS = true\nFAILURE_SAFETY = 0\nHTTP_PORT = 0\nLOG_FILE_PATH = \"\"\nNETWORK_PASSPHRASE = \"Test SDF Network ; September 2015\"\nRUN_STANDALONE = true\nUNSAFE_QUORUM = true\n\n[[HOME_DOMAINS]]\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  QUALITY = \"HIGH\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet1.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_001/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_1\"\n  PUBLIC_KEY = \"GDKXE2OZMJIPOSLNA6N6F2BVCI3O777I2OOC4BV7VOYUEHYX7RTRYA7Y\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet2.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_002/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_2\"\n  PUBLIC_KEY = \"GCUCJTIYXSOXKBSNFGNFWW5MUQ54HKRPGJUTQFJ5RQXZXNOLNXYDHRAP\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet3.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_003/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_3\"\n  PUBLIC_KEY = \"GC2V2EFSXN6SQTWVYA5EPJPBWWIMSD2XQNKUOHGEKB535AQE2I6IXV2Z\"\n" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.249Z" level=info msg="Warning: running non-release version stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1) of stellar-core" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.249Z" level=info msg="default: Config from /captive-core-80e07d5e/stellar-core.conf" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.249Z" level=info msg="default: 'RUN_STANDALONE' enabled in configuration file - node will not function properly with most networks" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.250Z" level=info msg="default: Generated QUORUM_SET: {" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.250Z" level=info msg="\"t\" : 2," pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.250Z" level=info msg="\"v\" : [ \"sdf_testnet_2\", \"sdf_testnet_3\", \"sdf_testnet_1\" ]" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.250Z" level=info msg="}" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.250Z" level=info msg="Database: Connecting to: sqlite3://stellar.db" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.253Z" level=info msg="Ledger: Streaming metadata to file descriptor 3" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.253Z" level=info msg="SCP: LocalNode::LocalNode@GD7EH qSet: 59d361" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="Database: DB schema is in current version" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="Bucket: BucketListDB enabled: pageSizeExponent: 12 indexCutOff: 20MB, persist indexes: true" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: Connection effective settings:" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: TARGET_PEER_CONNECTIONS: 8" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: MAX_ADDITIONAL_PEER_CONNECTIONS: 64" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: MAX_PENDING_CONNECTIONS: 500" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: MAX_OUTBOUND_PENDING_CONNECTIONS: 56" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: MAX_INBOUND_PENDING_CONNECTIONS: 444" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: BACKGROUND_OVERLAY_PROCESSING=true" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: PARALLEL_LEDGER_APPLY=true" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=warning msg="History: Unsafe command: use --trusted-checkpoint-hashes or --trusted-hash to ensure catchup integrity. If you want to run untrusted catchup, use --force-untrusted-catchup." pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="Ledger: Starting up application" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="Ledger: Loaded LCL header from database: [seq=1, hash=63d98f]" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.257Z" level=info msg="default: Establishing 8-entry connection pool to: sqlite3://stellar.db" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.258Z" level=info msg="Ledger: Assumed bucket-state for LCL: [seq=1, hash=63d98f] (0.000 sec)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="default: Launching 1 loading and 5 compiling background threads" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="default: Compiled 0 contracts (0.00B of Wasm) in 0ms real time, 0ms CPU time" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="default: Heap changed from 15.60MB to 15.60MB during compilation (2.54KB difference)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="Perf: Populating in-memory Soroban state from LCL for ledger [seq=1, hash=63d98f]" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="Perf: Populated in-memory Soroban state in 0.000 sec" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="Perf: Startup state load took 0.002 sec (full=true)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="Ledger: Changing state LM_BOOTING_STATE -> LM_CATCHING_UP_STATE" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="History: Downloading history archive state: .well-known/stellar-history.json" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="History: Starting catchup with configuration:" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="lastClosedLedger: 1" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="toLedger: 4437358" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="count: 2" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="History: Catching up to ledger 4437358: Downloading state file history/00/43/b5/history-0043b57f.json for ledger 4437375" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="History: Downloading history archive state: history/00/43/b5/history-0043b57f.json" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.259Z" level=info msg="History: Selected archive sdf_testnet_2 to download history-0043b57f.json" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.322Z" level=info msg="History: Catching up to ledger 4437358: Downloading state file history/00/43/b5/history-0043b53f.json for ledger 4437311" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.322Z" level=info msg="History: Downloading history archive state: history/00/43/b5/history-0043b53f.json" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.322Z" level=info msg="History: Selected archive sdf_testnet_1 to download history-0043b53f.json" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.709Z" level=info msg="History: Downloading history archive state: .well-known/stellar-history.json" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.808Z" level=info msg="History: Catching up to ledger 4437358: downloading ledger files 1/2 (50%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.809Z" level=info msg="History: Catching up to ledger 4437358: downloading ledger files 2/2 (100%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.809Z" level=info msg="History: Selected archive sdf_testnet_2 to download ledger-0043b53f.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.811Z" level=info msg="History: Selected archive sdf_testnet_3 to download ledger-0043b57f.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.890Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: batch-download-ledger-0043b53f-0043b5bf : 2/2 children completed" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.890Z" level=info msg="History: Verifying ledgers [4437311,4437359)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.890Z" level=info msg="History: Skipping verification for ledger [seq=4437358, hash=636239] against SCP hash" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.890Z" level=info msg="History: Catching up to ledger 4437358: verifying checkpoint 1/1 (100%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.891Z" level=info msg="History: History chain [4437311,4437358] verified" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.891Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: verify-ledger-chain" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.900Z" level=info msg="History: Catching up to ledger 4437358: Ready to run: herder-state-consistency-work" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.900Z" level=info msg="History: Herder state is set! tracking=4437358, closeTime=1788210377.000" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.900Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: herder-state-consistency-work" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.904Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 0/35 (0%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.905Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-805620a8a6fbf2f606dfc0bc4989b9613cb0e5786b8a0a902b637fd57a3cd1a3.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.906Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-8bb25d8d671ad59ca0aa8dc852ec0f051934721f3bef6097b5f3f8a191c55c69.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.907Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-8ab781d7d7a048de7f023d46edd16cbac197bbae826743a26b9b826ceb09563b.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.908Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-f1161fb4c639fe5d91d9deec4379051638484f257295d791d22cfeb1cc87392c.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.909Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-28c0bdde5194eb23a6fa95b568c720f51f0811bb0ba6a0490d7623844e516a23.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.909Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-90f12a8ba05a905a064d302b83aca36c6c2e86019b6b154bca744240ec38e69b.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.911Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-fccd6ef4e02f16a727b25f9c5ae33252c40e8acd80c0b6e584b6f87d4eda505f.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.913Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-e44fa1c31df4cdc32b55978f1be3080726aa0200e65454c4da120cf632a95531.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.914Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-59aee3f7657f7fad471bfc83cccc2d0ac1ea5ceb18edd1a02810c228463c806e.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.916Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-1c39b83c25db023276d66f8829e686a95bbf79cf3a1832f97f326d5f068f6a6a.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.917Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-0c3898fde6e1bfce11e795088d4845e9819071ff4597a16168cae3b762e4e8c4.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.919Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-b48b3cf5995c444b840173b301035e6b84ab9d3886bdbaf76ac6c366fa967a6d.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.921Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-29ded83369cc529f4546a68de25117effedd1e7c77a0443740366c9b5211b38c.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.923Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-3a355c0faa46518bb02bf10a4c5934f5f53c25a0c9b12ebd82592948c3ed8c22.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.925Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-cb3767a6591c7aba61d2dd22c3cdb376867dd70acd5355a31879c57f22726c11.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:54.929Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-c1bdda576f5f5841f231f51d448ea97844d69f5b6362d5857db4762eed5fe65e.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.094Z" level=info msg="History: Verifying and indexing bucket 3a355c0faa46518bb02bf10a4c5934f5f53c25a0c9b12ebd82592948c3ed8c22" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.102Z" level=info msg="History: Verifying and indexing bucket 29ded83369cc529f4546a68de25117effedd1e7c77a0443740366c9b5211b38c" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.108Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 1/35 (2%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.108Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-7975e9756e5983b02645430d444d2e2c6ac0662a5b59894d131ae0112675f632.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.108Z" level=info msg="History: Downloading history archive state: .well-known/stellar-history.json" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.111Z" level=info msg="History: Verifying and indexing bucket c1bdda576f5f5841f231f51d448ea97844d69f5b6362d5857db4762eed5fe65e" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.116Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 2/35 (5%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.116Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-94ae477bd2b5235286b0d124ea76944b19005f73a9422227aa89caf2f3d6e529.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.119Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 3/35 (8%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.119Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-75c1afbefb6ba3b67a014f4a994e41dccb718f7ff1fb5c22b2f052aab70ee514.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.332Z" level=info msg="History: Verifying and indexing bucket 0c3898fde6e1bfce11e795088d4845e9819071ff4597a16168cae3b762e4e8c4" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.333Z" level=info msg="History: Verifying and indexing bucket 7975e9756e5983b02645430d444d2e2c6ac0662a5b59894d131ae0112675f632" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.341Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 4/35 (11%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.341Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-883a5ace683c4d7ea7ddc9d7ade24edccf09c98029aaa025cf2c0bbae6fa52bc.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.384Z" level=info msg="History: Verifying and indexing bucket 75c1afbefb6ba3b67a014f4a994e41dccb718f7ff1fb5c22b2f052aab70ee514" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.388Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 5/35 (14%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.388Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-483f27623f3795857192f9d3fe5d4fd6d0e6d6887e869cb34cf7bd7246a0a080.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.392Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 6/35 (17%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.392Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-43d1a0e3606c510be2969c6e7c76d214e8939689e8fcbaa222e7df3af043808c.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.400Z" level=info msg="History: Verifying and indexing bucket 1c39b83c25db023276d66f8829e686a95bbf79cf3a1832f97f326d5f068f6a6a" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.421Z" level=info msg="History: Verifying and indexing bucket 883a5ace683c4d7ea7ddc9d7ade24edccf09c98029aaa025cf2c0bbae6fa52bc" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.423Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 7/35 (20%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.423Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-4a9f10aac14869fc3e59fc58818a35c71d02c235ab9a55db532d795a959260c2.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.499Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 8/35 (22%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.499Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-4eb2c82fb7637b1c740b0a285e5cf388d4dd777f865517e97f69af61010c2311.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.588Z" level=info msg="History: Archive information: [name: sdf_testnet_1, server: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1), currentLedger: 5708543]" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.588Z" level=info msg="History: Archive information: [name: sdf_testnet_2, server: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1), currentLedger: 5708543]" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.588Z" level=info msg="History: Archive information: [name: sdf_testnet_3, server: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1), currentLedger: 5708543]" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.646Z" level=info msg="History: Verifying and indexing bucket cb3767a6591c7aba61d2dd22c3cdb376867dd70acd5355a31879c57f22726c11" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.657Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 9/35 (25%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.657Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-bd328eaf6820b3cc5d782b7914fc8eae805fb6588de30ed692638c1b04110beb.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.825Z" level=info msg="History: Verifying and indexing bucket 94ae477bd2b5235286b0d124ea76944b19005f73a9422227aa89caf2f3d6e529" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.832Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 10/35 (28%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.832Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-8883f9c76a6c2461f40ed05bf66adeb1fd6ea40e8f315662702a298d892458ce.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.928Z" level=info msg="History: Verifying and indexing bucket b48b3cf5995c444b840173b301035e6b84ab9d3886bdbaf76ac6c366fa967a6d" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.951Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 11/35 (31%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.951Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-b5090cec9c5011da1bcf6d2d1f3caa63dfe2344fc35cba593183468193915865.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.966Z" level=info msg="History: Verifying and indexing bucket 483f27623f3795857192f9d3fe5d4fd6d0e6d6887e869cb34cf7bd7246a0a080" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.969Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 12/35 (34%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:55.969Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-36cbd6eeb69e3a6513191bd3cae77abbc7d3f8fd4e0982498fc7b0ce96ea02d4.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:56.142Z" level=info msg="History: Verifying and indexing bucket e44fa1c31df4cdc32b55978f1be3080726aa0200e65454c4da120cf632a95531" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:56.426Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 13/35 (37%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:56.426Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-583d1e5643f9af5b4eab543d130455e4437d6d7952ce0e16d296aa866150f9da.xdr.gz" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:57.250Z" level=info msg="History: Verifying and indexing bucket fccd6ef4e02f16a727b25f9c5ae33252c40e8acd80c0b6e584b6f87d4eda505f" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:57.749Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 14/35 (40%)" pid=1 service=galexie subservice=stellar-core
-time="2026-11-13T10:40:57.749Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-30dfbca066c3a43c29f08b6daf5651f9bbc059a55077a81060ca612aea77e136.xdr.gz" pid=1 service=galexie subservice=stellar-core
-
+ Container xdr-corpus-evidence-s3-1  Running
+time="2026-11-13T13:15:29.320Z" level=info msg="Starting Galexie with version 10ea468" pid=1 service=galexie
+time="2026-11-13T13:15:29.320Z" level=info msg="Requested Scan and Fill mode with start=4437357, end=4437358" pid=1 service=galexie
+time="2026-11-13T13:15:29.320Z" level=info msg="Network Config Archive URLs: [https://history.stellar.org/prd/core-testnet/core_testnet_001/ https://history.stellar.org/prd/core-testnet/core_testnet_002/ https://history.stellar.org/prd/core-testnet/core_testnet_003]" pid=1 service=galexie
+time="2026-11-13T13:15:29.320Z" level=info msg="Network Config Archive Passphrase: Test SDF Network ; September 2015" pid=1 service=galexie
+time="2026-11-13T13:15:29.320Z" level=info msg="Network Config Stellar Core Binary Path: " pid=1 service=galexie
+time="2026-11-13T13:15:29.320Z" level=info msg="Network Config Stellar Core Toml Config: NETWORK_PASSPHRASE=\"Test SDF Network ; September 2015\"\nUNSAFE_QUORUM=true\nFAILURE_SAFETY=1\n\n[[HOME_DOMAINS]]\nHOME_DOMAIN=\"testnet.stellar.org\"\nQUALITY=\"HIGH\"\n\n[[VALIDATORS]]\nNAME=\"sdf_testnet_1\"\nHOME_DOMAIN=\"testnet.stellar.org\"\nPUBLIC_KEY=\"GDKXE2OZMJIPOSLNA6N6F2BVCI3O777I2OOC4BV7VOYUEHYX7RTRYA7Y\"\nADDRESS=\"core-testnet1.stellar.org\"\nHISTORY=\"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_001/{0} -o {1}\"\n\n[[VALIDATORS]]\nNAME=\"sdf_testnet_2\"\nHOME_DOMAIN=\"testnet.stellar.org\"\nPUBLIC_KEY=\"GCUCJTIYXSOXKBSNFGNFWW5MUQ54HKRPGJUTQFJ5RQXZXNOLNXYDHRAP\"\nADDRESS=\"core-testnet2.stellar.org\"\nHISTORY=\"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_002/{0} -o {1}\"\n\n[[VALIDATORS]]\nNAME=\"sdf_testnet_3\"\nHOME_DOMAIN=\"testnet.stellar.org\"\nPUBLIC_KEY=\"GC2V2EFSXN6SQTWVYA5EPJPBWWIMSD2XQNKUOHGEKB535AQE2I6IXV2Z\"\nADDRESS=\"core-testnet3.stellar.org\"\nHISTORY=\"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_003/{0} -o {1}\"" pid=1 service=galexie
+time="2026-11-13T13:15:29.820Z" level=info msg="Latest ledger sequence was detected as 5710527" pid=1 service=galexie
+time="2026-11-13T13:15:29.827Z" level=info msg="Computed effective export boundary ledger range: start=4437357, end=4437358" pid=1 service=galexie
+time="2026-11-13T13:15:29.827Z" level=info msg="Attempting to configure datastore..." pid=1 service=galexie
+time="2026-11-13T13:15:30.032Z" level=info msg="Successfully created datastore config manifest." manifest="{Test SDF Network ; September 2015 1.0 zstd 1 64000}" pid=1 service=galexie
+time="2026-11-13T13:15:30.032Z" level=info msg="Final computed ledger range for backend retrieval and export, start=4437357, end=4437358" pid=1 service=galexie
+time="2026-11-13T13:15:30.042Z" level=info msg="stellar-core version: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1)" pid=1 service=galexie
+time="2026-11-13T13:15:30.085Z" level=info msg="stellar-core version: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.085Z" level=info msg="Starting admin server on port 6061" pid=1 service=galexie
+time="2026-11-13T13:15:30.441Z" level=info msg="stellar-core version: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.467Z" level=debug msg="captive core config file contents:\n# Generated file, do not edit\nBACKFILL_RESTORE_META = true\nBACKFILL_STELLAR_ASSET_EVENTS = true\nBUCKETLIST_DB_INDEX_PAGE_SIZE_EXPONENT = 12\nBUCKETLIST_DB_MEMORY_FOR_CACHING = 0\nDATABASE = \"sqlite3://stellar.db\"\nEMIT_CLASSIC_EVENTS = true\nEMIT_LEDGER_CLOSE_META_EXT_V1 = true\nEMIT_SOROBAN_TRANSACTION_META_EXT_V1 = true\nENABLE_DIAGNOSTICS_FOR_TX_SUBMISSION = true\nENABLE_SOROBAN_DIAGNOSTIC_EVENTS = true\nFAILURE_SAFETY = 0\nHTTP_PORT = 0\nLOG_FILE_PATH = \"\"\nNETWORK_PASSPHRASE = \"Test SDF Network ; September 2015\"\nRUN_STANDALONE = true\nUNSAFE_QUORUM = true\n\n[[HOME_DOMAINS]]\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  QUALITY = \"HIGH\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet1.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_001/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_1\"\n  PUBLIC_KEY = \"GDKXE2OZMJIPOSLNA6N6F2BVCI3O777I2OOC4BV7VOYUEHYX7RTRYA7Y\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet2.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_002/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_2\"\n  PUBLIC_KEY = \"GCUCJTIYXSOXKBSNFGNFWW5MUQ54HKRPGJUTQFJ5RQXZXNOLNXYDHRAP\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet3.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_003/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_3\"\n  PUBLIC_KEY = \"GC2V2EFSXN6SQTWVYA5EPJPBWWIMSD2XQNKUOHGEKB535AQE2I6IXV2Z\"\n" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.471Z" level=info msg="Warning: running non-release version stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1) of stellar-core" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.479Z" level=info msg="default: Config from /captive-core-998050e6/stellar-core.conf" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.479Z" level=info msg="default: 'RUN_STANDALONE' enabled in configuration file - node will not function properly with most networks" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.479Z" level=info msg="default: Generated QUORUM_SET: {" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.479Z" level=info msg="\"t\" : 2," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.479Z" level=info msg="\"v\" : [ \"sdf_testnet_2\", \"sdf_testnet_3\", \"sdf_testnet_1\" ]" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.479Z" level=info msg="}" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.480Z" level=info msg="Database: Connecting to: sqlite3://stellar.db" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.486Z" level=info msg="SCP: LocalNode::LocalNode@GABGU qSet: 59d361" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.498Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.498Z" level=info msg="default: * The database has been initialized" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.498Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.499Z" level=info msg="Database: Misc: Applying DB schema upgrade to version 1" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.499Z" level=info msg="Database: Successfully copied 0 rows from table peers" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.499Z" level=info msg="Database: Successfully copied 0 rows from table ban" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.499Z" level=info msg="Database: Successfully copied 0 rows from table quoruminfo" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.499Z" level=info msg="Database: Successfully copied 0 rows from table scpquorums" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.500Z" level=info msg="Database: Successfully copied 0 rows from table scphistory" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.500Z" level=info msg="Database: Successfully copied 0 rows from table slotstate" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.501Z" level=info msg="Database: Misc: Applying DB schema upgrade to version 2" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.502Z" level=info msg="Database: Misc: Applying DB schema upgrade to version 3" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.503Z" level=info msg="Database: Main: Applying DB schema upgrade to version 26" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.505Z" level=info msg="Database: Main: Applying DB schema upgrade to version 27" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.505Z" level=info msg="Database: Main: Applying DB schema upgrade to version 28" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.506Z" level=info msg="Database: Main: Applying DB schema upgrade to version 29" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.506Z" level=info msg="Database: DB schema is in current version" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.506Z" level=info msg="default: Dropping offers" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.507Z" level=info msg="default: Successfully rebuilt ledger tables" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.507Z" level=info msg="default: Establishing 8-entry connection pool to: sqlite3://stellar.db" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.508Z" level=info msg="Ledger: Established genesis ledger, closing" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.508Z" level=info msg="Ledger: Root account: GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.508Z" level=info msg="Ledger: Root account seed: <redacted: the network root key, sha256 of the testnet passphrase>" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="Bucket: BucketListDB enabled: pageSizeExponent: 12 indexCutOff: 20MB, persist indexes: true" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Connection effective settings:" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: TARGET_PEER_CONNECTIONS: 8" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: MAX_ADDITIONAL_PEER_CONNECTIONS: 64" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: MAX_PENDING_CONNECTIONS: 500" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: MAX_OUTBOUND_PENDING_CONNECTIONS: 56" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: MAX_INBOUND_PENDING_CONNECTIONS: 444" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: BACKGROUND_OVERLAY_PROCESSING=true" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: PARALLEL_LEDGER_APPLY=true" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: * The next launch will catchup from the network afresh." pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Application destructing" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining ledger apply thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining overlay thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joining eviction thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Joined all 12 threads" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.510Z" level=info msg="default: Application destroyed" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.514Z" level=debug msg="captive core config file contents:\n# Generated file, do not edit\nBACKFILL_RESTORE_META = true\nBACKFILL_STELLAR_ASSET_EVENTS = true\nBUCKETLIST_DB_INDEX_PAGE_SIZE_EXPONENT = 12\nBUCKETLIST_DB_MEMORY_FOR_CACHING = 0\nDATABASE = \"sqlite3://stellar.db\"\nEMIT_CLASSIC_EVENTS = true\nEMIT_LEDGER_CLOSE_META_EXT_V1 = true\nEMIT_SOROBAN_TRANSACTION_META_EXT_V1 = true\nENABLE_DIAGNOSTICS_FOR_TX_SUBMISSION = true\nENABLE_SOROBAN_DIAGNOSTIC_EVENTS = true\nFAILURE_SAFETY = 0\nHTTP_PORT = 0\nLOG_FILE_PATH = \"\"\nNETWORK_PASSPHRASE = \"Test SDF Network ; September 2015\"\nRUN_STANDALONE = true\nUNSAFE_QUORUM = true\n\n[[HOME_DOMAINS]]\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  QUALITY = \"HIGH\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet1.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_001/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_1\"\n  PUBLIC_KEY = \"GDKXE2OZMJIPOSLNA6N6F2BVCI3O777I2OOC4BV7VOYUEHYX7RTRYA7Y\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet2.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_002/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_2\"\n  PUBLIC_KEY = \"GCUCJTIYXSOXKBSNFGNFWW5MUQ54HKRPGJUTQFJ5RQXZXNOLNXYDHRAP\"\n\n[[VALIDATORS]]\n  ADDRESS = \"core-testnet3.stellar.org\"\n  HISTORY = \"curl -sf http://history.stellar.org/prd/core-testnet/core_testnet_003/{0} -o {1}\"\n  HOME_DOMAIN = \"testnet.stellar.org\"\n  NAME = \"sdf_testnet_3\"\n  PUBLIC_KEY = \"GC2V2EFSXN6SQTWVYA5EPJPBWWIMSD2XQNKUOHGEKB535AQE2I6IXV2Z\"\n" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.519Z" level=info msg="Warning: running non-release version stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1) of stellar-core" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.519Z" level=info msg="default: Config from /captive-core-998050e6/stellar-core.conf" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.519Z" level=info msg="default: 'RUN_STANDALONE' enabled in configuration file - node will not function properly with most networks" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.519Z" level=info msg="default: Generated QUORUM_SET: {" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.519Z" level=info msg="\"t\" : 2," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.519Z" level=info msg="\"v\" : [ \"sdf_testnet_2\", \"sdf_testnet_3\", \"sdf_testnet_1\" ]" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.519Z" level=info msg="}" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.520Z" level=info msg="Database: Connecting to: sqlite3://stellar.db" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.522Z" level=info msg="Ledger: Streaming metadata to file descriptor 3" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.522Z" level=info msg="SCP: LocalNode::LocalNode@GDM6O qSet: 59d361" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="Database: DB schema is in current version" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="Bucket: BucketListDB enabled: pageSizeExponent: 12 indexCutOff: 20MB, persist indexes: true" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: Connection effective settings:" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: TARGET_PEER_CONNECTIONS: 8" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: MAX_ADDITIONAL_PEER_CONNECTIONS: 64" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: MAX_PENDING_CONNECTIONS: 500" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: MAX_OUTBOUND_PENDING_CONNECTIONS: 56" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: MAX_INBOUND_PENDING_CONNECTIONS: 444" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: BACKGROUND_OVERLAY_PROCESSING=true" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: PARALLEL_LEDGER_APPLY=true" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=warning msg="History: Unsafe command: use --trusted-checkpoint-hashes or --trusted-hash to ensure catchup integrity. If you want to run untrusted catchup, use --force-untrusted-catchup." pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="Ledger: Starting up application" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="Ledger: Loaded LCL header from database: [seq=1, hash=63d98f]" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.526Z" level=info msg="default: Establishing 8-entry connection pool to: sqlite3://stellar.db" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.527Z" level=info msg="Ledger: Assumed bucket-state for LCL: [seq=1, hash=63d98f] (0.000 sec)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.527Z" level=info msg="default: Launching 1 loading and 5 compiling background threads" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="default: Compiled 0 contracts (0.00B of Wasm) in 0ms real time, 0ms CPU time" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="default: Heap changed from 15.60MB to 15.60MB during compilation (2.37KB difference)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="Perf: Populating in-memory Soroban state from LCL for ledger [seq=1, hash=63d98f]" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="Perf: Populated in-memory Soroban state in 0.000 sec" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="Perf: Startup state load took 0.002 sec (full=true)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="Ledger: Changing state LM_BOOTING_STATE -> LM_CATCHING_UP_STATE" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="History: Downloading history archive state: .well-known/stellar-history.json" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="History: Starting catchup with configuration:" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="lastClosedLedger: 1" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="toLedger: 4437358" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="count: 2" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="History: Catching up to ledger 4437358: Downloading state file history/00/43/b5/history-0043b57f.json for ledger 4437375" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="History: Downloading history archive state: history/00/43/b5/history-0043b57f.json" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.528Z" level=info msg="History: Selected archive sdf_testnet_3 to download history-0043b57f.json" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.571Z" level=info msg="History: Catching up to ledger 4437358: Downloading state file history/00/43/b5/history-0043b53f.json for ledger 4437311" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.571Z" level=info msg="History: Downloading history archive state: history/00/43/b5/history-0043b53f.json" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.571Z" level=info msg="History: Selected archive sdf_testnet_1 to download history-0043b53f.json" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.617Z" level=info msg="History: Catching up to ledger 4437358: downloading ledger files 1/2 (50%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.617Z" level=info msg="History: Catching up to ledger 4437358: downloading ledger files 2/2 (100%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.617Z" level=info msg="History: Selected archive sdf_testnet_1 to download ledger-0043b53f.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.617Z" level=info msg="History: Selected archive sdf_testnet_2 to download ledger-0043b57f.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.657Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: batch-download-ledger-0043b53f-0043b5bf : 2/2 children completed" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.657Z" level=info msg="History: Verifying ledgers [4437311,4437359)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.657Z" level=info msg="History: Skipping verification for ledger [seq=4437358, hash=636239] against SCP hash" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.657Z" level=info msg="History: Catching up to ledger 4437358: verifying checkpoint 1/1 (100%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.657Z" level=info msg="History: History chain [4437311,4437358] verified" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.657Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: verify-ledger-chain" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.661Z" level=info msg="History: Catching up to ledger 4437358: Ready to run: herder-state-consistency-work" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.661Z" level=info msg="History: Herder state is set! tracking=4437358, closeTime=1788210377.000" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.661Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: herder-state-consistency-work" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.661Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 0/35 (0%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.661Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-805620a8a6fbf2f606dfc0bc4989b9613cb0e5786b8a0a902b637fd57a3cd1a3.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.662Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-8bb25d8d671ad59ca0aa8dc852ec0f051934721f3bef6097b5f3f8a191c55c69.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.662Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-8ab781d7d7a048de7f023d46edd16cbac197bbae826743a26b9b826ceb09563b.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.662Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-f1161fb4c639fe5d91d9deec4379051638484f257295d791d22cfeb1cc87392c.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.662Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-28c0bdde5194eb23a6fa95b568c720f51f0811bb0ba6a0490d7623844e516a23.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.662Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-90f12a8ba05a905a064d302b83aca36c6c2e86019b6b154bca744240ec38e69b.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.662Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-fccd6ef4e02f16a727b25f9c5ae33252c40e8acd80c0b6e584b6f87d4eda505f.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.663Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-e44fa1c31df4cdc32b55978f1be3080726aa0200e65454c4da120cf632a95531.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.663Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-59aee3f7657f7fad471bfc83cccc2d0ac1ea5ceb18edd1a02810c228463c806e.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.663Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-1c39b83c25db023276d66f8829e686a95bbf79cf3a1832f97f326d5f068f6a6a.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.663Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-0c3898fde6e1bfce11e795088d4845e9819071ff4597a16168cae3b762e4e8c4.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.663Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-b48b3cf5995c444b840173b301035e6b84ab9d3886bdbaf76ac6c366fa967a6d.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.663Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-29ded83369cc529f4546a68de25117effedd1e7c77a0443740366c9b5211b38c.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.664Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-3a355c0faa46518bb02bf10a4c5934f5f53c25a0c9b12ebd82592948c3ed8c22.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.664Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-cb3767a6591c7aba61d2dd22c3cdb376867dd70acd5355a31879c57f22726c11.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.664Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-c1bdda576f5f5841f231f51d448ea97844d69f5b6362d5857db4762eed5fe65e.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.764Z" level=info msg="History: Verifying and indexing bucket cb3767a6591c7aba61d2dd22c3cdb376867dd70acd5355a31879c57f22726c11" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.766Z" level=info msg="History: Verifying and indexing bucket 3a355c0faa46518bb02bf10a4c5934f5f53c25a0c9b12ebd82592948c3ed8c22" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.770Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 1/35 (2%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.770Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-7975e9756e5983b02645430d444d2e2c6ac0662a5b59894d131ae0112675f632.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.774Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 2/35 (5%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.774Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-94ae477bd2b5235286b0d124ea76944b19005f73a9422227aa89caf2f3d6e529.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.802Z" level=info msg="History: Verifying and indexing bucket 29ded83369cc529f4546a68de25117effedd1e7c77a0443740366c9b5211b38c" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.803Z" level=info msg="History: Verifying and indexing bucket c1bdda576f5f5841f231f51d448ea97844d69f5b6362d5857db4762eed5fe65e" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.807Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 3/35 (8%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.807Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-75c1afbefb6ba3b67a014f4a994e41dccb718f7ff1fb5c22b2f052aab70ee514.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.814Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 4/35 (11%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.814Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-883a5ace683c4d7ea7ddc9d7ade24edccf09c98029aaa025cf2c0bbae6fa52bc.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.916Z" level=info msg="History: Verifying and indexing bucket b48b3cf5995c444b840173b301035e6b84ab9d3886bdbaf76ac6c366fa967a6d" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.917Z" level=info msg="History: Verifying and indexing bucket 94ae477bd2b5235286b0d124ea76944b19005f73a9422227aa89caf2f3d6e529" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.920Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 5/35 (14%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.920Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-483f27623f3795857192f9d3fe5d4fd6d0e6d6887e869cb34cf7bd7246a0a080.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.933Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 6/35 (17%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.933Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-43d1a0e3606c510be2969c6e7c76d214e8939689e8fcbaa222e7df3af043808c.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:30.975Z" level=info msg="History: Downloading history archive state: .well-known/stellar-history.json" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.008Z" level=info msg="History: Verifying and indexing bucket 883a5ace683c4d7ea7ddc9d7ade24edccf09c98029aaa025cf2c0bbae6fa52bc" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.010Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 7/35 (20%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.010Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-4a9f10aac14869fc3e59fc58818a35c71d02c235ab9a55db532d795a959260c2.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.010Z" level=info msg="History: Verifying and indexing bucket 75c1afbefb6ba3b67a014f4a994e41dccb718f7ff1fb5c22b2f052aab70ee514" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.012Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 8/35 (22%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.012Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-4eb2c82fb7637b1c740b0a285e5cf388d4dd777f865517e97f69af61010c2311.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.028Z" level=info msg="History: Verifying and indexing bucket 483f27623f3795857192f9d3fe5d4fd6d0e6d6887e869cb34cf7bd7246a0a080" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.029Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 9/35 (25%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.029Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-bd328eaf6820b3cc5d782b7914fc8eae805fb6588de30ed692638c1b04110beb.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.044Z" level=info msg="History: Verifying and indexing bucket 0c3898fde6e1bfce11e795088d4845e9819071ff4597a16168cae3b762e4e8c4" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.098Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 10/35 (28%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.098Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-8883f9c76a6c2461f40ed05bf66adeb1fd6ea40e8f315662702a298d892458ce.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.412Z" level=info msg="History: Downloading history archive state: .well-known/stellar-history.json" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.435Z" level=info msg="History: Verifying and indexing bucket 1c39b83c25db023276d66f8829e686a95bbf79cf3a1832f97f326d5f068f6a6a" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.466Z" level=info msg="History: Verifying and indexing bucket 7975e9756e5983b02645430d444d2e2c6ac0662a5b59894d131ae0112675f632" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.470Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 11/35 (31%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.470Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-b5090cec9c5011da1bcf6d2d1f3caa63dfe2344fc35cba593183468193915865.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.521Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 12/35 (34%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.521Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-36cbd6eeb69e3a6513191bd3cae77abbc7d3f8fd4e0982498fc7b0ce96ea02d4.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.958Z" level=info msg="History: Archive information: [name: sdf_testnet_1, server: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1), currentLedger: 5710399]" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.958Z" level=info msg="History: Archive information: [name: sdf_testnet_2, server: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1), currentLedger: 5710399]" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:31.958Z" level=info msg="History: Archive information: [name: sdf_testnet_3, server: stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1), currentLedger: 5710399]" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:33.211Z" level=info msg="History: Verifying and indexing bucket 59aee3f7657f7fad471bfc83cccc2d0ac1ea5ceb18edd1a02810c228463c806e" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:33.366Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 13/35 (37%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:33.366Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-583d1e5643f9af5b4eab543d130455e4437d6d7952ce0e16d296aa866150f9da.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.164Z" level=info msg="History: Verifying and indexing bucket e44fa1c31df4cdc32b55978f1be3080726aa0200e65454c4da120cf632a95531" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.434Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 14/35 (40%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.434Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-30dfbca066c3a43c29f08b6daf5651f9bbc059a55077a81060ca612aea77e136.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.522Z" level=info msg="History: Verifying and indexing bucket 583d1e5643f9af5b4eab543d130455e4437d6d7952ce0e16d296aa866150f9da" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.583Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 15/35 (42%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.583Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-7ca2164e578f2b0f44d7fac4f63c61274781724081a8bc06569e4ec04468f7ee.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.715Z" level=info msg="History: Verifying and indexing bucket b5090cec9c5011da1bcf6d2d1f3caa63dfe2344fc35cba593183468193915865" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.944Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 16/35 (45%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:35.944Z" level=info msg="History: Selected archive sdf_testnet_3 to download bucket-3d349908d30191016f8f38ab1ba41649208f4470a1e352d6305a8adfc7681eb8.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.037Z" level=info msg="History: Verifying and indexing bucket 36cbd6eeb69e3a6513191bd3cae77abbc7d3f8fd4e0982498fc7b0ce96ea02d4" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.158Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 17/35 (48%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.158Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-3401f9f2c425770dbe562fa103b7ab264a3b14f9e7cf6d64337e3e6fdd7be40d.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.355Z" level=info msg="History: Verifying and indexing bucket 7ca2164e578f2b0f44d7fac4f63c61274781724081a8bc06569e4ec04468f7ee" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.370Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 18/35 (51%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.370Z" level=info msg="History: Selected archive sdf_testnet_1 to download bucket-793e87f3a0f532376c546a227aa2df8f11b63a945fffb9bfb10f1a20ef44272f.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.611Z" level=info msg="History: Verifying and indexing bucket 3401f9f2c425770dbe562fa103b7ab264a3b14f9e7cf6d64337e3e6fdd7be40d" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.614Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 19/35 (54%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.614Z" level=info msg="History: Selected archive sdf_testnet_2 to download bucket-ee26c5cd57a41f91b671ea40529980618db72a16cfaaa508c4ea87b66f3b7bc6.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.636Z" level=info msg="History: Verifying and indexing bucket fccd6ef4e02f16a727b25f9c5ae33252c40e8acd80c0b6e584b6f87d4eda505f" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.660Z" level=info msg="History: Verifying and indexing bucket 793e87f3a0f532376c546a227aa2df8f11b63a945fffb9bfb10f1a20ef44272f" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.662Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 20/35 (57%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.815Z" level=info msg="History: Verifying and indexing bucket ee26c5cd57a41f91b671ea40529980618db72a16cfaaa508c4ea87b66f3b7bc6" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:36.818Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 21/35 (60%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:37.040Z" level=info msg="History: Verifying and indexing bucket 3d349908d30191016f8f38ab1ba41649208f4470a1e352d6305a8adfc7681eb8" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:37.059Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 22/35 (62%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:37.061Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 23/35 (65%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:37.159Z" level=info msg="History: Verifying and indexing bucket 30dfbca066c3a43c29f08b6daf5651f9bbc059a55077a81060ca612aea77e136" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:37.187Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 24/35 (68%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:37.688Z" level=info msg="History: Verifying and indexing bucket 90f12a8ba05a905a064d302b83aca36c6c2e86019b6b154bca744240ec38e69b" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:38.528Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 25/35 (71%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:42.256Z" level=info msg="History: Verifying and indexing bucket bd328eaf6820b3cc5d782b7914fc8eae805fb6588de30ed692638c1b04110beb" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:43.017Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 26/35 (74%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:43.721Z" level=info msg="History: Verifying and indexing bucket 8883f9c76a6c2461f40ed05bf66adeb1fd6ea40e8f315662702a298d892458ce" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:44.588Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 27/35 (77%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:45.284Z" level=info msg="History: Verifying and indexing bucket 4eb2c82fb7637b1c740b0a285e5cf388d4dd777f865517e97f69af61010c2311" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:46.791Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 28/35 (80%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:48.121Z" level=info msg="History: Verifying and indexing bucket f1161fb4c639fe5d91d9deec4379051638484f257295d791d22cfeb1cc87392c" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:51.153Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 29/35 (82%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:54.912Z" level=info msg="History: Verifying and indexing bucket 8ab781d7d7a048de7f023d46edd16cbac197bbae826743a26b9b826ceb09563b" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:15:58.555Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 30/35 (85%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:00.370Z" level=info msg="History: Verifying and indexing bucket 4a9f10aac14869fc3e59fc58818a35c71d02c235ab9a55db532d795a959260c2" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:02.906Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 31/35 (88%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:04.384Z" level=info msg="History: Verifying and indexing bucket 8bb25d8d671ad59ca0aa8dc852ec0f051934721f3bef6097b5f3f8a191c55c69" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:09.117Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 32/35 (91%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:09.260Z" level=info msg="History: Verifying and indexing bucket 28c0bdde5194eb23a6fa95b568c720f51f0811bb0ba6a0490d7623844e516a23" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:10.565Z" level=info msg="History: Verifying and indexing bucket 43d1a0e3606c510be2969c6e7c76d214e8939689e8fcbaa222e7df3af043808c" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:12.664Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 33/35 (94%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:14.895Z" level=info msg="History: Verifying and indexing bucket 805620a8a6fbf2f606dfc0bc4989b9613cb0e5786b8a0a902b637fd57a3cd1a3" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:16.482Z" level=info msg="History: Catching up to ledger 4437358: downloading and verifying buckets: 34/35 (97%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.891Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: download-verify-buckets : 35/35 children completed" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.892Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: verify-has" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.892Z" level=info msg="History: Applying buckets" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.896Z" level=info msg="History: ApplyBuckets estimated 22828494 ledger entries" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.896Z" level=info msg="History: Catching up to ledger 4437358: Running: apply-buckets : 0/1 children completed" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.896Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 0%. Currently on level 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.896Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 0%. Currently on level 1" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.896Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 0%. Currently on level 2" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.896Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 0%. Currently on level 3" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.896Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 0%. Currently on level 4" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.897Z" level=info msg="Bucket: Apply-rates for 5-entry bucket 4.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 0, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.897Z" level=info msg="Bucket: Entry-counts for 5-entry bucket 4.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 5, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.897Z" level=info msg="Bucket: Bucket-apply: 5 entries in 854.57KB/2.04GB in 1/21 files (0%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.897Z" level=info msg="Bucket: Apply-rates for 11-entry bucket 4.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 19298, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:19298" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.897Z" level=info msg="Bucket: Entry-counts for 11-entry bucket 4.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 11, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.897Z" level=info msg="Bucket: Bucket-apply: 16 entries in 1.77MB/2.04GB in 2/21 files (0%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.897Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 0%. Currently on level 5" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.898Z" level=info msg="Bucket: Apply-rates for 8-entry bucket 5.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 12158, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:12158" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.898Z" level=info msg="Bucket: Entry-counts for 8-entry bucket 5.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 8, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.898Z" level=info msg="Bucket: Bucket-apply: 24 entries in 5.55MB/2.04GB in 3/21 files (0%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.898Z" level=info msg="Bucket: Apply-rates for 8-entry bucket 5.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 13245, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:13245" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.898Z" level=info msg="Bucket: Entry-counts for 8-entry bucket 5.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 8, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.898Z" level=info msg="Bucket: Bucket-apply: 32 entries in 10.88MB/2.04GB in 4/21 files (0%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.899Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 0%. Currently on level 6" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.899Z" level=info msg="Bucket: Apply-rates for 8-entry bucket 6.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 11730, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:11730" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.899Z" level=info msg="Bucket: Entry-counts for 8-entry bucket 6.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 8, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.899Z" level=info msg="Bucket: Bucket-apply: 40 entries in 21.89MB/2.04GB in 5/21 files (1%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.899Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 1%. Currently on level 6" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.900Z" level=info msg="Bucket: Apply-rates for 8-entry bucket 6.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 14842, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:14842" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.900Z" level=info msg="Bucket: Entry-counts for 8-entry bucket 6.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 8, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.900Z" level=info msg="Bucket: Bucket-apply: 48 entries in 35.47MB/2.04GB in 6/21 files (1%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.900Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 1%. Currently on level 7" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.900Z" level=info msg="Bucket: Apply-rates for 28-entry bucket 7.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 43276, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:43276" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.900Z" level=info msg="Bucket: Entry-counts for 28-entry bucket 7.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 28, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.900Z" level=info msg="Bucket: Bucket-apply: 76 entries in 65.14MB/2.04GB in 7/21 files (3%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.900Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 3%. Currently on level 7" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.908Z" level=info msg="Bucket: Apply-rates for 1209-entry bucket 7.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 159414, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:159414" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.908Z" level=info msg="Bucket: Entry-counts for 1209-entry bucket 7.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 1209, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.908Z" level=info msg="Bucket: Bucket-apply: 1285 entries in 124.10MB/2.04GB in 8/21 files (5%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.908Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 5%. Currently on level 7" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.908Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 5%. Currently on level 8" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.921Z" level=info msg="Bucket: Apply-rates for 2127-entry bucket 8.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 157883, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:157883" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.922Z" level=info msg="Bucket: Entry-counts for 2127-entry bucket 8.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 2127, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.922Z" level=info msg="Bucket: Bucket-apply: 3412 entries in 365.82MB/2.04GB in 9/21 files (17%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.922Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 17%. Currently on level 8" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.932Z" level=info msg="Bucket: Apply-rates for 1581-entry bucket 8.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 144462, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:144462" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.932Z" level=info msg="Bucket: Entry-counts for 1581-entry bucket 8.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 1581, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.932Z" level=info msg="Bucket: Bucket-apply: 4993 entries in 594.82MB/2.04GB in 10/21 files (28%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.932Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 28%. Currently on level 8" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.932Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 28%. Currently on level 9" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.955Z" level=info msg="Bucket: Apply-rates for 3648-entry bucket 9.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 161223, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:161223" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.955Z" level=info msg="Bucket: Entry-counts for 3648-entry bucket 9.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 3648, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.955Z" level=info msg="Bucket: Bucket-apply: 8641 entries in 855.80MB/2.04GB in 11/21 files (40%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.955Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 40%. Currently on level 9" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.981Z" level=info msg="Bucket: Bucket-apply: 12737 entries in 897.38MB/2.04GB in 11/21 files (42%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:23.981Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 42%. Currently on level 9" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.005Z" level=info msg="Bucket: Apply-rates for 7425-entry bucket 9.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 147678, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:147678" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.005Z" level=info msg="Bucket: Entry-counts for 7425-entry bucket 9.snap ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 7425, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.005Z" level=info msg="Bucket: Bucket-apply: 16066 entries in 1.19GB/2.04GB in 12/21 files (58%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.005Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 58%. Currently on level 9" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.005Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 58%. Currently on level 10" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.033Z" level=info msg="Bucket: Bucket-apply: 20162 entries in 1.56GB/2.04GB in 12/21 files (76%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.033Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 76%. Currently on level 10" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.087Z" level=info msg="Bucket: Bucket-apply: 28354 entries in 1.56GB/2.04GB in 12/21 files (76%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.143Z" level=info msg="Bucket: Bucket-apply: 36546 entries in 1.56GB/2.04GB in 12/21 files (76%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.202Z" level=info msg="Bucket: Bucket-apply: 44738 entries in 1.56GB/2.04GB in 12/21 files (76%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.249Z" level=info msg="Bucket: Bucket-apply: 48834 entries in 1.56GB/2.04GB in 12/21 files (76%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.309Z" level=info msg="Bucket: Bucket-apply: 57026 entries in 1.56GB/2.04GB in 12/21 files (76%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.371Z" level=info msg="Bucket: Bucket-apply: 65218 entries in 1.56GB/2.04GB in 12/21 files (76%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.382Z" level=info msg="Bucket: Apply-rates for 50042-entry bucket 10.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 132909, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0 T:132909" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.382Z" level=info msg="Bucket: Entry-counts for 50042-entry bucket 10.curr ACCOUNT up: 0, del: 0 TRUSTLINE up: 0, del: 0 OFFER up: 50042, del: 0 DATA up: 0, del: 0 CLAIMABLE_BALANCE up: 0, del: 0 LIQUIDITY_POOL up: 0, del: 0 CONTRACT_DATA up: 0, del: 0 CONTRACT_CODE up: 0, del: 0 CONFIG_SETTING up: 0, del: 0 TTL up: 0, del: 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.382Z" level=info msg="Bucket: Bucket-apply: 66108 entries in 2.04GB/2.04GB in 13/21 files (99%)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.382Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 99%. Currently on level 10" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.382Z" level=info msg="History: ApplyBuckets : done, assuming state" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.382Z" level=info msg="History: Catching up to ledger 4437358: Applying buckets 99%. Currently on level 11" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:24.400Z" level=info msg="default: Launching 1 loading and 5 compiling background threads" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:27.694Z" level=info msg="default: Compiled 4290 contracts (114.40MB of Wasm) in 3294ms real time, 16404ms CPU time" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:27.694Z" level=info msg="default: Heap changed from 869.20MB to 2.24GB during compilation (1.39GB difference)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.385Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: download-verify-apply-buckets" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.386Z" level=info msg="History: Downloading ledger checkpoint ledger-0000003f.xdr.gz from archive sdf_testnet_1" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.386Z" level=info msg="History: Downloading, unzipping and applying transactions for checkpoint 4437375" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.386Z" level=info msg="History: Catching up to ledger 4437358: Download & apply checkpoints: num checkpoints left to apply:1 (0% done)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.386Z" level=info msg="History: Selected archive sdf_testnet_3 to download transactions-0043b57f.xdr.gz" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.452Z" level=info msg="History: Local ledger header 1 matches archive sdf_testnet_1" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.452Z" level=info msg="History: Downloading ledger checkpoint ledger-0000003f.xdr.gz from archive sdf_testnet_2" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.490Z" level=info msg="Tx: applying ledger 4437312 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.537Z" level=info msg="Ledger: Ledger close complete: 4437312" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.538Z" level=info msg="Tx: applying ledger 4437313 (classic phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.552Z" level=info msg="Ledger: Ledger close complete: 4437313" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.552Z" level=info msg="Tx: applying ledger 4437314 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.570Z" level=info msg="Ledger: Ledger close complete: 4437314" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.570Z" level=info msg="Tx: applying ledger 4437315 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.590Z" level=info msg="Ledger: Ledger close complete: 4437315" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.590Z" level=info msg="Tx: applying ledger 4437316 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.601Z" level=info msg="Ledger: Ledger close complete: 4437316" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.601Z" level=info msg="Tx: applying ledger 4437317 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.621Z" level=info msg="Ledger: Ledger close complete: 4437317" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.621Z" level=info msg="Tx: applying ledger 4437318 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:10, ops:10, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.637Z" level=info msg="Ledger: Ledger close complete: 4437318" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.637Z" level=info msg="Tx: applying ledger 4437319 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.661Z" level=info msg="Ledger: Ledger close complete: 4437319" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.662Z" level=info msg="Tx: applying ledger 4437320 (classic phase: 1 component(s): [{discounted txs:4, ops:4, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:14, ops:14, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.686Z" level=info msg="Ledger: Ledger close complete: 4437320" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.686Z" level=info msg="Tx: applying ledger 4437321 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.705Z" level=info msg="Ledger: Ledger close complete: 4437321" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.705Z" level=info msg="Tx: applying ledger 4437322 (classic phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:10, ops:10, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.724Z" level=info msg="Ledger: Ledger close complete: 4437322" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.724Z" level=info msg="Tx: applying ledger 4437323 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.740Z" level=info msg="Ledger: Ledger close complete: 4437323" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.740Z" level=info msg="Tx: applying ledger 4437324 (classic phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.751Z" level=info msg="Ledger: Ledger close complete: 4437324" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.751Z" level=info msg="Tx: applying ledger 4437325 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:9, ops:9, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.775Z" level=info msg="Ledger: Ledger close complete: 4437325" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.776Z" level=info msg="Tx: applying ledger 4437326 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.789Z" level=info msg="Ledger: Ledger close complete: 4437326" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.789Z" level=info msg="Tx: applying ledger 4437327 (classic phase: 0 component(s): [], soroban phase: 1 component(s): [{discounted txs:11, ops:11, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.809Z" level=info msg="Ledger: Ledger close complete: 4437327" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.810Z" level=info msg="Tx: applying ledger 4437328 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.827Z" level=info msg="Ledger: Ledger close complete: 4437328" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.827Z" level=info msg="Tx: applying ledger 4437329 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.846Z" level=info msg="Ledger: Ledger close complete: 4437329" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.846Z" level=info msg="Tx: applying ledger 4437330 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.860Z" level=info msg="Ledger: Ledger close complete: 4437330" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.860Z" level=info msg="Tx: applying ledger 4437331 (classic phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:9, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.880Z" level=info msg="Ledger: Ledger close complete: 4437331" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.880Z" level=info msg="Tx: applying ledger 4437332 (classic phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.894Z" level=info msg="Ledger: Ledger close complete: 4437332" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.894Z" level=info msg="Tx: applying ledger 4437333 (classic phase: 1 component(s): [{discounted txs:4, ops:4, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.915Z" level=info msg="Ledger: Ledger close complete: 4437333" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.915Z" level=info msg="Tx: applying ledger 4437334 (classic phase: 1 component(s): [{discounted txs:2, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.927Z" level=info msg="Ledger: Ledger close complete: 4437334" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.928Z" level=info msg="Tx: applying ledger 4437335 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:10, ops:10, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.949Z" level=info msg="Ledger: Ledger close complete: 4437335" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.949Z" level=info msg="Tx: applying ledger 4437336 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.964Z" level=info msg="Ledger: Ledger close complete: 4437336" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.964Z" level=info msg="Tx: applying ledger 4437337 (classic phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.985Z" level=info msg="Ledger: Ledger close complete: 4437337" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:38.985Z" level=info msg="Tx: applying ledger 4437338 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.000Z" level=info msg="Ledger: Ledger close complete: 4437338" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.000Z" level=info msg="Tx: applying ledger 4437339 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.016Z" level=info msg="Ledger: Ledger close complete: 4437339" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.017Z" level=info msg="Tx: applying ledger 4437340 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.034Z" level=info msg="Ledger: Ledger close complete: 4437340" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.034Z" level=info msg="Tx: applying ledger 4437341 (classic phase: 0 component(s): [], soroban phase: 1 component(s): [{discounted txs:7, ops:7, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.047Z" level=info msg="Ledger: Ledger close complete: 4437341" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.048Z" level=info msg="Tx: applying ledger 4437342 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:10, ops:10, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.074Z" level=info msg="Ledger: Ledger close complete: 4437342" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.075Z" level=info msg="Tx: applying ledger 4437343 (classic phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:4, ops:4, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.088Z" level=info msg="Ledger: Ledger close complete: 4437343" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.088Z" level=info msg="Tx: applying ledger 4437344 (classic phase: 1 component(s): [{discounted txs:5, ops:5, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:13, ops:13, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.114Z" level=info msg="Ledger: Ledger close complete: 4437344" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.117Z" level=info msg="Tx: applying ledger 4437345 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.131Z" level=info msg="Ledger: Ledger close complete: 4437345" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.131Z" level=info msg="Tx: applying ledger 4437346 (classic phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:3, ops:3, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.147Z" level=info msg="Ledger: Ledger close complete: 4437346" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.147Z" level=info msg="Tx: applying ledger 4437347 (classic phase: 0 component(s): [], soroban phase: 1 component(s): [{discounted txs:5, ops:5, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.166Z" level=info msg="Ledger: Ledger close complete: 4437347" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.167Z" level=info msg="Tx: applying ledger 4437348 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:12, ops:12, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.206Z" level=info msg="Ledger: Ledger close complete: 4437348" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.206Z" level=info msg="Tx: applying ledger 4437349 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.227Z" level=info msg="Ledger: Ledger close complete: 4437349" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.228Z" level=info msg="Tx: applying ledger 4437350 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.250Z" level=info msg="Ledger: Ledger close complete: 4437350" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.250Z" level=info msg="Tx: applying ledger 4437351 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:5, ops:5, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.265Z" level=info msg="Ledger: Ledger close complete: 4437351" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.265Z" level=info msg="Tx: applying ledger 4437352 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.280Z" level=info msg="Ledger: Ledger close complete: 4437352" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.281Z" level=info msg="Tx: applying ledger 4437353 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:9, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.299Z" level=info msg="Ledger: Ledger close complete: 4437353" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.299Z" level=info msg="Tx: applying ledger 4437354 (classic phase: 1 component(s): [{discounted txs:1, ops:1, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:11, ops:11, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.342Z" level=info msg="Ledger: Ledger close complete: 4437354" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.343Z" level=info msg="Tx: applying ledger 4437355 (classic phase: 1 component(s): [{discounted txs:2, ops:2, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:6, ops:6, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.372Z" level=info msg="Ledger: Ledger close complete: 4437355" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.373Z" level=info msg="Tx: applying ledger 4437356 (classic phase: 1 component(s): [{discounted txs:4, ops:4, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:11, ops:11, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.402Z" level=info msg="Ledger: Ledger close complete: 4437356" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.402Z" level=info msg="Tx: applying ledger 4437357 (classic phase: 1 component(s): [{discounted txs:4, ops:4, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:8, ops:8, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.417Z" level=info msg="Ledger: Ledger close complete: 4437357" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.417Z" level=info msg="Tx: applying ledger 4437358 (classic phase: 1 component(s): [{discounted txs:4, ops:4, base_fee:100}], soroban phase: 1 component(s): [{discounted txs:11, ops:11, base_fee:100}])" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.426Z" level=info msg="Uploading FFBC9DFF--4416000-4479999/FFBC4A92--4437357.xdr.zst, overwrite=false" pid=1 service=galexie
+time="2026-11-13T13:16:39.440Z" level=info msg="Ledger: Ledger close complete: 4437358" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.440Z" level=info msg="History: Catching up to ledger 4437358: Download & apply checkpoints: num checkpoints left to apply:0 (100% done)" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.440Z" level=info msg="History: Catching up to ledger 4437358: Succeeded: catchup-seq" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.440Z" level=info msg="History: Catchup finished" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.440Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.440Z" level=info msg="default: * Catchup finished." pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.440Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="default: * Catchup info:" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"info\" : {" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"build\" : \"stellar-core 30.0.0 (0e49751aa9ddf892302cca02cea7f3f5d97df9f1)\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"ledger\" : {" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"age\" : 6365422," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"baseFee\" : 100," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"baseReserve\" : 5000000," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"bucketlist\" : [" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"curr\" : \"3f8c128b3a6f81069e922815643bd86afe70ff178c31f98044d6f04ffcb5aa1a\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"snap\" : \"0270e7617393441f84bb1b94ebf4192071becd8d293e51f1a9ab43976026e1bd\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"curr\" : \"63bd7e57b9b3e552e530367e12f03a72f1ff4f3181732626ee8ec8a1fc8622ba\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.441Z" level=info msg="\"snap\" : \"8c83ee05752e5c399dc62adc51a63ce9f8e3d09ba6632d2ee7913bd2d8b276bf\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"0bcd145cee9cdba37032519821a65d5671c961029ffe21e7c76e26a0070f6d0d\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"987f6b4afba3ab6b464a7cfbd43c9f6f2f2ffe0536f435767949ebeb4c61c069\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"3c94eda0cbc70ba73768fffc0b02025041b8a86f69f3fc77ace7ed5510c0254b\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"3a355c0faa46518bb02bf10a4c5934f5f53c25a0c9b12ebd82592948c3ed8c22\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"29ded83369cc529f4546a68de25117effedd1e7c77a0443740366c9b5211b38c\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"b48b3cf5995c444b840173b301035e6b84ab9d3886bdbaf76ac6c366fa967a6d\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"0c3898fde6e1bfce11e795088d4845e9819071ff4597a16168cae3b762e4e8c4\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"1c39b83c25db023276d66f8829e686a95bbf79cf3a1832f97f326d5f068f6a6a\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"59aee3f7657f7fad471bfc83cccc2d0ac1ea5ceb18edd1a02810c228463c806e\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"e44fa1c31df4cdc32b55978f1be3080726aa0200e65454c4da120cf632a95531\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"fccd6ef4e02f16a727b25f9c5ae33252c40e8acd80c0b6e584b6f87d4eda505f\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"90f12a8ba05a905a064d302b83aca36c6c2e86019b6b154bca744240ec38e69b\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"28c0bdde5194eb23a6fa95b568c720f51f0811bb0ba6a0490d7623844e516a23\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"f1161fb4c639fe5d91d9deec4379051638484f257295d791d22cfeb1cc87392c\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"8ab781d7d7a048de7f023d46edd16cbac197bbae826743a26b9b826ceb09563b\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"8bb25d8d671ad59ca0aa8dc852ec0f051934721f3bef6097b5f3f8a191c55c69\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="{" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"curr\" : \"805620a8a6fbf2f606dfc0bc4989b9613cb0e5786b8a0a902b637fd57a3cd1a3\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"snap\" : \"0000000000000000000000000000000000000000000000000000000000000000\"" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="]," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"closeTime\" : 1788210377," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"hash\" : \"636239dd7507c42a61d35797e415fcc325fe2579ed60ff3ba1edd1eb1bba6ed0\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"maxSorobanTxSetSize\" : 2000," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"maxTxSetSize\" : 200," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"num\" : 4437358," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"version\" : 28" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"network\" : \"Test SDF Network ; September 2015\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"peers\" : {" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"authenticated_count\" : 0," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"pending_count\" : 0" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"protocol_version\" : 30," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"quorum\" : {" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"maybe_dead_nodes\" : []," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"node\" : \"GDM6O\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"qset\" : {" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"cost\" : 0," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"lag_ms\" : null" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"startedOn\" : \"2026-11-13T13:15:30Z\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"state\" : \"Joining SCP\"," pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="\"status\" : [ \"Catching up to ledger 4437358: Succeeded: catchup-seq\" ]" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="}" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="default: *" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="default: Application destructing" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="default: Joining ledger apply thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.442Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.459Z" level=info msg="Uploaded FFBC9DFF--4416000-4479999/FFBC4A92--4437357.xdr.zst successfully" pid=1 service=galexie
+time="2026-11-13T13:16:39.463Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining worker thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining overlay thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joining eviction thread" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Joined all 12 threads" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:39.464Z" level=info msg="default: Application destroyed" pid=1 service=galexie subservice=stellar-core
+time="2026-11-13T13:16:40.993Z" level=info msg="Uploading FFBC9DFF--4416000-4479999/FFBC4A91--4437358.xdr.zst, overwrite=false" pid=1 service=galexie
+time="2026-11-13T13:16:40.993Z" level=info msg="ExportManager successfully exported ledgers from 4437357 to 4437358" pid=1 service=galexie
+time="2026-11-13T13:16:41.000Z" level=info msg="Uploaded FFBC9DFF--4416000-4479999/FFBC4A91--4437358.xdr.zst successfully" pid=1 service=galexie
+time="2026-11-13T13:16:41.000Z" level=info msg="Meta archive channel closed, stopping uploader" pid=1 service=galexie
+time="2026-11-13T13:16:41.000Z" level=info msg="Shutting down Galexie" pid=1 service=galexie
