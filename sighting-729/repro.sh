@@ -27,7 +27,11 @@ EXPECTED_ACCOUNT=GBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSBB7B
 CORPUS_DIR=corpus/entries/cap-0040/cap0040-signed-payload-signer-01
 OBJECT_KEY=testnet/FFBC9DFF--4416000-4479999/FFBC4A92--4437357.xdr.zst
 OUT=sighting-729/evidence
-PG="psql -h localhost -p 5433 -U postgres -v ON_ERROR_STOP=1"
+# Host ports of the local S3 and Postgres; override if 8333/5433 are taken (infra/docker-compose.yml reads the same vars).
+export XDR_S3_PORT=${XDR_S3_PORT:-8333} XDR_PG_PORT=${XDR_PG_PORT:-5433}
+S3_PORT=$XDR_S3_PORT
+PG_PORT=$XDR_PG_PORT
+PG="psql -h localhost -p $PG_PORT -U postgres -v ON_ERROR_STOP=1"
 export PGCONNECT_TIMEOUT=5
 
 FROM_CORPUS=0
@@ -49,17 +53,17 @@ if [ $CLEAN = 1 ]; then
   step "Removing old containers and volumes"
   compose down -v --remove-orphans
 fi
-step "Starting SeaweedFS (S3 :8333) and TimescaleDB (:5433)"
+step "Starting SeaweedFS (S3 :$S3_PORT) and TimescaleDB (:$PG_PORT)"
 compose up -d --wait s3 db
 
 # --- 2. put ledger 4437357 in the data lake ---------------------------------------------------
 if [ $FROM_CORPUS = 1 ]; then
   step "Uploading the committed ledger file to s3://ledgers/$OBJECT_KEY"
   curl -sf -X PUT --data-binary "@$CORPUS_DIR/FFBC4A92--4437357.xdr.zst" \
-    "http://localhost:8333/ledgers/$OBJECT_KEY" >/dev/null
+    "http://localhost:$S3_PORT/ledgers/$OBJECT_KEY" >/dev/null
   # wallet-backend gets the schema from env, but publish the manifest Galexie would write too
   printf '%s' '{"networkPassphrase":"Test SDF Network ; September 2015","version":"1.0","compression":"zstd","ledgersPerBatch":1,"batchesPerPartition":64000}' |
-    curl -sf -X PUT --data-binary @- "http://localhost:8333/ledgers/testnet/.config.json" >/dev/null
+    curl -sf -X PUT --data-binary @- "http://localhost:$S3_PORT/ledgers/testnet/.config.json" >/dev/null
 else
   step "Exporting ledgers $LEDGER..$((LEDGER + 1)) with Galexie (captive core catches up from the testnet archive)"
   # Galexie requires end > start; 4437358 is exported too and is harmless.
@@ -75,7 +79,7 @@ STELLAR=${STELLAR:-$(corpus/tools/get-stellar-cli.sh | tail -1)}
 step "Verifying the exported object against the committed corpus file"
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
-curl -sf -o "$TMP/l.xdr.zst" "http://localhost:8333/ledgers/$OBJECT_KEY"
+curl -sf -o "$TMP/l.xdr.zst" "http://localhost:$S3_PORT/ledgers/$OBJECT_KEY"
 zstd -qdc "$TMP/l.xdr.zst" > "$TMP/l.xdr"
 "$STELLAR" xdr decode --type LedgerCloseMetaBatch --input single --output json "$TMP/l.xdr" > "$TMP/l.json"
 grep -q "$TX_HASH" "$TMP/l.json" || { echo "tx $TX_HASH not in exported ledger" >&2; exit 1; }
@@ -113,7 +117,7 @@ run_variant() { # <name> <commit>
   step "[$name] Fresh database $db, migrations, backfill seed"
   $PG -qc "DROP DATABASE IF EXISTS $db WITH (FORCE)" -qc "CREATE DATABASE $db" 2>&1 | grep -v NOTICE || true
   $PG -d "$db" -qc "CREATE EXTENSION IF NOT EXISTS timescaledb" 2>&1 | grep -v NOTICE || true
-  export DATABASE_URL="postgres://postgres@localhost:5433/$db?sslmode=disable"
+  export DATABASE_URL="postgres://postgres@localhost:$PG_PORT/$db?sslmode=disable"
   "$bin" migrate up > "$OUT/migrate-$name.log" 2>&1
   $PG -d "$db" -qf sighting-729/seed-backfill.sql
 

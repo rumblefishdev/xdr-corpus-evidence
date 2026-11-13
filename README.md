@@ -37,7 +37,8 @@ things. This repository provides them, each as something a reviewer can rerun:
 
 ## Requirements
 
-Docker with Compose v2, `psql`, `zstd`, `curl`, `jq`, `python3`. Free ports 5433 (Postgres) and 8333 (local S3).
+Docker with Compose v2, `psql`, `zstd`, `curl`, `jq`, `python3`. Ports 5433 (Postgres) and 8333 (local S3)
+by default; if either is taken, set `XDR_PG_PORT` / `XDR_S3_PORT` (e.g. `XDR_PG_PORT=55433 sighting-729/repro.sh …`).
 No Go or Node needed: builds and SDK runs happen in containers. The `stellar` CLI (the XDR decoder) is downloaded on first
 use by `corpus/tools/get-stellar-cli.sh` (pinned 30.0.1, Linux x86_64, sha256-checked); set `STELLAR=<path>` to use your own.
 

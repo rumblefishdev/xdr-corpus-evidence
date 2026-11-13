@@ -28,6 +28,8 @@ case $ID in
   *) echo "unknown entry $ID" >&2; exit 2 ;;
 esac
 OUT=${2:-.cache/regen/$ID-$(date -u +%Y%m%dT%H%M%SZ)}
+export XDR_S3_PORT=${XDR_S3_PORT:-8333}   # host port of the local S3; override if 8333 is taken
+S3_PORT=$XDR_S3_PORT
 ARCHIVE=https://history.stellar.org/prd/core-testnet/core_testnet_001
 STELLAR=${STELLAR:-$(corpus/tools/get-stellar-cli.sh | tail -1)}
 export STELLAR
@@ -67,7 +69,7 @@ sed -i -E 's/(Root account seed: )S[A-Z2-7]{55}/\1<redacted>/' "$OUT/galexie-exp
 # Object key for ledgers_per_file=1, files_per_partition=64000 (infra/galexie/testnet.toml).
 P=$((L / 64000 * 64000))
 KEY=$(printf '%08X--%d-%d/%08X--%d.xdr.zst' $((0xFFFFFFFF - P)) "$P" $((P + 63999)) $((0xFFFFFFFF - L)) "$L")
-curl -sf -o "$OUT/$(basename "$KEY")" "http://localhost:8333/ledgers/testnet/$KEY"
+curl -sf -o "$OUT/$(basename "$KEY")" "http://localhost:$S3_PORT/ledgers/testnet/$KEY"
 zstd -qdf "$OUT/$(basename "$KEY")" -o "$OUT/ledger-$L.LedgerCloseMetaBatch.xdr"
 echo "downloaded $KEY"
 
