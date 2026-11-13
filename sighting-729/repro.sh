@@ -2,17 +2,22 @@
 # Reproduce wallet-backend #729: a CAP-40 signed-payload signer (P... strkey) added by set_options
 # in testnet ledger 4437357 cannot be persisted by the pre-fix commit; the fix stores it.
 #
-# Usage: sighting-729/repro.sh [--from-corpus] [--clean]
+# Usage: sighting-729/repro.sh [--from-corpus] [--clean] [--record]
 #   --from-corpus  upload the committed ledger file to the local S3 instead of exporting it with
 #                  Galexie (no testnet history archive needed; survives a testnet reset)
 #   --clean        remove the local S3/DB containers and volumes first
+#   --record       write logs and verdicts to sighting-729/evidence/ (the committed evidence);
+#                  by default they go to .cache/sighting-729/<timestamp>/ and the working tree stays clean
 #
 # Verdict per binary (same shape as the future harness):
-#   pass        the tx is persisted and its SIGNER state change holds the full P... key
-#   mishandled  the tx is persisted but the signer is missing or altered
-#   dropped     the tx is not persisted
+#   pass        all transactions of the ledger are persisted and the SIGNER state change holds the full
+#               P... key, the right account and weight 1
+#   mishandled  the tx is persisted, but the signer is missing or altered, or other txs of the ledger are missing
+#   dropped     the tx is not persisted AND the ingest log shows the #729 failure for this signer
+#               (the signer_account_id conversion error); the cause is checked, not just the empty table
+#   error       the tx is not persisted for any other reason (setup, network, data lake): inconclusive
 # The script exits 0 only if pre-fix = dropped and fixed = pass.
-# Note: wallet-backend exits 0 even when a backfill batch fails, so verdicts come from the DB.
+# Note: wallet-backend exits 0 even when a backfill batch fails, so verdicts come from the DB and the log.
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
@@ -26,7 +31,7 @@ EXPECTED_SIGNER=PBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSAAAAAAB55LN6
 EXPECTED_ACCOUNT=GBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSBB7B
 CORPUS_DIR=corpus/entries/cap-0040/cap0040-signed-payload-signer-01
 OBJECT_KEY=testnet/FFBC9DFF--4416000-4479999/FFBC4A92--4437357.xdr.zst
-OUT=sighting-729/evidence
+HORIZON=https://horizon-testnet.stellar.org
 # Host ports of the local S3 and Postgres; override if 8333/5433 are taken (infra/docker-compose.yml reads the same vars).
 export XDR_S3_PORT=${XDR_S3_PORT:-8333} XDR_PG_PORT=${XDR_PG_PORT:-5433}
 S3_PORT=$XDR_S3_PORT
@@ -36,13 +41,16 @@ export PGCONNECT_TIMEOUT=5
 
 FROM_CORPUS=0
 CLEAN=0
+RECORD=0
 for a in "$@"; do
   case $a in
     --from-corpus) FROM_CORPUS=1 ;;
     --clean) CLEAN=1 ;;
+    --record) RECORD=1 ;;
     *) echo "unknown argument: $a" >&2; exit 2 ;;
   esac
 done
+if [ $RECORD = 1 ]; then OUT=sighting-729/evidence; else OUT=.cache/sighting-729/$(date -u +%Y%m%dT%H%M%SZ); fi
 
 compose() { docker compose -f "$ROOT/infra/docker-compose.yml" "$@"; }
 step() { printf '\n\033[1m==> %s\033[0m\n' "$*"; }
@@ -76,18 +84,38 @@ else
 fi
 
 STELLAR=${STELLAR:-$(corpus/tools/get-stellar-cli.sh | tail -1)}
-step "Verifying the exported object against the committed corpus file"
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 curl -sf -o "$TMP/l.xdr.zst" "http://localhost:$S3_PORT/ledgers/$OBJECT_KEY"
 zstd -qdc "$TMP/l.xdr.zst" > "$TMP/l.xdr"
 "$STELLAR" xdr decode --type LedgerCloseMetaBatch --input single --output json "$TMP/l.xdr" > "$TMP/l.json"
-grep -q "$TX_HASH" "$TMP/l.json" || { echo "tx $TX_HASH not in exported ledger" >&2; exit 1; }
-grep -q "$EXPECTED_SIGNER" "$TMP/l.json" || { echo "signer $EXPECTED_SIGNER not in exported ledger" >&2; exit 1; }
+grep -q "$TX_HASH" "$TMP/l.json" || { echo "tx $TX_HASH not in the ledger in S3" >&2; exit 1; }
+grep -q "$EXPECTED_SIGNER" "$TMP/l.json" || { echo "signer $EXPECTED_SIGNER not in the ledger in S3" >&2; exit 1; }
 echo "tx $TX_HASH and signer ${EXPECTED_SIGNER:0:8}... present"
-if cmp -s "$TMP/l.xdr" "$CORPUS_DIR/ledger-4437357.LedgerCloseMetaBatch.xdr"; then
+# Number of transactions in the ledger: the fixed binary must persist all of them.
+LEDGER_TX_COUNT=$(jq '.ledger_close_metas[0].v2.tx_processing | length' "$TMP/l.json")
+if [ $FROM_CORPUS = 1 ]; then
+  # The uploaded object IS the committed file, so comparing the two proves nothing. Check the committed
+  # transaction against the network instead (independent of this repo), when testnet still has it.
+  step "Checking the committed #729 transaction against testnet Horizon"
+  if H=$(curl -sf --max-time 20 "$HORIZON/transactions/$TX_HASH"); then
+    env_b64=$(base64 -w0 "$CORPUS_DIR"/tx-*.TransactionEnvelope.xdr)
+    if [ "$(jq -r .envelope_xdr <<<"$H")" = "$env_b64" ] && [ "$(jq -r .ledger <<<"$H")" = "$LEDGER" ] &&
+       [ "$(jq -r .successful <<<"$H")" = true ]; then
+      echo "Horizon: tx in ledger $LEDGER, successful, envelope byte-identical to the committed one"
+    else
+      echo "Horizon disagrees with the committed transaction (envelope, ledger or result)" >&2
+      exit 1
+    fi
+  else
+    echo "Horizon unreachable or tx unknown (testnet reset?): committed file NOT verified against the network"
+    echo "(run without --from-corpus to re-export it from the history archive)"
+  fi
+elif cmp -s "$TMP/l.xdr" "$CORPUS_DIR/ledger-4437357.LedgerCloseMetaBatch.xdr"; then
+  step "Comparing the fresh export with the committed corpus file"
   echo "exported LedgerCloseMetaBatch is byte-identical to the committed corpus file"
 else
+  step "Comparing the fresh export with the committed corpus file"
   # A fresh captive-core replay is not byte-reproducible: Soroban txs carry wall-clock
   # core_metrics diagnostic events and may order ledger-entry changes differently.
   # The ledger header and the #729 transaction's meta must still match exactly.
@@ -129,8 +157,11 @@ run_variant() { # <name> <commit>
 
   $PG -d "$db" -f sighting-729/query.sql > "$OUT/sql-$name.txt" 2>&1
 
-  local tx_rows signer_hex signer account_hex account weight
+  local tx_rows ledger_rows signer_hex signer account_hex account weight bug_in_log=no
   tx_rows=$($PG -d "$db" -Atc "SELECT count(*) FROM transactions WHERE hash = decode('$TX_HASH','hex')")
+  ledger_rows=$($PG -d "$db" -Atc "SELECT count(*) FROM transactions WHERE ledger_number = $LEDGER")
+  # The #729 failure: wallet-backend cannot convert this P... signer into its 32-byte account column.
+  grep -F "converting signer_account_id" "$OUT/ingest-$name.log" | grep -qF "$EXPECTED_SIGNER" && bug_in_log=yes
   signer_hex=$($PG -d "$db" -Atc "SELECT encode(signer_account_id,'hex') FROM state_changes
      WHERE ledger_number = $LEDGER AND state_change_category = 'SIGNER' AND state_change_reason = 'ADD' LIMIT 1")
   account_hex=$($PG -d "$db" -Atc "SELECT encode(account_id,'hex') FROM state_changes
@@ -141,9 +172,12 @@ run_variant() { # <name> <commit>
   account=$([ -n "$account_hex" ] && python3 -I sighting-729/strkey.py "$account_hex" || echo "")
 
   local verdict
-  if [ "$tx_rows" = 0 ]; then
+  if [ "$tx_rows" = 0 ] && [ $bug_in_log = yes ]; then
     verdict=dropped
-  elif [ "$signer" = "$EXPECTED_SIGNER" ] && [ "$account" = "$EXPECTED_ACCOUNT" ] && [ "$weight" = 1 ]; then
+  elif [ "$tx_rows" = 0 ]; then
+    verdict=error   # nothing stored, but not because of #729: setup/network problem, inconclusive
+  elif [ "$signer" = "$EXPECTED_SIGNER" ] && [ "$account" = "$EXPECTED_ACCOUNT" ] && [ "$weight" = 1 ] &&
+       [ "$ledger_rows" = "$LEDGER_TX_COUNT" ]; then
     verdict=pass
   else
     verdict=mishandled
@@ -152,6 +186,8 @@ run_variant() { # <name> <commit>
     echo "variant:          $name"
     echo "commit:           $commit"
     echo "tx persisted:     $tx_rows"
+    echo "ledger txs:       $ledger_rows of $LEDGER_TX_COUNT persisted"
+    echo "#729 error in log: $bug_in_log"
     echo "signer (decoded): ${signer:-<none>}"
     echo "account:          ${account:-<none>}"
     echo "signer weight:    ${weight:-<none>}"

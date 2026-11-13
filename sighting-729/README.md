@@ -28,10 +28,13 @@ indexer stored. The harness deliverable generalises this to every entry, with an
 ```bash
 sighting-729/repro.sh --clean --from-corpus   # ~30 s after the first run; uses the committed ledger file
 sighting-729/repro.sh --clean                 # ~90 s; exports the ledger again from the testnet history archive
+XDR_PG_PORT=55433 sighting-729/repro.sh …     # if port 5433 (or 8333: XDR_S3_PORT) is already taken
 ```
 
 The script exits 0 only if pre-fix = `dropped` and fixed = `pass`. The first run also builds wallet-backend twice
-(about 1 minute each, in a Go container) and pulls the Docker images.
+(about 1 minute each, in a Go container) and pulls the Docker images. Logs and verdicts go to
+`.cache/sighting-729/<timestamp>/`; add `--record` to overwrite the committed `evidence/` instead.
+CI runs `--clean --from-corpus` on a fresh runner on every push.
 
 ## What the script does, step by step
 
@@ -61,7 +64,11 @@ The script exits 0 only if pre-fix = `dropped` and fixed = `pass`. The first run
      prefix is `0xFFFFFFFF − ledger`, so newer ledgers sort first. Galexie also writes `.config.json` describing this layout.
      Config: [`infra/galexie/testnet.toml`](../infra/galexie/testnet.toml).
 3. **Verify the object.** Download it, decompress it and decode it with the `stellar` CLI. Check that the #729 transaction and its `P…` signer are
-   in it, and compare it with the committed corpus file (see *Re-exports are not byte-identical* below).
+   in it.
+   - After a fresh export: compare it with the committed corpus file (see *Re-exports are not byte-identical* below).
+   - With `--from-corpus` the object *is* the committed file, so that comparison would prove nothing. Instead the script
+     asks testnet Horizon for the transaction: it must be in ledger 4437357, successful, with an envelope byte-identical
+     to the committed one. If Horizon no longer knows it (testnet reset), the script says the file is not verified.
 4. **Build wallet-backend at both commits** ([`build-wallet-backend.sh`](build-wallet-backend.sh)), inside a `golang:1.25.9`
    container (the version in wallet-backend's `go.mod`), so no local Go is needed.
 5. **For each commit, on a fresh database:**
@@ -69,10 +76,13 @@ The script exits 0 only if pre-fix = `dropped` and fixed = `pass`. The first run
    - run `wallet-backend ingest` in **backfill** mode for ledger 4437357, with the **datastore** ledger backend pointed at
      the local S3 ([`env.sh`](env.sh)). wallet-backend downloads the object, decompresses and decodes it, and runs its
      indexer over the `LedgerCloseMeta`. This is the same code path it uses in production with a cloud data lake.
-6. **Verdict from the database** ([`query.sql`](query.sql)):
-   - `dropped`: the transaction is not stored;
-   - `mishandled`: it is stored, but the signer state change is missing or wrong;
-   - `pass`: the signer state change holds the full `P…` key, the right account and weight 1.
+6. **Verdict from the database and the log** ([`query.sql`](query.sql)):
+   - `dropped`: the transaction is not stored **and** the ingest log shows the #729 failure for this signer (the
+     `signer_account_id` conversion error). An empty table alone is not enough: a broken setup also stores nothing;
+   - `error`: nothing stored for any other reason (data lake, network, configuration). Inconclusive, the run fails;
+   - `mishandled`: it is stored, but the signer state change is missing or wrong, or other transactions of the ledger are missing;
+   - `pass`: all 12 transactions of the ledger are stored (counted from the ledger file), and the signer state change holds
+     the full `P…` key, the right account and weight 1.
 
    The stored key bytes are turned back into a strkey by [`strkey.py`](strkey.py), independently of wallet-backend's code.
 
@@ -97,7 +107,13 @@ The script exits 0 only if pre-fix = `dropped` and fixed = `pass`. The first run
 2. **Galexie rejects a range with start = end**, so it exports 4437357–4437358.
 3. **`ingest` also needs `STELLAR_ENVIRONMENT`.** It is only a label for logs and metrics.
 4. **Exit codes don't show the bug.** Backfill logs the failed batch but exits 0, so the verdict must come from the stored
-   data. The harness needs to do the same.
+   data. The stored data alone is not enough either: a misconfigured data lake also leaves the table empty with exit 0
+   (we checked this with the fixed binary). So `dropped` also requires the #729 error in the log. The harness needs to do the same.
+6. **Backfill, not live ingestion.** The sighting describes *live* ingestion retrying the same ledger forever. This repro uses
+   backfill mode because live mode on an empty database first loads all balances from the latest testnet checkpoint, which
+   is slow and unrelated to the bug. Both modes persist through the same function, `ingestService.insertIntoDB`
+   (`internal/services/ingest_live.go` and `ingest_backfill.go` at the pre-fix commit), whose `state_changes` COPY is where
+   the bug is. Backfill gives up after 5 attempts where live mode would retry forever.
 5. **Re-exports are not byte-identical.** Exporting the same ledger twice gives files of the same size but different bytes.
    The ledger header, the transaction set and all classic transactions (including #729's) are identical. Soroban transactions
    differ: their `core_metrics` diagnostic events carry wall-clock timings, and in one case ledger-entry changes came
