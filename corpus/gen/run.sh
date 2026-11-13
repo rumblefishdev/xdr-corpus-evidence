@@ -7,7 +7,7 @@ ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 mkdir -p "$ROOT/.cache/go"
 exec docker run --rm --network host \
   -u "$(id -u):$(id -g)" \
-  -e HOME=/tmp -e GOCACHE=/cache/build -e GOMODCACHE=/cache/mod -e GOFLAGS=-mod=mod \
+  -e HOME=/tmp -e GOCACHE=/cache/build -e GOMODCACHE=/cache/mod -e GOFLAGS=-mod=readonly \
   -e RPC_URL -e NETWORK_PASSPHRASE -e FRIENDBOT_URL \
   -v "$ROOT/.cache/go:/cache" -v "$ROOT/corpus/gen:/gen" -w /gen \
   "${GO_IMAGE:-golang:1.25.9-bookworm}" go run . "$@"

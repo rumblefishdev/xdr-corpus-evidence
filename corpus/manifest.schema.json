@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/xdr-corpus-evidence/corpus/manifest.schema.json",
+  "$id": "https://github.com/rumblefishdev/xdr-corpus-evidence/blob/main/corpus/manifest.schema.json",
   "title": "XDR corpus manifest (draft)",
   "description": "Draft manifest for the RFP 9 XDR/CAP coverage corpus. RFP-required fields: id, cap, protocol, source, synthetic, expected. Values under expected/extra are derived from decoding the entry's files, never typed by hand.",
   "type": "object",
