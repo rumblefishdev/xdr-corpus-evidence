@@ -41,6 +41,48 @@ What gets started (`docker-compose.yml`): SeaweedFS `4.46` as the S3 store and T
 same images and settings wallet-backend uses in its own setup. Galexie `30.0.1` runs as a one-shot exporter (profile `export`).
 The S3 keys `test`/`test` are dummies, because the local S3 runs without auth.
 
+## Check and regenerate the corpus entries
+
+The three sample entries are described in [`corpus/README.md`](corpus/README.md). They can be reproduced at two levels.
+
+**1. Check the committed entries.** This runs offline in about 10 seconds and is the RFP's reviewer check:
+
+```bash
+scripts/roundtrip.sh                           # sha256 + decode → encode byte-exact, for every file in the manifest
+python3 -I scripts/build-manifest.py --check   # corpus/manifest.json equals what the files decode to
+```
+
+Both are also run by CI. The first run downloads the pinned `stellar` CLI 30.0.1 into `.cache/bin` (sha256-checked), because
+older CLIs cannot decode protocol-30 ledgers.
+
+**2. Regenerate a generated entry from scratch on testnet.** This takes 3–8 minutes:
+
+```bash
+scripts/regen-entry.sh lp-issuer-order-01
+scripts/regen-entry.sh cap0027-muxed-sac-destination-01
+```
+
+The script runs the generator in `gen/`, which creates and funds new accounts with friendbot and submits the transactions,
+including the variants core must reject. It then waits for the testnet history archive to publish a checkpoint past the
+target ledger (one every 64 ledgers, about 5.5 minutes) and exports that ledger with Galexie into the local S3. Last, it compares
+the result with the committed entry. Expected ending:
+
+```
+SAME PATTERN AND CORE VERDICTS - lp-issuer-order-01
+```
+
+**A regenerated entry is never byte-identical to the committed one.** Each run creates new accounts, so the keys, tx hash and
+ledger change. The comparison covers what must stay the same: operation type and results, the pattern's decoded values
+(e.g. the muxed id and the event's `to_muxed_id`, or the issuers' byte vs text order), and core's rejections of the invalid
+variants, including the diagnostic message. The field list is `COMMON_INVARIANTS` plus each entry's `invariants` in
+[`scripts/build-manifest.py`](scripts/build-manifest.py). Output, including the regenerated manifest entry, goes to `.cache/regen/`.
+
+The mined entry `cap0040-signed-payload-signer-01` cannot be regenerated, only re-exported from history:
+`scripts/repro-729.sh --clean` does that and checks the ledger header and the #729 tx against the committed file.
+
+The generators also run against a local network (see `docker-compose.yml`, profile `local`). The Galexie export step
+is testnet-only for now.
+
 ## Layout
 
 ```
@@ -55,6 +97,7 @@ scripts/
   strkey.py                 independent strkey encoder for the stored key bytes
   roundtrip.sh              sha256 + byte-exact decode/encode of every corpus file
   build-manifest.py         derive corpus/manifest.json from the corpus files (--check in CI)
+  regen-entry.sh            regenerate a generated entry on testnet and compare it with the committed one
   get-stellar-cli.sh        fetch the pinned stellar CLI 30.0.1 (sha256-checked)
 gen/                        corpus generators (Go, run in a container): muxed-soroban, lp-issuer-order
 corpus/                     manifest schema, manifest, entry files (see corpus/README.md)

@@ -24,7 +24,8 @@ scripts/roundtrip.sh                      # sha256 + decode -> encode byte-exact
 python3 -I scripts/build-manifest.py --check   # manifest matches what the files decode to
 ```
 
-Both run in CI (`.github/workflows/corpus.yml`), together with schema validation. Decoding protocol-30 ledgers needs
+Both run in CI (`.github/workflows/corpus.yml`), together with schema validation. To regenerate a generated entry from scratch on testnet
+and compare it with the committed one, run `scripts/regen-entry.sh <entry-id>` (see the [top-level README](../README.md#check-and-regenerate-the-corpus-entries)). Decoding protocol-30 ledgers needs
 stellar CLI ≥ 30; [`scripts/get-stellar-cli.sh`](../scripts/get-stellar-cli.sh) fetches the pinned 30.0.1, checked against GitHub's sha256.
 
 ## Generators

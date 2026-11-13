@@ -11,7 +11,10 @@ For each entry the script also checks:
   * the target tx is in the ledger and succeeded.
 
 Usage: scripts/build-manifest.py [--check]
-  --check  do not write; exit 1 if corpus/manifest.json differs from what would be written
+       scripts/build-manifest.py --regen-check <entry-id> <dir>
+  --check        do not write; exit 1 if corpus/manifest.json differs from what would be written
+  --regen-check  build the entry from a regenerated <dir> (see scripts/regen-entry.sh) and compare it with
+                 the committed entry on the fields that must not change (COMMON_INVARIANTS + "invariants")
 Env: STELLAR=<path to stellar CLI> (default: scripts/get-stellar-cli.sh)
 """
 import base64
@@ -51,6 +54,7 @@ ENTRIES = [
             {"kind": "sighting", "url": "https://github.com/stellar/wallet-backend/issues/716"},
         ],
         "evidence": "evidence/729/README.md",
+        "invariants": ["extra.signer_key_type", "extra.signer_weight"],
     },
     {
         "id": "cap0027-muxed-sac-destination-01",
@@ -75,6 +79,8 @@ ENTRIES = [
             {"kind": "target", "url": "https://github.com/stellar/wallet-backend/issues/716"},
         ],
         "evidence": None,
+        "invariants": ["extra.contract", "extra.function", "extra.to_scaddress_type", "extra.muxed_id", "extra.amount",
+                       "extra.event_to_muxed_id", "extra.event_amount"],
     },
     {
         "id": "lp-issuer-order-01",
@@ -98,7 +104,17 @@ ENTRIES = [
             {"kind": "target", "url": "https://github.com/stellar/js-stellar-sdk/pull/1766"},
         ],
         "evidence": None,
+        "invariants": ["extra.asset_code", "extra.issuers_byte_order_a_lt_b", "extra.issuers_text_order_a_lt_b",
+                       "extra.fee_bps"],
     },
+]
+
+# Fields that must be identical between a committed entry and a regenerated one. Everything else
+# (keys, hashes, ledger numbers, apply index, ledger protocol) is expected to differ.
+COMMON_INVARIANTS = [
+    "synthetic", "source.kind", "pattern.id", "protocol.introduced_in", "core_validates", "roundtrip.byte_exact",
+    "expected.lcm_version", "expected.tx_envelope_type", "expected.tx_result", "expected.op_index",
+    "expected.op_type", "expected.op_result", "negative_probes",
 ]
 
 B32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
@@ -146,9 +162,23 @@ def find_envelopes(node):
 
 
 def envelope_hash(env, passphrase):
-    b64 = cli("xdr", "encode", "--type", "TransactionEnvelope", "--input", "json", "--output", "single-base64",
-              data=json.dumps(env).encode()).decode().strip()
-    return cli("tx", "hash", "--network-passphrase", passphrase, b64).decode().strip()
+    """Transaction hash as core computes it: sha256(network_id || envelope type || tx XDR).
+
+    v1 ("tx") hashes Transaction with ENVELOPE_TYPE_TX (2); fee bumps hash FeeBumpTransaction with
+    ENVELOPE_TYPE_TX_FEE_BUMP (5); v0 hashes as the equivalent v1 Transaction, whose XDR is the
+    TransactionV0 XDR prefixed by the 4-byte KEY_TYPE_ED25519 (0) muxed-account tag (the optional
+    TimeBounds encodes like the PRECOND_NONE/PRECOND_TIME union).
+    """
+    kind, body = one_key(env)
+    xdr_type, tag, prefix = {
+        "tx": ("Transaction", 2, b""),
+        "tx_fee_bump": ("FeeBumpTransaction", 5, b""),
+        "tx_v0": ("TransactionV0", 2, b"\0\0\0\0"),
+    }[kind]
+    raw = cli("xdr", "encode", "--type", xdr_type, "--input", "json", "--output", "single",
+              data=json.dumps(body["tx"]).encode())
+    network_id = hashlib.sha256(passphrase.encode()).digest()
+    return hashlib.sha256(network_id + tag.to_bytes(4, "big") + prefix + raw).hexdigest()
 
 
 def one_key(d):
@@ -157,13 +187,19 @@ def one_key(d):
     return k, v
 
 
-def build_entry(e):
-    d = ROOT / e["dir"]
+def rel(p):
+    return os.path.relpath(p, ROOT)
+
+
+def build_entry(e, entry_dir=None):
+    """Build a manifest entry. entry_dir: a regenerated directory; its ledger comes from generation.json."""
+    d = Path(entry_dir).resolve() if entry_dir else ROOT / e["dir"]
     gen = json.loads((d / "generation.json").read_text()) if (d / "generation.json").exists() else None
+    ledger = gen["target_ledger"] if entry_dir else e["ledger"]
     tx_hash = e["tx_hash"] or gen["target_tx_hash"]
     passphrase = gen["network_passphrase"] if gen else TESTNET
     zst = next(d.glob("*.xdr.zst"))
-    xdr = d / f"ledger-{e['ledger']}.LedgerCloseMetaBatch.xdr"
+    xdr = d / f"ledger-{ledger}.LedgerCloseMetaBatch.xdr"
 
     # file checks: zst -> xdr, and byte-exact round trip
     raw = subprocess.run(["zstd", "-qdc", str(zst)], check=True, capture_output=True).stdout
@@ -182,7 +218,11 @@ def build_entry(e):
     idx = next(i for i, p in enumerate(procs) if p["result"]["transaction_hash"] == tx_hash)
     proc = procs[idx]
     tx_result_code, op_results = one_key(proc["result"]["result"]["result"])
-    env = next(x for x in find_envelopes(lcm["tx_set"]) if envelope_hash(x, passphrase) == tx_hash)
+    # Hash every envelope: the set must equal the hashes in tx_processing (checks the hashing and the file).
+    by_hash = {envelope_hash(x, passphrase): x for x in find_envelopes(lcm["tx_set"])}
+    if set(by_hash) != {p["result"]["transaction_hash"] for p in procs}:
+        raise RuntimeError(f"{e['id']}: tx_set envelope hashes do not match tx_processing hashes")
+    env = by_hash[tx_hash]
     env_kind, env_body = one_key(env)
     tx = env_body["tx"]
     op = tx["operations"][e["op_index"]]
@@ -218,17 +258,17 @@ def build_entry(e):
         "network_passphrase": passphrase,
         "source": {
             "kind": e["source_kind"],
-            "ledger": e["ledger"],
+            "ledger": ledger,
             "tx_hash": tx_hash,
             "generator": e["generator"],
-            "generation_record": str((d / "generation.json").relative_to(ROOT)) if gen else None,
+            "generation_record": rel(d / "generation.json") if gen else None,
         },
         "synthetic": False,
         "pattern": e["pattern"],
         "files": [
-            {"path": str(zst.relative_to(ROOT)), "xdr_type": "LedgerCloseMetaBatch", "encoding": "xdr+zstd",
+            {"path": rel(zst), "xdr_type": "LedgerCloseMetaBatch", "encoding": "xdr+zstd",
              "layout": "galexie", "sha256": sha256(zst)},
-            {"path": str(xdr.relative_to(ROOT)), "xdr_type": "LedgerCloseMetaBatch", "encoding": "xdr",
+            {"path": rel(xdr), "xdr_type": "LedgerCloseMetaBatch", "encoding": "xdr",
              "sha256": sha256(xdr)},
         ],
         "core_validates": True,
@@ -337,7 +377,40 @@ EXTRA = {
 }
 
 
+def get_path(obj, path):
+    for part in path.split("."):
+        obj = obj[part]
+    return obj
+
+
+def regen_check(entry_id, entry_dir):
+    e = next((x for x in ENTRIES if x["id"] == entry_id), None)
+    if e is None:
+        sys.exit(f"unknown entry {entry_id}")
+    committed = next(x for x in json.loads(MANIFEST.read_text())["entries"] if x["id"] == entry_id)
+    fresh = build_entry(e, entry_dir)
+    (Path(entry_dir) / "manifest-entry.json").write_text(json.dumps(fresh, indent=2, ensure_ascii=False) + "\n")
+    ok = True
+    print(f"{'field':40} {'committed':>24}   regenerated")
+    for path in COMMON_INVARIANTS + e["invariants"]:
+        a, b = get_path(committed, path), get_path(fresh, path)
+        same = a == b
+        ok &= same
+        show = lambda v: (json.dumps(v)[:60] + "...") if len(json.dumps(v)) > 63 else json.dumps(v)
+        print(f"{'ok  ' if same else 'DIFF'} {path:35} {show(a):>24}   {'(same)' if same else show(b)}")
+    changed = [k for k in sorted(set(committed["extra"]) | set(fresh["extra"])) if k not in committed["extra"] or k not in fresh["extra"]]
+    if changed:
+        ok = False
+        print(f"DIFF extra keys differ: {changed}")
+    print(f"\nregenerated: ledger {fresh['source']['ledger']}, tx {fresh['source']['tx_hash']}")
+    print("SAME PATTERN AND CORE VERDICTS" if ok else "MISMATCH", "-", entry_id)
+    sys.exit(0 if ok else 1)
+
+
 def main():
+    if len(sys.argv) == 4 and sys.argv[1] == "--regen-check":
+        regen_check(sys.argv[2], sys.argv[3])
+        return
     manifest = {
         "$schema": "./manifest.schema.json",
         "manifest_version": "0.1.0-draft",
