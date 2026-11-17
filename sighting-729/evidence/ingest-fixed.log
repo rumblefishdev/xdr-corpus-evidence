@@ -1,11 +1,14 @@
-time="2026-11-13T14:16:57.374+01:00" level=info msg="📦 Git Commit: " pid=274020
-time="2026-11-13T14:16:57.374+01:00" level=info msg="📦 Version: 0.2.0" pid=274020
-time="2026-11-13T14:16:57.375+01:00" level=debug msg="Setting log level to: info" pid=274020
-time="2026-11-13T14:16:57.388+01:00" level=info msg="Using datastore backend with buffer size 100, 10 workers" pid=274020
-time="2026-11-13T14:16:57.399+01:00" level=info msg="Using datastore backend with buffer size 100, 10 workers" pid=274020
-time="2026-11-13T14:16:57.428+01:00" level=info msg="Batch 1/1 [4437357 - 4437357] completed: 1 ledgers in 31.158771ms" pid=274020
-time="2026-11-13T14:16:57.428+01:00" level=info msg="Backfilling completed: 0/1 batches failed" pid=274020
-time="2026-11-13T14:16:57.436+01:00" level=info msg="Progressive compression complete: 0 total chunks compressed" pid=274020
-time="2026-11-13T14:16:57.436+01:00" level=info msg="Backfilling completed in 31.468997ms: 1 batches" pid=274020
-time="2026-11-13T14:16:57.436+01:00" level=info msg="Shutting down servers..." pid=274020
-time="2026-11-13T14:16:57.436+01:00" level=info msg="Servers gracefully stopped" pid=274020
+time="2026-11-17T15:35:57.273+01:00" level=info msg="📦 Git Commit: " pid=1472508
+time="2026-11-17T15:35:57.273+01:00" level=info msg="📦 Version: 0.2.0" pid=1472508
+time="2026-11-17T15:35:57.274+01:00" level=debug msg="Setting log level to: info" pid=1472508
+SDK 2026/11/17 15:35:57 WARN Response has no supported checksum. Not validating response payload.
+time="2026-11-17T15:35:57.285+01:00" level=info msg="Using datastore backend with buffer size 100, 10 workers" pid=1472508
+SDK 2026/11/17 15:35:57 WARN Response has no supported checksum. Not validating response payload.
+time="2026-11-17T15:35:57.298+01:00" level=info msg="Using datastore backend with buffer size 100, 10 workers" pid=1472508
+SDK 2026/11/17 15:35:57 WARN Response has no supported checksum. Not validating response payload.
+time="2026-11-17T15:35:57.319+01:00" level=info msg="Batch 1/1 [4437357 - 4437357] completed: 1 ledgers in 23.26099ms" pid=1472508
+time="2026-11-17T15:35:57.319+01:00" level=info msg="Backfilling completed: 0/1 batches failed" pid=1472508
+time="2026-11-17T15:35:57.330+01:00" level=info msg="Progressive compression complete: 0 total chunks compressed" pid=1472508
+time="2026-11-17T15:35:57.330+01:00" level=info msg="Backfilling completed in 23.321035ms: 1 batches" pid=1472508
+time="2026-11-17T15:35:57.330+01:00" level=info msg="Shutting down servers..." pid=1472508
+time="2026-11-17T15:35:57.330+01:00" level=info msg="Servers gracefully stopped" pid=1472508

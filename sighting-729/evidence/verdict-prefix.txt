@@ -6,4 +6,4 @@ ledger txs:       0 of 12 persisted
 signer (decoded): <none>
 account:          <none>
 signer weight:    <none>
-verdict:          dropped
+verdict:          halted

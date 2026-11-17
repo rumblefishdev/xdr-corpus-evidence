@@ -14,13 +14,13 @@ such a signer, the database write failed, the whole ledger was rolled back, and 
 | Transactions of ledger 4437357 in the DB | **0 of 12**: the whole ledger is lost, not just this tx | 12 of 12 |
 | Signer state change | none | `signer_account_id` = 41 bytes, decoding to `PBCK2RYYLIYOSHBEL2FQLAVRSHRH3GP3ID476SGKBV7BEZHMQ6NSAAAAAAB55LN6AANMS`, account `GBCK2RYY…BB7B`, weight 1 |
 | Process exit code | **0** (the failure is only in the log and the DB) | 0 |
-| **Verdict** | **`dropped`** | **`pass`** |
+| **Verdict** | **`halted`** | **`pass`** |
 
 ## How this relates to the corpus
 
 The input ledger is corpus entry [`cap0040-signed-payload-signer-01`](../corpus/entries/cap-0040/cap0040-signed-payload-signer-01/).
 This folder is a first, hand-built version of the RFP's **replay harness**. It takes a corpus entry, delivers it to an indexer
-through an input the indexer already reads (the Galexie data-lake layout), and reports **pass / mishandled / dropped** from what the
+through an input the indexer already reads (the Galexie data-lake layout), and reports **pass / mishandled / halted** from what the
 indexer stored. The harness deliverable generalises this to every entry, with an adapter per indexer.
 
 ## Run it
@@ -31,7 +31,7 @@ sighting-729/repro.sh --clean                 # ~90 s; exports the ledger again 
 XDR_PG_PORT=55433 sighting-729/repro.sh …     # if port 5433 (or 8333: XDR_S3_PORT) is already taken
 ```
 
-The script exits 0 only if pre-fix = `dropped` and fixed = `pass`. The first run also builds wallet-backend twice
+The script exits 0 only if pre-fix = `halted` and fixed = `pass`. The first run also builds wallet-backend twice
 (about 1 minute each, in a Go container) and pulls the Docker images. Logs and verdicts go to
 `.cache/sighting-729/<timestamp>/`; add `--record` to overwrite the committed `evidence/` instead.
 CI runs `--clean --from-corpus` on a fresh runner on every push.
@@ -77,8 +77,10 @@ CI runs `--clean --from-corpus` on a fresh runner on every push.
      the local S3 ([`env.sh`](env.sh)). wallet-backend downloads the object, decompresses and decodes it, and runs its
      indexer over the `LedgerCloseMeta`. This is the same code path it uses in production with a cloud data lake.
 6. **Verdict from the database and the log** ([`query.sql`](query.sql)):
-   - `dropped`: the transaction is not stored **and** the ingest log shows the #729 failure for this signer (the
-     `signer_account_id` conversion error). An empty table alone is not enough: a broken setup also stores nothing;
+   - `halted`: no transaction of the ledger is stored **and** the ingest log shows the #729 failure for this signer (the
+     `signer_account_id` conversion error), so the indexer reached the ledger and stored nothing from it. An empty table
+     alone is not enough: a broken setup also stores nothing. (Earlier versions of this script called this `dropped`;
+     `dropped` now means other transactions of the ledger are stored and the target is not.);
    - `error`: nothing stored for any other reason (data lake, network, configuration). Inconclusive, the run fails;
    - `mishandled`: it is stored, but the signer state change is missing or wrong, or other transactions of the ledger are missing;
    - `pass`: all 12 transactions of the ledger are stored (counted from the ledger file), and the signer state change holds
@@ -108,7 +110,7 @@ CI runs `--clean --from-corpus` on a fresh runner on every push.
 3. **`ingest` also needs `STELLAR_ENVIRONMENT`.** It is only a label for logs and metrics.
 4. **Exit codes don't show the bug.** Backfill logs the failed batch but exits 0, so the verdict must come from the stored
    data. The stored data alone is not enough either: a misconfigured data lake also leaves the table empty with exit 0
-   (we checked this with the fixed binary). So `dropped` also requires the #729 error in the log. The harness needs to do the same.
+   (we checked this with the fixed binary). So `halted` also requires the #729 error in the log. The harness needs to do the same.
 6. **Backfill, not live ingestion.** The sighting describes *live* ingestion retrying the same ledger forever. This repro uses
    backfill mode because live mode on an empty database first loads all balances from the latest testnet checkpoint, which
    is slow and unrelated to the bug. Both modes persist through the same function, `ingestService.insertIntoDB`

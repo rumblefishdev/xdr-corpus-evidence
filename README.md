@@ -12,7 +12,7 @@ things. This repository provides them, each as something a reviewer can rerun:
 | --- | --- | --- | --- |
 | a draft manifest schema | [`corpus/manifest.schema.json`](corpus/manifest.schema.json), with the generated [`corpus/manifest.json`](corpus/manifest.json) | `corpus/tools/roundtrip.sh` and `python3 -I corpus/tools/build-manifest.py --check` (~10 s, offline) | 5 entries, every file round-trips byte-exactly, manifest = fresh decode, schema validates (typed per pattern) |
 | 2–3 sample corpus entries | [`corpus/`](corpus/README.md), 5 entries: a CAP-40 signed-payload signer, a muxed token-contract recipient, a pool with differently ordered issuers, a classic payment with muxed sources, a contract map with colliding keys | `corpus/tools/regen-entry.sh <entry>` regenerates one on testnet (3–8 min) | same pattern and same core verdicts as the committed entry |
-| evidence of reproducing one sighting | [`sighting-729/`](sighting-729/README.md): wallet-backend #729 | `sighting-729/repro.sh --clean --from-corpus` (~30 s; first run builds wallet-backend) | pre-fix **dropped**, fixed **pass** |
+| evidence of reproducing one sighting | [`sighting-729/`](sighting-729/README.md): wallet-backend #729 | `sighting-729/repro.sh --clean --from-corpus` (~30 s; first run builds wallet-backend) | pre-fix **halted**, fixed **pass** |
 | *(extra)* SDK conformance on all entries | [`conformance/`](conformance/README.md): js-stellar-sdk #1766 and #1789, found by generic checks | `conformance/run.sh` (~30 s) | #1766: 17.2.0 **mishandled** → 17.2.1 **pass**; #1789: 17.2.1 **mishandled** → 17.3.0 **pass**; latest 17.4.0 **pass** |
 
 ## How the parts fit together
@@ -34,7 +34,7 @@ things. This repository provides them, each as something a reviewer can rerun:
   [`corpus/README.md`](corpus/README.md) explains how entries are made and what exactly is validated.
 - **`sighting-729/` and `conformance/` use the corpus.** `sighting-729/` feeds entry 1 to wallet-backend at the commit
   before and after the #729 fix. `conformance/` feeds every entry to four js-stellar-sdk releases with generic checks that
-  know no particular bug. Both report **pass / mishandled / dropped** and name the check or log line behind each verdict.
+  know no particular bug. They report **pass / mishandled** (and the wallet-backend run also **halted**) and name the check or log line behind each verdict.
   They are first versions of the RFP's replay harness (indexers) and conformance runner (SDKs).
 - The `stellar` CLI appears throughout only as the **reference XDR decoder**: it wraps rs-stellar-xdr, the library the RFP names.
 

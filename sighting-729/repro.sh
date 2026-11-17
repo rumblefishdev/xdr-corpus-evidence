@@ -13,10 +13,11 @@
 #   pass        all transactions of the ledger are persisted and the SIGNER state change holds the full
 #               P... key, the right account and weight 1
 #   mishandled  the tx is persisted, but the signer is missing or altered, or other txs of the ledger are missing
-#   dropped     the tx is not persisted AND the ingest log shows the #729 failure for this signer
-#               (the signer_account_id conversion error); the cause is checked, not just the empty table
+#   halted      no tx of the ledger is persisted AND the ingest log shows the #729 failure for this signer
+#               (the signer_account_id conversion error): the indexer reached the ledger and stored nothing
+#               from it. The cause is checked, not just the empty table
 #   error       the tx is not persisted for any other reason (setup, network, data lake): inconclusive
-# The script exits 0 only if pre-fix = dropped and fixed = pass.
+# The script exits 0 only if pre-fix = halted and fixed = pass.
 # Note: wallet-backend exits 0 even when a backfill batch fails, so verdicts come from the DB and the log.
 set -euo pipefail
 
@@ -172,8 +173,8 @@ run_variant() { # <name> <commit>
   account=$([ -n "$account_hex" ] && python3 -I sighting-729/strkey.py "$account_hex" || echo "")
 
   local verdict
-  if [ "$tx_rows" = 0 ] && [ $bug_in_log = yes ]; then
-    verdict=dropped
+  if [ "$ledger_rows" = 0 ] && [ $bug_in_log = yes ]; then
+    verdict=halted
   elif [ "$tx_rows" = 0 ]; then
     verdict=error   # nothing stored, but not because of #729: setup/network problem, inconclusive
   elif [ "$signer" = "$EXPECTED_SIGNER" ] && [ "$account" = "$EXPECTED_ACCOUNT" ] && [ "$weight" = 1 ] &&
@@ -200,9 +201,9 @@ run_variant prefix "$PREFIX_COMMIT"
 run_variant fixed "$FIXED_COMMIT"
 
 step "Result"
-echo "pre-fix ($PREFIX_COMMIT): $VERDICT_prefix  (expected: dropped)"
+echo "pre-fix ($PREFIX_COMMIT): $VERDICT_prefix  (expected: halted)"
 echo "fixed   ($FIXED_COMMIT): $VERDICT_fixed  (expected: pass)"
-if [ "$VERDICT_prefix" = dropped ] && [ "$VERDICT_fixed" = pass ]; then
+if [ "$VERDICT_prefix" = halted ] && [ "$VERDICT_fixed" = pass ]; then
   echo "REPRODUCED: wallet-backend #729"
 else
   echo "NOT REPRODUCED" >&2
