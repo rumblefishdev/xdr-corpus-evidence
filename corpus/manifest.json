@@ -52,7 +52,16 @@
           "derived_from": "corpus/entries/cap-0040/cap0040-signed-payload-signer-01/ledger-4437357.LedgerCloseMetaBatch.xdr"
         }
       ],
-      "core_validates": true,
+      "accepted": true,
+      "core_validation": [
+        {
+          "field": "SetOptionsOp.signer.key.ed25519_signed_payload.payload",
+          "validated": true,
+          "stage": "validation",
+          "evidence_kind": "source_ref",
+          "evidence": "stellar-core src/transactions/SetOptionsOpFrame.cpp:308-313 rejects an empty payload (SET_OPTIONS_BAD_SIGNER); the XDR caps it at 64 bytes (opaque payload<64>)"
+        }
+      ],
       "negative_probes": [],
       "roundtrip": {
         "byte_exact": true,
@@ -121,7 +130,7 @@
       "synthetic": false,
       "pattern": {
         "id": "muxed-soroban-recipient",
-        "description": "A Soroban SAC transfer whose `to` is an ScAddress of type MUXED_ACCOUNT. The event topic carries the base G... account and the muxed id moves to a `to_muxed_id` data field. Readers that render the ScAddress as M... and store 32-byte keys truncate it. A muxed op or tx source on a Soroban tx is rejected by core since protocol 25 (see negative_probes)."
+        "description": "A Soroban SAC transfer whose `to` is an ScAddress of type MUXED_ACCOUNT. The event topic carries the base G... account and the muxed id moves to a `to_muxed_id` data field. Readers that render the ScAddress as M... and store 32-byte keys truncate it. A muxed op or tx source on InvokeHostFunction is rejected by core since protocol 25 (see negative_probes); on ExtendFootprintTtl and RestoreFootprint it stays valid."
       },
       "files": [
         {
@@ -145,7 +154,23 @@
           "derived_from": "corpus/entries/cap-0027/cap0027-muxed-sac-destination-01/ledger-5708671.LedgerCloseMetaBatch.xdr"
         }
       ],
-      "core_validates": true,
+      "accepted": true,
+      "core_validation": [
+        {
+          "field": "Operation.source_account (muxed) on InvokeHostFunction",
+          "validated": true,
+          "stage": "validation",
+          "evidence_kind": "rejected_probe",
+          "evidence": "negative_probes[0]: tx_soroban_invalid"
+        },
+        {
+          "field": "Transaction.source_account (muxed) with an InvokeHostFunction operation",
+          "validated": true,
+          "stage": "validation",
+          "evidence_kind": "rejected_probe",
+          "evidence": "negative_probes[1]: tx_soroban_invalid"
+        }
+      ],
       "negative_probes": [
         {
           "variant": "invoke_host_function with muxed op source",
@@ -251,7 +276,16 @@
           "derived_from": "corpus/entries/cap-0038/lp-issuer-order-01/ledger-5708628.LedgerCloseMetaBatch.xdr"
         }
       ],
-      "core_validates": true,
+      "accepted": true,
+      "core_validation": [
+        {
+          "field": "ChangeTrustOp.line.liquidity_pool.constant_product: asset_a < asset_b",
+          "validated": true,
+          "stage": "validation",
+          "evidence_kind": "rejected_probe",
+          "evidence": "negative_probes[0]: the pair in strkey-text order fails as change_trust malformed"
+        }
+      ],
       "negative_probes": [
         {
           "variant": "pool assets in strkey-text order (must be rejected)",
@@ -322,7 +356,7 @@
       "synthetic": false,
       "pattern": {
         "id": "muxed-classic-sources",
-        "description": "A classic payment whose transaction source, operation source and destination are muxed accounts with three different ids: 2^63+1, 2^53+1 (the smallest a float64 cannot hold) and 2^64-1. The tx and op sources share one base account. Readers that store 32-byte keys truncate the M... addresses; readers that keep ids as floats or confuse the three accounts are visible. This is the muxed-source shape: on Soroban it is rejected since protocol 25 (see cap0027-muxed-sac-destination-01)."
+        "description": "A classic payment whose transaction source, operation source and destination are muxed accounts with three different ids: 2^63+1, 2^53+1 (the smallest a float64 cannot hold) and 2^64-1. The tx and op sources share one base account. Readers that store 32-byte keys truncate the M... addresses; readers that keep ids as floats or confuse the three accounts are visible. This is the muxed-source shape: on InvokeHostFunction it is rejected since protocol 25 (see cap0027-muxed-sac-destination-01)."
       },
       "files": [
         {
@@ -346,7 +380,30 @@
           "derived_from": "corpus/entries/cap-0027/cap0027-muxed-classic-payment-01/ledger-5710218.LedgerCloseMetaBatch.xdr"
         }
       ],
-      "core_validates": true,
+      "accepted": true,
+      "core_validation": [
+        {
+          "field": "Transaction.source_account.med25519.id",
+          "validated": false,
+          "stage": "validation",
+          "evidence_kind": "accepted_probe",
+          "evidence": "this entry: core accepted id 2^63+1"
+        },
+        {
+          "field": "Operation.source_account.med25519.id",
+          "validated": false,
+          "stage": "validation",
+          "evidence_kind": "accepted_probe",
+          "evidence": "this entry: core accepted id 2^53+1"
+        },
+        {
+          "field": "PaymentOp.destination.med25519.id",
+          "validated": false,
+          "stage": "validation",
+          "evidence_kind": "accepted_probe",
+          "evidence": "this entry: core accepted id 2^64-1"
+        }
+      ],
       "negative_probes": [],
       "roundtrip": {
         "byte_exact": true,
@@ -440,7 +497,8 @@
           "derived_from": "corpus/entries/cap-0046/cap0046-scmap-key-collision-01/ledger-5710299.LedgerCloseMetaBatch.xdr"
         }
       ],
-      "core_validates": true,
+      "accepted": true,
+      "core_validation": [],
       "negative_probes": [],
       "roundtrip": {
         "byte_exact": true,

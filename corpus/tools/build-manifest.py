@@ -3,7 +3,8 @@
 
 Every expected value is derived from `stellar xdr decode` of the committed ledger files.
 The only hand-written inputs are in ENTRIES below: which tx and operation an entry is about
-(the selector), CAP/SEP tags, the protocol a CAP was introduced in, and issue links.
+(the selector), CAP/SEP tags, the protocol a CAP was introduced in, issue links, and the per-field
+core_validation records (each backed by a negative probe, a value core accepted, or a stellar-core source line).
 
 For each entry the script also checks:
   * the .xdr.zst file decompresses to the committed .xdr file,
@@ -54,6 +55,9 @@ ENTRIES = [
             {"kind": "sighting", "url": "https://github.com/stellar/wallet-backend/issues/716"},
         ],
         "evidence": "sighting-729/README.md",
+        "core_validation": [
+            {"field": "SetOptionsOp.signer.key.ed25519_signed_payload.payload", "validated": True, "stage": "validation", "evidence_kind": "source_ref", "evidence": "stellar-core src/transactions/SetOptionsOpFrame.cpp:308-313 rejects an empty payload (SET_OPTIONS_BAD_SIGNER); the XDR caps it at 64 bytes (opaque payload<64>)"},
+        ],
         "invariants": ["extra.signer_key_type", "extra.signer_weight"],
     },
     {
@@ -72,13 +76,18 @@ ENTRIES = [
             "id": "muxed-soroban-recipient",
             "description": "A Soroban SAC transfer whose `to` is an ScAddress of type MUXED_ACCOUNT. The event topic "
             "carries the base G... account and the muxed id moves to a `to_muxed_id` data field. Readers that "
-            "render the ScAddress as M... and store 32-byte keys truncate it. A muxed op or tx source on a "
-            "Soroban tx is rejected by core since protocol 25 (see negative_probes).",
+            "render the ScAddress as M... and store 32-byte keys truncate it. A muxed op or tx source on "
+            "InvokeHostFunction is rejected by core since protocol 25 (see negative_probes); on ExtendFootprintTtl "
+            "and RestoreFootprint it stays valid.",
         },
         "related": [
             {"kind": "target", "url": "https://github.com/stellar/wallet-backend/issues/716"},
         ],
         "evidence": None,
+        "core_validation": [
+            {"field": "Operation.source_account (muxed) on InvokeHostFunction", "validated": True, "stage": "validation", "evidence_kind": "rejected_probe", "evidence": "negative_probes[0]: tx_soroban_invalid"},
+            {"field": "Transaction.source_account (muxed) with an InvokeHostFunction operation", "validated": True, "stage": "validation", "evidence_kind": "rejected_probe", "evidence": "negative_probes[1]: tx_soroban_invalid"},
+        ],
         "invariants": ["extra.contract", "extra.function", "extra.to_scaddress_type", "extra.muxed_id", "extra.amount",
                        "extra.event_to_muxed_id", "extra.event_amount"],
     },
@@ -104,6 +113,9 @@ ENTRIES = [
             {"kind": "target", "url": "https://github.com/stellar/js-stellar-sdk/pull/1766"},
         ],
         "evidence": "conformance/README.md",
+        "core_validation": [
+            {"field": "ChangeTrustOp.line.liquidity_pool.constant_product: asset_a < asset_b", "validated": True, "stage": "validation", "evidence_kind": "rejected_probe", "evidence": "negative_probes[0]: the pair in strkey-text order fails as change_trust malformed"},
+        ],
         "invariants": ["extra.asset_code", "extra.issuers_byte_order_a_lt_b", "extra.issuers_text_order_a_lt_b",
                        "extra.fee_bps"],
     },
@@ -125,13 +137,19 @@ ENTRIES = [
             "accounts with three different ids: 2^63+1, 2^53+1 (the smallest a float64 cannot hold) and 2^64-1. "
             "The tx and op sources share one base account. Readers that store 32-byte keys truncate the M... "
             "addresses; readers that keep ids as floats or confuse the three accounts are visible. This is the "
-            "muxed-source shape: on Soroban it is rejected since protocol 25 (see cap0027-muxed-sac-destination-01).",
+            "muxed-source shape: on InvokeHostFunction it is rejected since protocol 25 (see "
+            "cap0027-muxed-sac-destination-01).",
         },
         "related": [
             {"kind": "target", "url": "https://github.com/stellar/wallet-backend/issues/716"},
             {"kind": "target", "url": "https://github.com/stellar/js-stellar-sdk/issues/1785"},
         ],
         "evidence": None,
+        "core_validation": [
+            {"field": "Transaction.source_account.med25519.id", "validated": False, "stage": "validation", "evidence_kind": "accepted_probe", "evidence": "this entry: core accepted id 2^63+1"},
+            {"field": "Operation.source_account.med25519.id", "validated": False, "stage": "validation", "evidence_kind": "accepted_probe", "evidence": "this entry: core accepted id 2^53+1"},
+            {"field": "PaymentOp.destination.med25519.id", "validated": False, "stage": "validation", "evidence_kind": "accepted_probe", "evidence": "this entry: core accepted id 2^64-1"},
+        ],
         "invariants": ["extra.tx_source_muxed_id", "extra.op_source_muxed_id", "extra.destination_muxed_id",
                        "extra.tx_and_op_source_same_base", "extra.amount"],
     },
@@ -166,7 +184,7 @@ ENTRIES = [
 # Fields that must be identical between a committed entry and a regenerated one. Everything else
 # (keys, hashes, ledger numbers, apply index, ledger protocol) is expected to differ.
 COMMON_INVARIANTS = [
-    "synthetic", "source.kind", "pattern.id", "protocol.introduced_in", "core_validates", "roundtrip.byte_exact",
+    "synthetic", "source.kind", "pattern.id", "protocol.introduced_in", "accepted", "roundtrip.byte_exact",
     "expected.lcm_version", "expected.tx_envelope_type", "expected.tx_result", "expected.op_index",
     "expected.op_type", "expected.op_result", "negative_probes",
 ]
@@ -339,7 +357,8 @@ def build_entry(e, entry_dir=None):
             {"path": rel(env_file), "xdr_type": "TransactionEnvelope", "encoding": "xdr",
              "sha256": sha256(env_file), "derived_from": rel(xdr)},
         ],
-        "core_validates": True,
+        "accepted": True,
+        "core_validation": e.get("core_validation", []),
         "negative_probes": probes,
         "roundtrip": {"byte_exact": True, "tool": cli("--version").decode().splitlines()[1].strip()},
         "check_lcm_golden": None,
