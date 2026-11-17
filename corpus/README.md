@@ -68,7 +68,7 @@ The records are in [`gen/local-runs/`](gen/local-runs/). The export step is test
 
 | # | Check | What it establishes | Done by |
 | --- | --- | --- | --- |
-| 1 | The target tx is in a ledger with `tx_success` | the shape is something the network accepts and emits | the network; recorded in the manifest (`core_validates`) |
+| 1 | The target tx is in a ledger with `tx_success` | the shape is something the network accepts and emits | the network; recorded in the manifest (`accepted`) |
 | 2 | The invalid variants were rejected by core, with its error message | the pattern sits exactly on core's validation boundary | the network; recorded as `negative_probes` |
 | 3 | sha256 of every file matches the manifest | the files are the captured ones | `tools/roundtrip.sh` |
 | 4 | decode → encode of every file is **byte-exact** with rs-stellar-xdr (the `stellar` CLI's decoder) | a reference decoder reads and writes it losslessly. This is the RFP's reviewer check. | `tools/roundtrip.sh` |
@@ -159,6 +159,12 @@ be regenerated, only re-exported: `sighting-729/repro.sh --clean` does that.
 - **Expected values are decoded by rs-stellar-xdr, then cross-checked by a second decoder.** The conformance run decodes every
   envelope again with js-stellar-sdk's own XDR code and checks the tx hash against the manifest, and that every muxed
   address round-trips in the SDK.
+- **`accepted` and per-field `core_validation`.** `accepted` says core accepted the target tx into a ledger. Each
+  `core_validation` record says whether core validates one field the entry exercises, at which stage (`validation`,
+  `apply`, `host`), and the evidence: a `rejected_probe` proves the field is validated, an `accepted_probe` (an
+  edge value core accepted, like muxed id 2^64−1) proves it is not, and a `source_ref` cites a stellar-core source
+  line. The indexer-hardening guide's field table is to be checked against these records. They are hand-written in
+  `tools/build-manifest.py` and kept only where evidence exists, so `cap0046-scmap-key-collision-01` has none yet.
 - **`synthetic` means hand-crafted bytes**, as in the RFP. All five entries were emitted by core on a real network, so they are
   `synthetic: false`. `source.kind` (`mined` / `generated` / `local` / `handcrafted`) records the origin, and the schema enforces
   `synthetic == (kind == handcrafted)`.

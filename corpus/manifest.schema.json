@@ -55,7 +55,8 @@
         "synthetic",
         "pattern",
         "files",
-        "core_validates",
+        "accepted",
+        "core_validation",
         "negative_probes",
         "roundtrip",
         "check_lcm_golden",
@@ -237,9 +238,54 @@
             }
           }
         },
-        "core_validates": {
+        "accepted": {
           "description": "true if stellar-core accepted the target tx into a ledger.",
           "type": "boolean"
+        },
+        "core_validation": {
+          "description": "One record per transaction field the entry exercises: whether stellar-core validates it, at which stage, and the evidence. The indexer-hardening guide's field table is checked against these records. Empty when no field has evidence yet.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "field",
+              "validated",
+              "stage",
+              "evidence_kind",
+              "evidence"
+            ],
+            "properties": {
+              "field": {
+                "type": "string",
+                "minLength": 1,
+                "description": "XDR path of the field, e.g. Transaction.source_account.med25519.id"
+              },
+              "validated": {
+                "type": "boolean"
+              },
+              "stage": {
+                "enum": [
+                  "validation",
+                  "apply",
+                  "host"
+                ],
+                "description": "validation: transaction validity checks; apply: checks during apply; host: Soroban host checks such as auth"
+              },
+              "evidence_kind": {
+                "enum": [
+                  "rejected_probe",
+                  "accepted_probe",
+                  "source_ref"
+                ],
+                "description": "rejected_probe proves the field is validated; accepted_probe (an adversarial value core accepted) proves it is not; source_ref cites a CAP or stellar-core source line"
+              },
+              "evidence": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
         },
         "negative_probes": {
           "description": "Variants of the pattern that core rejected, recorded by the generator.",
