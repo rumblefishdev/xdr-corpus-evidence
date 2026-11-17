@@ -105,7 +105,7 @@ entries cover 123 arms (25%), mostly by incidental content of their ledgers, not
 The list makes gaps concrete. For example, entry 2 covers the muxed `SCAddress` arm but not `MuxedAccount`'s
 `KEY_TYPE_MUXED_ED25519`; the list pointed at the missing classic muxed-source entry, and `cap0027-muxed-classic-payment-01`
 now covers that arm. Uncovered newer arms include the
-protocol-30 muxed contract address (`W…`, CAP-84), the protocol-26 freeze results (CAP-77/80), and two of the three new
+protocol-30 muxed contract address (`W…`, CAP-84), the protocol-26 freeze results (CAP-77), and two of the three new
 `SCAddress` arms from protocol 23 (claimable balance, liquidity pool).
 
 Limits of the prototype:
@@ -157,7 +157,8 @@ be regenerated, only re-exported: `sighting-729/repro.sh --clean` does that.
   validation. Ids are decimal strings (`uint64String`), never JSON numbers, which lose precision above 2^53. An unknown
   `pattern.id` is rejected: a new pattern needs its `extra` type.
 - **Expected values are decoded by rs-stellar-xdr, then cross-checked by a second decoder.** The conformance run decodes every
-  envelope again with js-stellar-sdk's own XDR code and checks the tx hash and every muxed id against the manifest.
+  envelope again with js-stellar-sdk's own XDR code and checks the tx hash against the manifest, and that every muxed
+  address round-trips in the SDK.
 - **`synthetic` means hand-crafted bytes**, as in the RFP. All five entries were emitted by core on a real network, so they are
   `synthetic: false`. `source.kind` (`mined` / `generated` / `local` / `handcrafted`) records the origin, and the schema enforces
   `synthetic == (kind == handcrafted)`.

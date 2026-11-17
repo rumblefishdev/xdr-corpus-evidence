@@ -9,7 +9,8 @@ Only types reachable from LedgerCloseMetaBatch count: that is what an indexer re
 For each target:
   - introduced  the first stellar-xdr protocol tag (v19..v30) that has it; "<=19" if v19 already had it;
   - cap         CAPs named in the stellar-xdr commits that added it in that protocol (best effort; blank for
-                <=19, where history starts, and for numbered v0/v1 slots, whose numbers are too common to search);
+                <=19, where history starts, and for numbered v0/v1 slots, whose numbers are too common to search),
+                except for the arms in CAP_OVERRIDES, which were checked by hand against the CAP texts;
   - covered_by  corpus entries whose files contain it (any transaction in the ledger, not only the target tx).
 
 Coverage comes from walking the stellar CLI's JSON decode of each entry's files alongside the parsed XDR schema.
@@ -250,6 +251,30 @@ def ensure_repo():
         subprocess.run(["git", "-C", XDR_DIR, "fetch", "-q", "--tags"], check=True)
 
 
+# Hand-checked CAPs for arms whose stellar-xdr commits name the wrong CAP or none. The P26 arms come from one merge
+# commit that also carried CAP-80 (BN254 host functions), so the git-log lookup tags them CAP-80 as well; the
+# protocol 28-30 arms below have no CAP in their commit messages. Each entry was checked against the CAP's own text
+# in stellar/stellar-protocol.
+CAP_OVERRIDES = {
+    # CAP-77: Freeze Ledger Entries via Network Configuration (protocol 26)
+    "CLAIM_CLAIMABLE_BALANCE_TRUSTLINE_FROZEN": "CAP-0077",
+    "LIQUIDITY_POOL_DEPOSIT_TRUSTLINE_FROZEN": "CAP-0077",
+    "LIQUIDITY_POOL_WITHDRAW_TRUSTLINE_FROZEN": "CAP-0077",
+    "txFROZEN_KEY_ACCESSED": "CAP-0077",
+    "CONFIG_SETTING_FROZEN_LEDGER_KEYS": "CAP-0077",
+    "CONFIG_SETTING_FROZEN_LEDGER_KEYS_DELTA": "CAP-0077",
+    "CONFIG_SETTING_FREEZE_BYPASS_TXS": "CAP-0077",
+    "CONFIG_SETTING_FREEZE_BYPASS_TXS_DELTA": "CAP-0077",
+    # CAP-83: Allow validators to vote to drop the transaction set from the current ledger
+    "STELLAR_VALUE_EMPTY_TX_SET": "CAP-0083",
+    # CAP-84: Muxed Contract Addresses
+    "SC_ADDRESS_TYPE_MUXED_CONTRACT": "CAP-0084",
+    # CAP-88: Millisecond-Resolution Close Times
+    "STELLAR_VALUE_SIGNED_MS": "CAP-0088",
+    "STELLAR_VALUE_EMPTY_TX_SET_MS": "CAP-0088",
+}
+
+
 def cap_for(case_name, intro_tag):
     """CAP named in the stellar-xdr commits between the previous protocol tag and intro_tag that touch this
     identifier. Restricting the range avoids crediting a name reused in a new union to its first use elsewhere."""
@@ -419,8 +444,11 @@ def main():
     rows = []
     for kind, owner, case, payload in targets:
         intro = introduced(kind, owner, case)
-        cap = "" if args.no_cap or kind != "arm" or intro in ("v19", "?") or case == "default" \
-            or case.lstrip("-").isdigit() else cap_for(case, intro)
+        if kind == "arm" and case in CAP_OVERRIDES:
+            cap = CAP_OVERRIDES[case]
+        else:
+            cap = "" if args.no_cap or kind != "arm" or intro in ("v19", "?") or case == "default" \
+                or case.lstrip("-").isdigit() else cap_for(case, intro)
         rows.append({
             "kind": kind, "type": owner, "case": case, "payload": payload,
             "introduced": "<=19" if intro == "v19" else intro.lstrip("v").split(".")[0],
