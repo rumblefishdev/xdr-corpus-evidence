@@ -28,12 +28,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Run all corpus entries through three SDK releases (#1766 and #1789 before/after)
+      - name: Run all corpus entries through four SDK releases (#1766 and #1789 before/after)
         run: conformance/run.sh
 
   sighting-729:
     # wallet-backend #729 on corpus entry cap0040-signed-payload-signer-01, from a clean checkout:
-    # pre-fix = dropped (signer error in the log), fixed = pass. Catches setup bugs that only show on a fresh machine.
+    # pre-fix = halted (signer error in the log), fixed = pass. Catches setup bugs that only show on a fresh machine.
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4

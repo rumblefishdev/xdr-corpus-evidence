@@ -173,13 +173,15 @@ be regenerated, only re-exported: `sighting-729/repro.sh --clean` does that.
 
 ## Findings while building the entries
 
-1. **A Soroban transaction with a muxed source can't be generated on any current network.** Since protocol 25, stellar-core rejects
+1. **An `InvokeHostFunction` transaction with a muxed source can't be generated on any current network.** Since protocol 25, stellar-core rejects
    `invoke_host_function` with a muxed transaction or operation source, or with a memo (`TransactionFrame::validateSorobanMemo`,
    `tx_soroban_invalid`: "Soroban transactions are not allowed to use memo or muxed source account"). In current core, ledgers
    before protocol 25 apply this check only when transactions are queued, not in consensus. We haven't checked older core releases.
-   wallet-backend #716's "most reachable" path, taking a Soroban participant from the operation source, can therefore only be
-   met in pre-protocol-25 history, if at all. Entry 2 targets #716's other path, a muxed recipient, which is valid today.
-   The RFP's *muxed source* pattern is therefore a classic transaction: entry `cap0027-muxed-classic-payment-01`.
+   The check covers `InvokeHostFunction` only: the same function returns early for every other operation, so
+   `ExtendFootprintTtl` and `RestoreFootprint` with a muxed source stay valid at every protocol (wallet-backend PR #753
+   relies on this). #716's Soroban operation-source path is therefore still reachable through those two operations; an entry
+   for it is planned. Entry 2 targets #716's other path, a muxed recipient. The sample *muxed source* entry is a classic
+   transaction: `cap0027-muxed-classic-payment-01`.
 2. **Core rejects the text-ordered pool** as `change_trust: malformed` and accepts the byte-ordered one. Random issuer pairs
    disagree on order often, so this isn't an exotic case.
 3. **A fresh local network has no native-XLM token contract**, so the muxed generator deploys it first when it's missing.

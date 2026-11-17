@@ -33,4 +33,5 @@ Protocol-30 ledgers need stellar CLI ≥ 30; `corpus/tools/get-stellar-cli.sh` f
 
 - Galexie re-exports of a ledger are not byte-identical (Soroban diagnostic timings); the committed file is canonical (sha256).
 - wallet-backend backfill exits 0 even when a batch fails; verdicts come from the database and the log, never the exit code.
-- Since protocol 25, core rejects a muxed source or a memo on Soroban transactions; muxed-source entries are classic.
+- Since protocol 25, core rejects a muxed source or a memo on `InvokeHostFunction` only (`validateSorobanMemo`);
+  `ExtendFootprintTtl` and `RestoreFootprint` with a muxed source stay valid. The sample muxed-source entry is classic.
